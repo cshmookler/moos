@@ -9,8 +9,9 @@ error() {
 }
 
 THIS_DIR=$(pwd)
-WORK_DIR="$THIS_DIR/.work"
 PROFILE_DIR="$THIS_DIR/profile"
+WORK_DIR="$THIS_DIR/work"
+OUT_DIR="$THIS_DIR/iso"
 
 pacman_conf() {
     echo "[options]"
@@ -33,7 +34,7 @@ if ! pacman_conf > "$PROFILE_DIR/pacman.conf"; then
     exit 1
 fi
 
-if ! sudo mkarchiso -v -r -w "$WORK_DIR" -o "$THIS_DIR" "$PROFILE_DIR"; then
+if ! sudo mkarchiso -v -r -w "$WORK_DIR" -o "$OUT_DIR" "$PROFILE_DIR"; then
     error "ISO construction failed"
     exit 1
 fi
