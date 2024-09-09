@@ -53,15 +53,6 @@ def get(*args) -> str | None:
     return None
 
 
-# def remove(path: str) -> bool:
-#     try:
-#         shutil.rmtree(path)
-#     except os.error:
-#         redtext("Error: Failed to remove " + path)
-#         return False
-#     return True
-
-
 def remove(path: str) -> bool:
     return run("sudo", "rm", "-rf", path)
 
@@ -188,7 +179,7 @@ class PackageBuilder:
 
 class PackageRepoMaker:
     def __init__(
-        self, dst: str, packager: str, local_packages_dir: str
+        self, dst: str, db_dir: str, local_packages_dir: str, packager: str
     ) -> None:
         self.dst = dst
         if not os.path.exists(self.dst):
@@ -199,12 +190,12 @@ class PackageRepoMaker:
 
         self.added_packages: Dict[str, bool] = {}
 
-        self.dbpath = TempDir()
-        self.good = self.dbpath.good
+        self.dbpath = db_dir
+        if not os.path.exists(self.dbpath):
+            os.makedirs(self.dbpath)
 
         # Update the system-wide package database so dependencies can be installed.
-        if self.good:
-            self.good = self._pacman("-Sy")
+        self.good = self._pacman("-Sy")
 
         # Populate a fresh package database for use when downloading packages.
         if self.good:
@@ -220,7 +211,7 @@ class PackageRepoMaker:
             "--cache",
             self.dst,
             "--dbpath",
-            self.dbpath.path,
+            self.dbpath,
             "--noconfirm",
             *args,
             quiet=quiet,
@@ -382,10 +373,11 @@ def make_repo(
     name: str,
     packager: str,
     packages: List[str],
-    local_packages_dir: str,
     dst: str,
+    db_dir: str,
+    local_packages_dir: str,
 ) -> bool:
-    repo = PackageRepoMaker(dst, packager, local_packages_dir)
+    repo = PackageRepoMaker(dst, db_dir, local_packages_dir, packager)
     if not repo.good:
         error("Error: Failed to initialize a fresh package repository")
         return False
@@ -429,19 +421,17 @@ if __name__ == "__main__":
     work_dir: str = os.getcwd()
     local_packages_dir: str = work_dir + "/local_packages"
     profile_dir: str = work_dir + "/profile"
+    db_dir: str = work_dir + "/offline_db"
     offline_repo_dir: str = profile_dir + "/airootfs/offline"
-
-    # Remove the existing package database (if it exists)
-    if not remove(offline_repo_dir):
-        quit(1)
 
     # Make a package repository containing the specified packages and place it in the profile directory.
     if not make_repo(
         name=package_repo_name,
         packager=packager,
         packages=packages,
-        local_packages_dir=local_packages_dir,
         dst=offline_repo_dir,
+        db_dir=db_dir,
+        local_packages_dir=local_packages_dir,
     ):
         quit(1)
 
