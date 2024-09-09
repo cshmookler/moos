@@ -1,0 +1,60 @@
+pkgname='moos'
+pkgver=20240908
+pkgrel=1
+pkgdesc='All required packages for a base MOOS installation.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+depends=(
+    # Packages from the official repositories.
+    'base'
+    'base-devel'
+    'linux'
+    'linux-firmware'
+    'bash'
+    'bash-completion'
+    'man-db'
+    'man-pages'
+    'less'
+    'curl'
+    'git'
+    'zip'
+    'unzip'
+    'python'
+    'python-virtualenv'
+    'htop'
+    'ufw'
+    'borg'
+    'openssh'
+    'neovim'
+    'networkmanager'
+    'alsa-utils'
+    'bluez'
+    'bluez-utils'
+    'pulseaudio'
+    'pulseaudio-alsa'
+    'pulseaudio-bluetooth'
+    'xorg'
+    'xorg-init'
+    'ffmpeg'
+    'firefox'
+    'torbrowser-launcher'
+
+    # Packages from the AUR.
+    'yay'
+    'neovim-symlinks'
+
+    # Custom packages made specifically for MOOS.
+    'moos-auto-moos'
+    'moos-auto-limine'
+    'moos-sshd-conf'
+    'moos-xorg-conf'
+    'moos-special-keys'
+    'moos-dwm'
+    'moos-status-bar'
+    'moos-st'
+    'moos-fonts'
+    'moos-snap'
+    'moos-us-keys'
+    'moos-slock'
+)

@@ -1,0 +1,9 @@
+[Unit]
+Description=Change file permissions for the backlight brightness file on startup
+After=multi-user.target
+
+[Service]
+ExecStart=/bin/bash -c 'chmod 666 /sys/class/backlight/*/brightness'
+
+[Install]
+WantedBy=graphical.target

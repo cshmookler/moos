@@ -1,0 +1,12 @@
+{
+    "network_install": false,
+    "min_device_bytes": 10000000000,
+    "device": null,
+    "boot_label": "MOOS",
+    "time_zone": "America/Denver",
+    "hostname": "moos",
+    "root_password": "root",
+    "username": "main",
+    "user_password": "main",
+    "sudo_group": "wheel"
+}

@@ -1,0 +1,29 @@
+pkgname='moos-auto-moos'
+pkgver=20240908
+pkgrel=1
+pkgdesc='Automatically installs MOOS (https://github.com/cshmookler/moos) on a device.'
+arch=('any')
+license=('Zlib')
+groups=('moos')
+options=('!debug')
+depends=(
+    'git'
+    'python'
+    'dosfstools'
+    'arch-install-scripts'
+)
+source=('git+https://github.com/cshmookler/auto_moos.git')
+sha256sums=('SKIP')
+_repo='auto_moos'
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+package() {
+    cd "$_repo"
+    install -Dm755 "auto_moos.py" "$pkgdir/usr/bin/auto_moos"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

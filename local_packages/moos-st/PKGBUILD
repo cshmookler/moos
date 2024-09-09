@@ -1,0 +1,56 @@
+pkgname='moos-st'
+pkgver=20240809
+pkgrel=1
+pkgdesc='Patched simple terminal for X'
+arch=('any')
+url='https://st.suckless.org'
+license=('MIT')
+groups=('moos')
+options=(
+    'zipman'
+    '!debug'
+)
+makedepends=('git')
+depends=(
+    'libxft'
+    'moos-fonts'
+)
+provides=('st')
+source=(
+    'git+https://git.suckless.org/st'
+    'Makefile.patch'
+    'st.info.patch'
+    'config.h'
+)
+sha256sums=(
+    'SKIP'
+    '1262e4c57896a678dd7d2d31a4a776bcab29c0a9183fedb54cbe1a6f9fab3259'
+    '0a3394180059ee2e02cccc31e2138b4a1649f1203fc29411a6d171e8eb6da987'
+    '4b9c2fb4837cbc60d2e73491cfa2825d23925c7ce9a6f743f404a5ed1e4adaf7'
+)
+_repo='st'
+
+prepare() {
+    cd "$_repo"
+    patch < "$srcdir/Makefile.patch"
+    patch < "$srcdir/st.info.patch"
+    cp "$srcdir/config.h" .
+}
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    cd "$_repo"
+    make
+}
+
+package() {
+    cd "$_repo"
+    make PREFIX="/usr" DESTDIR="$pkgdir/" install
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README" "$pkgdir/usr/share/doc/$pkgname/README"
+    install -Dm644 "st.info" "$pkgdir/usr/share/$pkgname/st.info"
+}

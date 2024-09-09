@@ -1,0 +1,46 @@
+pkgname='moos-status-bar'
+pkgver=20240816
+pkgrel=1
+pkgdesc='Status bar for dwm (https://dwm.suckless.org). Customizable at runtime and updates instantly.'
+arch=('any')
+license=('Zlib')
+groups=('moos')
+options=('!debug')
+makedepends=(
+    'meson'
+    'gtest'
+    'argparse'
+)
+makedepends=('git')
+depends=(
+    'libx11'
+    'alsa-lib'
+)
+provides=('slstatus')
+source=('git+https://github.com/cshmookler/status_bar.git')
+sha256sums=('SKIP')
+_repo='status_bar'
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    cd "$_repo"
+    arch-meson . build 
+    meson compile -C build 
+}
+
+# check() {
+#     # Testing fails if any of the status fields are invalid.
+#     cd "$_repo"
+#     meson test -C build 
+# }
+
+package() {
+    cd "$_repo"
+    meson install -C build --destdir "$pkgdir"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

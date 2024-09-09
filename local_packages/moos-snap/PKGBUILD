@@ -1,0 +1,14 @@
+pkgname='moos-snap'
+pkgver=20240908
+pkgrel=1
+pkgdesc='A simple wrapper for maim.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+depends=('maim')
+source=('snap')
+sha256sums=('2ab9a0450f44bff3a9e0f03b07f787a3ce71dbc73ab0fa717936058dbef9f0f0')
+
+package() {
+    install -Dm755 "snap" "$pkgdir/usr/bin/snap"
+}

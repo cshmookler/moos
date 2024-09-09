@@ -1,0 +1,56 @@
+pkgname='moos-dwm'
+pkgver=20240608
+pkgrel=1
+pkgdesc='Patched dynamic window manager for X.'
+arch=('any')
+url='https://tools.suckless.org/dwm/'
+license=('MIT')
+groups=('moos')
+options=(
+    'zipman'
+    '!debug'
+)
+makedepends=('git')
+depends=(
+    'libx11'
+    'libxinerama'
+    'libxft'
+    'dmenu'
+    'moos-fonts'
+    'moos-special-keys'
+)
+provides=('dwm')
+source=(
+    'git+https://git.suckless.org/dwm'
+    'dwm.c.patch'
+    'config.h'
+)
+sha256sums=(
+    'SKIP'
+    '2e773dd4f276e2485dd40dd13180322519503c5bea66c639115e39bc72033010'
+    '367067190c53d198f52f86bea6e7792cec161a05c805ac96227d4a322dfe4e5e'
+)
+_repo='dwm'
+
+prepare() {
+    cd "$_repo"
+    patch < "$srcdir/dwm.c.patch"
+    cp "$srcdir/config.h" .
+}
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    cd "$_repo"
+    make
+}
+
+package() {
+    cd "$_repo"
+    make PREFIX="/usr" DESTDIR="$pkgdir/" install
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README" "$pkgdir/usr/share/doc/$pkgname/README"
+}

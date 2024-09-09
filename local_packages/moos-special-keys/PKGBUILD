@@ -1,0 +1,52 @@
+pkgname='moos-special-keys'
+pkgver=20240817
+pkgrel=1
+pkgdesc='Provides functions for common special (multimedia) keys. Communicates with status_bar (https://github.com/cshmookler/status_bar) for instant visual feedback.'
+arch=('any')
+license=('Zlib')
+groups=('moos')
+options=('!debug')
+makedepends=(
+    'git'
+    'meson'
+    'gtest'
+    'argparse'
+)
+depends=(
+    'alsa-lib'
+    'moos-status-bar'
+)
+source=(
+    'git+https://github.com/cshmookler/special_keys.git'
+    'special-keys-backlight.service'
+)
+sha256sums=(
+    'SKIP'
+    '4db85c62add58d003e0307666b1a444d6ad7faf84c8914e7995913f0420522f0'
+)
+install="$pkgname.install"
+_repo='special_keys'
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    cd "$_repo"
+    arch-meson . build 
+    meson compile -C build 
+}
+
+check() {
+    cd "$_repo"
+    meson test -C build 
+}
+
+package() {
+    cd "$_repo"
+    meson install -C build --destdir "$pkgdir"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 "$srcdir/special-keys-backlight.service" "$pkgdir/etc/systemd/system/special-keys-backlight.service"
+}

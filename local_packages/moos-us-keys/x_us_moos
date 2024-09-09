@@ -1,0 +1,8 @@
+xkb_symbols {
+    include "pc+us+inet(evdev)"
+
+    key <CAPS> { [ Shift_L ] };
+    key <LFSH> { [ Control_L ] };
+    key <RTSH> { [ Escape ] };
+    key <LCTL> { [ VoidSymbol ] };
+};

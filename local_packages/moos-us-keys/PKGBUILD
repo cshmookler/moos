@@ -1,0 +1,21 @@
+pkgname="moos-us-keys"
+pkgver=20240908
+pkgrel=1
+pkgdesc='A custom us-derived keyboard layout.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+source=(
+    'tty_us_moos.map.gz'
+    'x_us_moos'
+)
+sha256sums=(
+    '5b89e572665ca54778ab1e17e8ccad7e1ff5a88c6d9a971975f6363ddb15d067'
+    '825094aa9646bbd53b870cf3b053d2f4a322cb4c0c16b7187d04dd4048b9785e'
+)
+install="$pkgname.install"
+
+package() {
+    install -Dm644 "tty_us_moos.map.gz" "$pkgdir/usr/share/kbd/keymaps/moos/us_moos.map.gz"
+    install -Dm644 "x_us_moos" "$pkgdir/usr/share/X11/xkb/symbols/us_moos"
+}

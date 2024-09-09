@@ -1,0 +1,48 @@
+pkgname='moos-slock'
+pkgver=20231006
+pkgrel=1
+pkgdesc='Patched simple display locker for X.'
+arch=('any')
+url='https://tools.suckless.org/slock'
+license=('MIT')
+groups=('moos')
+options=(
+    'zipman'
+    '!debug'
+)
+makedepends=('git')
+depends=(
+    'libxext'
+    'libxrandr'
+)
+source=(
+    'git+https://git.suckless.org/slock'
+    'config.h'
+)
+sha256sums=(
+    'SKIP'
+    '1dec655f0c54337a434556e871f34453c4bdc8ed66631a0bf4fa9dd0d368eea3'
+)
+_repo='slock'
+
+prepare() {
+    cd "$_repo"
+    cp "$srcdir/config.h" .
+}
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    cd "$_repo"
+    make
+}
+
+package() {
+    cd "$_repo"
+    make PREFIX="/usr" DESTDIR="$pkgdir/" install
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README" "$pkgdir/usr/share/doc/$pkgname/README"
+}

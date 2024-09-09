@@ -1,0 +1,20 @@
+pkgname='moos-xorg-conf'
+pkgver=20240908
+pkgrel=1
+pkgdesc='Configuration for securing Xorg.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+
+_xorg_config() {
+    echo 'Section "ServerFlags"'
+    echo '        Option "DontVTSwitch" "True"'
+    echo '        Option "DontZap" "True"'
+    echo 'EndSection'
+}
+
+package() {
+    CONF_NAME="10-secure.conf"
+    _xorg_config > "$CONF_NAME"
+    install -Dm644 "$CONF_NAME" "$pkgdir/etc/X11/xorg.conf.d/$CONF_NAME"
+}

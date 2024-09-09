@@ -1,0 +1,28 @@
+pkgname='moos-auto-limine'
+pkgver=20240907
+pkgrel=1
+pkgdesc='Automatically installs Limine (https://limine-bootloader.org/) on BIOS and UEFI systems.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+makedepends=('git')
+depends=(
+    'limine'
+    'efibootmgr'
+    'ncurses'
+)
+source=('git+https://github.com/cshmookler/auto_limine.git')
+sha256sums=('SKIP')
+_repo='auto_limine'
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+package() {
+    cd "$_repo"
+    install -Dm755 "auto_limine.sh" "$pkgdir/usr/bin/auto_limine"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

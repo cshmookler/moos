@@ -1,0 +1,9 @@
+post_install() {
+    sudo localectl --no-convert set-keymap us_moos
+    sudo localectl --no-convert set-x11-keymap us_moos
+}
+
+pre_remove() {
+    sudo localectl --no-convert set-keymap us
+    sudo localectl --no-convert set-x11-keymap us
+}

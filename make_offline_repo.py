@@ -1,0 +1,448 @@
+#!/usr/bin/python
+
+from argparse import ArgumentParser, Namespace
+import atexit
+from colorama import Fore, Style
+import time
+from typing import Any, Callable, Dict, List, Optional
+import shutil
+import subprocess
+import os
+
+
+# General utilities
+# ----------------------------------------------------------------------------
+
+
+def green(msg: str) -> str:
+    return Fore.GREEN + Style.BRIGHT + msg + Style.RESET_ALL
+
+
+def blue(msg: str) -> str:
+    return Fore.BLUE + Style.BRIGHT + msg + Style.RESET_ALL
+
+
+def red(msg: str) -> str:
+    return Fore.RED + Style.BRIGHT + msg + Style.RESET_ALL
+
+
+def event(msg: str) -> None:
+    print(green("==> ") + msg)
+
+
+def sub_event(msg: str) -> None:
+    print(blue("  -> ") + msg)
+
+
+def error(msg: str) -> None:
+    print(red(msg))
+
+
+def sep() -> str:
+    return "-" * os.get_terminal_size().columns
+
+
+def run(*args, quiet: bool = True, env: Dict[str, str] | None = None) -> bool:
+    return subprocess.run(args, capture_output=quiet, env=env).returncode == 0
+
+
+def get(*args) -> str | None:
+    result = subprocess.run(args, capture_output=True)
+    if result.returncode == 0:
+        return result.stdout.decode().strip()
+    return None
+
+
+# def remove(path: str) -> bool:
+#     try:
+#         shutil.rmtree(path)
+#     except os.error:
+#         redtext("Error: Failed to remove " + path)
+#         return False
+#     return True
+
+
+def remove(path: str) -> bool:
+    return run("sudo", "rm", "-rf", path)
+
+
+def copy(src: str, dst: str) -> bool:
+    try:
+        shutil.copytree(src, dst, symlinks=True, dirs_exist_ok=True)
+    except os.error:
+        error("Error: Failed to copy " + src + " to " + dst)
+        return False
+    return True
+
+
+def cd(dst: str) -> bool:
+    try:
+        os.chdir(dst)
+    except os.error:
+        error("Error: Failed to change directory to " + dst)
+        return False
+    return True
+
+
+# ----------------------------------------------------------------------------
+
+
+class Dir:
+    def __init__(self, path: str) -> None:
+        self.path = path
+
+
+class TempDir:
+    def __init__(self) -> None:
+        temp_dir: str | None = get("mktemp", "-d")
+        self.good = temp_dir != None
+        self.path = str(temp_dir)
+        atexit.register(self.cleanup)
+
+    def cleanup(self) -> None:
+        if self.good:
+            remove(self.path)
+            self.good = False
+
+
+class PackageBuilder:
+    def __init__(
+        self,
+        recipe_dir: str | None = None,
+    ) -> None:
+        if recipe_dir:
+            self.recipe_dir = Dir(recipe_dir)
+
+            self.build_dir = TempDir()
+            self.good = self.build_dir.good
+
+            if self.good:
+                self.good = copy(self.recipe_dir.path, self.build_dir.path)
+        else:
+            self.recipe_dir = TempDir()
+            self.good = self.recipe_dir.good
+            self.build_dir = self.recipe_dir
+
+    def download(self, url: str) -> bool:
+        return run("git", "clone", url, self.build_dir.path)
+
+    def build(
+        self,
+        dep_handler: Callable[[str], bool],
+        makepkg_env: Dict[str, str],
+        install: bool = False,
+    ) -> bool:
+        # Get package name
+        name = get(
+            "bash",
+            "-ec",
+            "source " + self.build_dir.path + "/PKGBUILD; echo $pkgname;",
+        )
+        if name == None:
+            error("Error: Failed to read package name")
+            return False
+        name = str(name)
+
+        # Get package dependencies
+        dependencies = get(
+            "bash",
+            "-ec",
+            "source " + self.build_dir.path + "/PKGBUILD;"
+            "echo ${makedepends[@]%:*};"
+            "echo ${checkdepends[@]%:*};"
+            "echo ${depends[@]%:*};"
+            "echo ${optdepends[@]%:*};",
+        )
+        if dependencies == None:
+            error("Error: Failed to read package dependencies")
+            return False
+        dependencies = str(dependencies).split()
+
+        # Handle package dependencies
+        for dep in dependencies:
+            if not dep_handler(dep):
+                error("Error: Failed to handle dependency for: " + name)
+                return False
+
+        # makepkg requires that the PKGBUILD be in the working directory.
+        if not cd(self.build_dir.path):
+            return False
+
+        # Optional extra arguments for makepkg
+        extra_args = ["--install", "--noconfirm"] if install else []
+
+        # Build the package with makepkg.
+        if not run(
+            "makepkg",
+            "--clean",
+            "--force",
+            *extra_args,
+            quiet=False,
+            env=makepkg_env,
+        ):
+            error("Error: Failed to build package: " + name)
+            return False
+
+        return True
+
+
+class PackageRepoMaker:
+    def __init__(
+        self, dst: str, packager: str, local_packages_dir: str
+    ) -> None:
+        self.dst = dst
+        if not os.path.exists(self.dst):
+            os.makedirs(self.dst)
+
+        self.packager = packager
+        self.local_packages_dir = local_packages_dir
+
+        self.added_packages: Dict[str, bool] = {}
+
+        self.dbpath = TempDir()
+        self.good = self.dbpath.good
+
+        # Update the system-wide package database so dependencies can be installed.
+        if self.good:
+            self.good = self._pacman("-Sy")
+
+        # Populate a fresh package database for use when downloading packages.
+        if self.good:
+            self.good = self._fresh_pacman("-Sy")
+
+    def _pacman(self, *args, quiet: bool = False) -> bool:
+        return run("sudo", "pacman", "--noconfirm", *args, quiet=quiet)
+
+    def _fresh_pacman(self, *args, quiet: bool = False) -> bool:
+        return run(
+            "sudo",
+            "pacman",
+            "--cache",
+            self.dst,
+            "--dbpath",
+            self.dbpath.path,
+            "--noconfirm",
+            *args,
+            quiet=quiet,
+        )
+
+    def _is_already_added(self, package: str) -> bool:
+        return package in self.added_packages
+
+    def _is_already_installed(self, package: str) -> bool:
+        return self._pacman("-Qi", package, quiet=True)
+
+    def _is_official_package_addable(self, package: str) -> bool:
+        return self._fresh_pacman("-Sp", package, quiet=True)
+
+    def _is_official_package_installable(self, package: str) -> bool:
+        return self._pacman("-Sp", package, quiet=True)
+
+    def _add_official_package(self, package: str) -> bool:
+        result: bool = self._fresh_pacman("-Sw", package)
+        if result:
+            self.added_packages[package] = True
+        return result
+
+    def _install_official_package(self, package: str) -> bool:
+        return self._pacman("-S", package)
+
+    def _is_aur_package(self, package: str) -> bool:
+        return run(
+            "git",
+            "ls-remote",
+            "--exit-code",
+            "https://aur.archlinux.org/" + package + ".git",
+        )
+
+    def _get_makepkg_env(
+        self, build_dir: str, cache_dir: str
+    ) -> Dict[str, str]:
+        makepkg_env = os.environ.copy()
+        makepkg_env["SRCDEST"] = build_dir
+        makepkg_env["SRCPKGDEST"] = build_dir
+        makepkg_env["BUILDDIR"] = build_dir
+        makepkg_env["PACKAGER"] = self.packager
+        makepkg_env["PKGDEST"] = cache_dir
+        return makepkg_env
+
+    def _get_aur_package(self, package: str, install: bool = False) -> bool:
+        package_builder = PackageBuilder()
+        if not package_builder.good:
+            error("Error: Failed to initialize the packager for: " + package)
+            return False
+
+        if not package_builder.download(
+            "https://aur.archlinux.org/" + package + ".git"
+        ):
+            error("Error: Failed to download package recipe for: " + package)
+            return False
+
+        cache_dir: str = package_builder.build_dir.path if install else self.dst
+        makepkg_env = self._get_makepkg_env(
+            package_builder.build_dir.path, cache_dir
+        )
+
+        result: bool = package_builder.build(
+            self.add_package_dependency, makepkg_env, install=install
+        )
+        if result and not install:
+            self.added_packages[package] = True
+        return result
+
+    def _is_local_package(self, package: str) -> bool:
+        return os.path.isdir(self.local_packages_dir + "/" + package)
+
+    def _get_local_package(self, package: str, install: bool = False) -> bool:
+        package_builder = PackageBuilder(
+            recipe_dir=self.local_packages_dir + "/" + package,
+        )
+        if not package_builder.good:
+            error("Error: Failed to initialize the packager for: " + package)
+            return False
+
+        cache_dir: str = package_builder.build_dir.path if install else self.dst
+        makepkg_env = self._get_makepkg_env(
+            package_builder.build_dir.path, cache_dir
+        )
+
+        result: bool = package_builder.build(
+            self.add_package_dependency, makepkg_env, install=install
+        )
+        if result and not install:
+            self.added_packages[package] = True
+        return result
+
+    def install_dependency(self, package: str) -> bool:
+        if self._is_already_installed(package):
+            return True
+
+        # Search the official package repositories (or wherever /etc/pacman.conf tells pacman to look).
+        if self._is_official_package_installable(package):
+            return self._install_official_package(package)
+
+        # Search the AUR.
+        if self._is_aur_package(package):
+            return self._get_aur_package(package, install=True)
+
+        # Search the local package directory.
+        if self._is_local_package(package):
+            return self._get_local_package(package, install=True)
+
+        error("Error: Failed to resolve package: " + package)
+        return False
+
+    def add_package_dependency(self, package: str) -> bool:
+        sub_event(package)
+        if not self.install_dependency(package):
+            error("Error: Failed to install dependency: " + package)
+            return False
+        return self.add_package(package)
+
+    def add_package(self, package: str) -> bool:
+        if self._is_already_added(package):
+            return True
+
+        # Search the official package repositories (or wherever /etc/pacman.conf tells pacman to look).
+        if self._is_official_package_addable(package):
+            return self._add_official_package(package)
+
+        # Search the AUR.
+        if self._is_aur_package(package):
+            return self._get_aur_package(package)
+
+        # Search the local package directory.
+        if self._is_local_package(package):
+            return self._get_local_package(package)
+
+        error("Error: Failed to resolve package: " + package)
+        return False
+
+    def make_repo(self, name: str) -> bool:
+        # Make an offline package repository
+        if not run(
+            "bash",
+            "-ec",
+            "repo-add "
+            + self.dst
+            + "/"
+            + name
+            + ".db.tar.zst "
+            + self.dst
+            + "/*[^sig]",
+            quiet=False,
+        ):
+            error("Error: Failed to make repo")
+            return False
+
+        return True
+
+
+def make_repo(
+    name: str,
+    packager: str,
+    packages: List[str],
+    local_packages_dir: str,
+    dst: str,
+) -> bool:
+    repo = PackageRepoMaker(dst, packager, local_packages_dir)
+    if not repo.good:
+        error("Error: Failed to initialize a fresh package repository")
+        return False
+
+    for pack in packages:
+        event(pack)
+        if not repo.add_package(pack):
+            return False
+
+    return repo.make_repo(name)
+
+
+if __name__ == "__main__":
+    # Ensure this script is running on Linux. Other operating systems are not supported.
+    if get("uname", "-s") != "Linux":
+        error("Error: Incompatible operating system")
+        quit(1)
+
+    # The package repository name.
+    package_repo_name: str = "offline"
+
+    # Which packages are being added to the repository?
+    packages = ["moos"]
+
+    # Who is building the packages in this package database?
+    packager_name: Optional[str] = get("git", "config", "get", "user.name")
+    if not packager_name:
+        error(
+            "Error: Packager name not found. Set the 'user.name' field in your Git configuration."
+        )
+        quit(1)
+    packager_email: Optional[str] = get("git", "config", "get", "user.email")
+    if not packager_email:
+        error(
+            "Error: Packager email not found. Set the 'user.email' field in your Git configuration"
+        )
+        quit(1)
+    packager: str = packager_name + " <" + packager_email + ">"
+
+    # Declare paths relative to the initial working directory.
+    work_dir: str = os.getcwd()
+    local_packages_dir: str = work_dir + "/local_packages"
+    profile_dir: str = work_dir + "/profile"
+    offline_repo_dir: str = profile_dir + "/airootfs/offline"
+
+    # Remove the existing package database (if it exists)
+    if not remove(offline_repo_dir):
+        quit(1)
+
+    # Make a package repository containing the specified packages and place it in the profile directory.
+    if not make_repo(
+        name=package_repo_name,
+        packager=packager,
+        packages=packages,
+        local_packages_dir=local_packages_dir,
+        dst=offline_repo_dir,
+    ):
+        quit(1)
+
+    quit(0)
