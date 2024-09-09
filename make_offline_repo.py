@@ -181,9 +181,13 @@ class PackageRepoMaker:
     def __init__(
         self, dst: str, db_dir: str, local_packages_dir: str, packager: str
     ) -> None:
-        self.dst = dst
-        if not os.path.exists(self.dst):
-            os.makedirs(self.dst)
+        self.pkg_dir = dst + "/pkg"
+        if not os.path.exists(self.pkg_dir):
+            os.makedirs(self.pkg_dir)
+
+        self.repo_dir = dst + "/repo"
+        if not os.path.exists(self.repo_dir):
+            os.makedirs(self.repo_dir)
 
         self.packager = packager
         self.local_packages_dir = local_packages_dir
@@ -209,7 +213,7 @@ class PackageRepoMaker:
             "sudo",
             "pacman",
             "--cache",
-            self.dst,
+            self.pkg_dir,
             "--dbpath",
             self.dbpath,
             "--noconfirm",
@@ -269,7 +273,9 @@ class PackageRepoMaker:
             error("Error: Failed to download package recipe for: " + package)
             return False
 
-        cache_dir: str = package_builder.build_dir.path if install else self.dst
+        cache_dir: str = (
+            package_builder.build_dir.path if install else self.pkg_dir
+        )
         makepkg_env = self._get_makepkg_env(
             package_builder.build_dir.path, cache_dir
         )
@@ -292,7 +298,9 @@ class PackageRepoMaker:
             error("Error: Failed to initialize the packager for: " + package)
             return False
 
-        cache_dir: str = package_builder.build_dir.path if install else self.dst
+        cache_dir: str = (
+            package_builder.build_dir.path if install else self.pkg_dir
+        )
         makepkg_env = self._get_makepkg_env(
             package_builder.build_dir.path, cache_dir
         )
@@ -355,11 +363,11 @@ class PackageRepoMaker:
             "bash",
             "-ec",
             "repo-add "
-            + self.dst
+            + self.repo_dir
             + "/"
             + name
             + ".db.tar.zst "
-            + self.dst
+            + self.pkg_dir
             + "/*[^sig]",
             quiet=False,
         ):
