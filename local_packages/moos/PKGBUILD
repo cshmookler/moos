@@ -35,7 +35,7 @@ depends=(
     'pulseaudio-alsa'
     'pulseaudio-bluetooth'
     'xorg'
-    'xorg-init'
+    'xorg-xinit'
     'ffmpeg'
     'firefox'
     'torbrowser-launcher'
