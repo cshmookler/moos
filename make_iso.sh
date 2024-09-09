@@ -33,12 +33,6 @@ if ! pacman_conf > "$PROFILE_DIR/pacman.conf"; then
     exit 1
 fi
 
-AUTO_MOOS_DIR="$PROFILE_DIR/airootfs/root/.auto_moos/"
-if ! mkdir -p "$AUTO_MOOS_DIR" && cp "$THIS_DIR/packages" "$AUTO_MOOS_DIR/packages"; then
-    error "Failed to create the packages file for auto_moos"
-    exit 1
-fi
-
 if ! sudo mkarchiso -v -r -w "$WORK_DIR" -o "$THIS_DIR" "$PROFILE_DIR"; then
     error "ISO construction failed"
     exit 1
