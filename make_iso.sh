@@ -20,7 +20,7 @@ pacman_conf() {
     echo "SigLevel = Never"
     echo ""
     echo "[offline]"
-    echo "Server = file://$PROFILE_DIR/airootfs/offline/repo"
+    echo "Server = file://$PROFILE_DIR/airootfs/offline/repo/"
     echo ""
     echo "[core]"
     echo "Include = /etc/pacman.d/mirrorlist"
