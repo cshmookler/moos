@@ -181,13 +181,9 @@ class PackageRepoMaker:
     def __init__(
         self, dst: str, db_dir: str, local_packages_dir: str, packager: str
     ) -> None:
-        self.pkg_dir = dst + "/pkg"
-        if not os.path.exists(self.pkg_dir):
-            os.makedirs(self.pkg_dir)
-
-        self.repo_dir = dst + "/repo"
-        if not os.path.exists(self.repo_dir):
-            os.makedirs(self.repo_dir)
+        self.dst = dst
+        if not os.path.exists(self.dst):
+            os.makedirs(self.dst)
 
         self.packager = packager
         self.local_packages_dir = local_packages_dir
@@ -213,7 +209,7 @@ class PackageRepoMaker:
             "sudo",
             "pacman",
             "--cache",
-            self.pkg_dir,
+            self.dst,
             "--dbpath",
             self.dbpath,
             "--noconfirm",
@@ -273,9 +269,7 @@ class PackageRepoMaker:
             error("Error: Failed to download package recipe for: " + package)
             return False
 
-        cache_dir: str = (
-            package_builder.build_dir.path if install else self.pkg_dir
-        )
+        cache_dir: str = package_builder.build_dir.path if install else self.dst
         makepkg_env = self._get_makepkg_env(
             package_builder.build_dir.path, cache_dir
         )
@@ -298,9 +292,7 @@ class PackageRepoMaker:
             error("Error: Failed to initialize the packager for: " + package)
             return False
 
-        cache_dir: str = (
-            package_builder.build_dir.path if install else self.pkg_dir
-        )
+        cache_dir: str = package_builder.build_dir.path if install else self.dst
         makepkg_env = self._get_makepkg_env(
             package_builder.build_dir.path, cache_dir
         )
@@ -358,17 +350,21 @@ class PackageRepoMaker:
         return False
 
     def make_repo(self, name: str) -> bool:
-        # Make an offline package repository
+        # Accumulate all packages into a list.
+        packages: List[str] = []
+        for file in os.listdir(self.dst):
+            file_path = self.dst + "/" + file
+            if not os.path.isfile(file_path):
+                continue
+            if not file.endswith(".pkg.tar.zst"):
+                continue
+            packages.append(file_path)
+
+        # Make an offline package repository.
         if not run(
-            "bash",
-            "-ec",
-            "repo-add "
-            + self.repo_dir
-            + "/"
-            + name
-            + ".db.tar.zst "
-            + self.pkg_dir
-            + "/*[^sig]",
+            "repo-add",
+            self.dst + "/" + name + ".db.tar.zst",
+            *packages,
             quiet=False,
         ):
             error("Error: Failed to make repo")
