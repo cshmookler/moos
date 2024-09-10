@@ -1,9 +1,9 @@
 [Unit]
-Description=Change file permissions for the backlight brightness file on startup
+Description=Enable reading and writing to backlight brightness files on startup.
 After=multi-user.target
 
 [Service]
-ExecStart=/bin/bash -c 'chmod 666 /sys/class/backlight/*/brightness'
+ExecStart=/usr/bin/bash -c 'if test -n "$(ls -A '/sys/class/backlight/')"; then chmod 666 /sys/class/backlight/*/brightness; fi'
 
 [Install]
 WantedBy=graphical.target

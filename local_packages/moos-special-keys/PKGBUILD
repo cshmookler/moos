@@ -22,7 +22,7 @@ source=(
 )
 sha256sums=(
     'SKIP'
-    '4db85c62add58d003e0307666b1a444d6ad7faf84c8914e7995913f0420522f0'
+    'a916d9236b8d55618980f3502ea855a64aa1a2c7117762bbbbe9636b56701df4'
 )
 install="$pkgname.install"
 _repo='special_keys'
