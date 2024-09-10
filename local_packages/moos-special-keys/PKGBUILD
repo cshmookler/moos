@@ -16,16 +16,42 @@ depends=(
     'alsa-lib'
     'moos-status-bar'
 )
+_service_name='special-keys-backlight'
 source=(
     'git+https://github.com/cshmookler/special_keys.git'
-    'special-keys-backlight.service'
+    "$_service_name"
 )
 sha256sums=(
     'SKIP'
     'a916d9236b8d55618980f3502ea855a64aa1a2c7117762bbbbe9636b56701df4'
 )
-install="$pkgname.install"
 _repo='special_keys'
+
+_install_hook() {
+    echo "[Trigger]"
+    echo "Operation = Install"
+    echo "Type = Package"
+    echo "Target = $pkgname"
+    echo ""
+    echo "[Action]"
+    echo "Description = Enabling $_service_name service..."
+    echo "When = PostTransaction"
+    echo "Depends = systemd"
+    echo "Exec = /usr/bin/systemctl enable $_service_name.service"
+}
+
+_removal_hook() {
+    echo "[Trigger]"
+    echo "Operation = Remove"
+    echo "Type = Package"
+    echo "Target = $pkgname"
+    echo ""
+    echo "[Action]"
+    echo "Description = Disabling the $_service_name service..."
+    echo "When = PreTransaction"
+    echo "Depends = systemd"
+    echo "Exec = /usr/bin/systemctl disable $_service_name.service"
+}
 
 pkgver() {
     cd "$_repo"
@@ -45,8 +71,20 @@ check() {
 
 package() {
     cd "$_repo"
+
+    # Install this program.
     meson install -C build --destdir "$pkgdir"
     install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
-    install -Dm644 "$srcdir/special-keys-backlight.service" "$pkgdir/etc/systemd/system/special-keys-backlight.service"
+
+    # Install the systemd service.
+    install -Dm644 "$srcdir/$_service_name.service" "$pkgdir/etc/systemd/system/$_service_name.service"
+
+    # Install the post-installation and pre-removal pacman hooks.
+    INSTALL_HOOK="$pkgname-install.hook"
+    REMOVAL_HOOK="$pkgname-removal.hook"
+    _install_hook > "$INSTALL_HOOK"
+    _removal_hook > "$REMOVAL_HOOK"
+    install -Dm644 "$INSTALL_HOOK" "$pkgdir/etc/pacman.d/hooks/$INSTALL_HOOK"
+    install -Dm644 "$REMOVAL_HOOK" "$pkgdir/etc/pacman.d/hooks/$REMOVAL_HOOK"
 }

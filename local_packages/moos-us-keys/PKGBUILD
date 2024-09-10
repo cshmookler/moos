@@ -48,8 +48,8 @@ package() {
     install -Dm644 "x_us_moos" "$pkgdir/usr/share/X11/xkb/symbols/us_moos"
 
     # Install the post-installation and pre-removal pacman hooks.
-    INSTALL_HOOK="moos-us-keys-install.hook"
-    REMOVAL_HOOK="moos-us-keys-removal.hook"
+    INSTALL_HOOK="$pkgname-install.hook"
+    REMOVAL_HOOK="$pkgname-removal.hook"
     _install_hook > "$INSTALL_HOOK"
     _removal_hook > "$REMOVAL_HOOK"
     install -Dm644 "$INSTALL_HOOK" "$pkgdir/etc/pacman.d/hooks/$INSTALL_HOOK"
