@@ -6,6 +6,9 @@ arch=('any')
 groups=('moos')
 options=('!debug')
 depends=(
+    # Base packages for MOOS (override other packages).
+    'moos-filesystem'
+
     # Packages from the official repositories.
     'base'
     'base-devel'
@@ -44,7 +47,7 @@ depends=(
     'yay'
     'neovim-symlinks'
 
-    # Custom packages made specifically for MOOS.
+    # Other packages made specifically for MOOS.
     'moos-auto-moos'
     'moos-auto-limine'
     'moos-sshd-conf'

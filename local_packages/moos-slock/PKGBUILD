@@ -15,6 +15,7 @@ depends=(
     'libxext'
     'libxrandr'
 )
+provides=('slock')
 source=(
     'git+https://git.suckless.org/slock'
     'config.h'

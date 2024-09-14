@@ -1,5 +1,5 @@
 pkgname='moos-status-bar'
-pkgver=20240816
+pkgver=20240910
 pkgrel=1
 pkgdesc='Status bar for dwm (https://dwm.suckless.org). Customizable at runtime and updates instantly.'
 arch=('any')

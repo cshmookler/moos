@@ -1,0 +1,7 @@
+NAME="MOOS"
+PRETTY_NAME="MOOS"
+ID=moos
+BUILD_ID=rolling
+HOME_URL="https://github.com/cshmookler/moos"
+BUG_REPORT_URL="https://github.com/cshmookler/moos/issues"
+DOCUMENTATION_URL="https://github.com/cshmookler/moos/wiki"
