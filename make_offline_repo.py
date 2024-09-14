@@ -318,18 +318,16 @@ class PackageRepoMaker:
 
         # Search the local package directory.
         if self._is_local_package(package):
-            return self._get_local_package(package, install=True)
+            return self._get_local_package(package, install=False)
 
         error("Error: Failed to resolve package: " + package)
         return False
 
     def add_package_dependency(self, package: str) -> bool:
         sub_event(package)
-        # Do not install custom MOOS packages.
-        if not package.startswith("moos"):
-            if not self.install_dependency(package):
-                error("Error: Failed to install dependency: " + package)
-                return False
+        if not self.install_dependency(package):
+            error("Error: Failed to install dependency: " + package)
+            return False
         return self.add_package(package)
 
     def add_package(self, package: str) -> bool:
