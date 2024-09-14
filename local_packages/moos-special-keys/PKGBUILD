@@ -19,7 +19,7 @@ depends=(
 _service_name='special-keys-backlight'
 source=(
     'git+https://github.com/cshmookler/special_keys.git'
-    "$_service_name"
+    "$_service_name.service"
 )
 sha256sums=(
     'SKIP'
