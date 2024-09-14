@@ -1,5 +1,5 @@
 pkgname='moos'
-pkgver=20240908
+pkgver=20240914
 pkgrel=1
 pkgdesc='All required packages for a base MOOS installation.'
 arch=('any')

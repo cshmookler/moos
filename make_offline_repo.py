@@ -325,9 +325,11 @@ class PackageRepoMaker:
 
     def add_package_dependency(self, package: str) -> bool:
         sub_event(package)
-        if not self.install_dependency(package):
-            error("Error: Failed to install dependency: " + package)
-            return False
+        # Do not install custom MOOS dependencies.
+        if not package.startswith("moos"):
+            if not self.install_dependency(package):
+                error("Error: Failed to install dependency: " + package)
+                return False
         return self.add_package(package)
 
     def add_package(self, package: str) -> bool:
