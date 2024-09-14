@@ -122,6 +122,7 @@ class PackageBuilder:
         dep_handler: Callable[[str], bool],
         makepkg_env: Dict[str, str],
         install: bool = False,
+        check_deps: bool = True,
     ) -> bool:
         # Get package name
         name = get(
@@ -160,7 +161,12 @@ class PackageBuilder:
             return False
 
         # Optional extra arguments for makepkg
-        extra_args = ["--install", "--noconfirm"] if install else []
+        extra_args: List[str] = []
+        if install:
+            extra_args.append("--install")
+            extra_args.append("--noconfirm")
+        if not check_deps:
+            extra_args.append("--nodeps")
 
         # Build the package with makepkg.
         if not run(
@@ -298,7 +304,10 @@ class PackageRepoMaker:
         )
 
         result: bool = package_builder.build(
-            self.add_package_dependency, makepkg_env, install=install
+            self.add_package_dependency,
+            makepkg_env,
+            install=install,
+            check_deps=False,
         )
         if result and not install:
             self.added_packages[package] = True
