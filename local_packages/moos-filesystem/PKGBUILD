@@ -18,6 +18,7 @@ groups=('moos')
 options=('!debug')
 depends=('iana-etc')
 provides=('filesystem')
+conflicts=('filesystem')
 backup=(
     'etc/crypttab'
     'etc/fstab'

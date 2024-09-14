@@ -1,5 +1,5 @@
 pkgname='moos-status-bar'
-pkgver=20240910
+pkgver=20240914
 pkgrel=1
 pkgdesc='Status bar for dwm (https://dwm.suckless.org). Customizable at runtime and updates instantly.'
 arch=('any')
@@ -17,6 +17,7 @@ depends=(
     'alsa-lib'
 )
 provides=('slstatus')
+conflicts=('slstatus')
 source=('git+https://github.com/cshmookler/status_bar.git')
 sha256sums=('SKIP')
 _repo='status_bar'

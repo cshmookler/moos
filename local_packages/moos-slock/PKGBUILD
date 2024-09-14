@@ -1,5 +1,5 @@
 pkgname='moos-slock'
-pkgver=20231006
+pkgver=20240914
 pkgrel=1
 pkgdesc='Patched simple display locker for X.'
 arch=('any')
@@ -16,6 +16,7 @@ depends=(
     'libxrandr'
 )
 provides=('slock')
+conflicts=('slock')
 source=(
     'git+https://git.suckless.org/slock'
     'config.h'

@@ -1,5 +1,5 @@
 pkgname='moos-dwm'
-pkgver=20240608
+pkgver=20240914
 pkgrel=1
 pkgdesc='Patched dynamic window manager for X.'
 arch=('any')
@@ -20,6 +20,7 @@ depends=(
     'moos-special-keys'
 )
 provides=('dwm')
+conflicts=('dwm')
 source=(
     'git+https://git.suckless.org/dwm'
     'dwm.c.patch'

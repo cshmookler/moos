@@ -1,5 +1,5 @@
 pkgname='moos-st'
-pkgver=20240809
+pkgver=20240914
 pkgrel=1
 pkgdesc='Patched simple terminal for X'
 arch=('any')
@@ -16,6 +16,7 @@ depends=(
     'moos-fonts'
 )
 provides=('st')
+conflicts=('st')
 source=(
     'git+https://git.suckless.org/st'
     'Makefile.patch'
