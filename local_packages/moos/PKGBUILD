@@ -48,6 +48,7 @@ depends=(
     'moos-filesystem'
     'moos-auto-moos'
     'moos-auto-limine'
+    'moos-user-env'
     'moos-sshd-conf'
     'moos-xorg-conf'
     'moos-special-keys'

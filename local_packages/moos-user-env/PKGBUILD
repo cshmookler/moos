@@ -1,0 +1,40 @@
+pkgname='moos-user-env'
+pkgver=20240915
+pkgrel=1
+pkgdesc='Default user environment for MOOS.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+depends=(
+    'xorg-xinit'
+    'xorg-xset'
+    'physlock'
+    'xss-lock'
+    'moos-dwm'
+    'moos-fonts'
+    'moos-slock'
+    'moos-status-bar'
+)
+source=(
+    '.bash_profile'
+    '.bashrc'
+    '.xinitrc'
+    'firefox-user.js'
+    'tor-browser-user.js'
+)
+sha256sums=(
+    '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
+    '53b2025be4363786b0367323f6278a39d738ed7fcad9935248ae98fd6f0018ae'
+    'd5d5f0654923c7c4f541acbbf80700107259fde1181a20b4c6209da1e4817e3d'
+    'f61cf6ce1e4a232c285b32a0aaa6d22e6da4341aa2337c247da26fb971e7ad65'
+    'ddbae0abc7116ec9028272b1dbf4b05893d2d80a1903560daf371a434c99c23a'
+)
+
+package() {
+    ENV_DIR="$pkgdir/etc/user_env"
+    install -Dm644 ".bash_profile" "$ENV_DIR/.bash_profile"
+    install -Dm644 ".bashrc" "$ENV_DIR/.bashrc"
+    install -Dm644 ".xinitrc" "$ENV_DIR/.xinitrc"
+    install -Dm644 "firefox-user.js" "$ENV_DIR/.mozilla/firefox/user.js"
+    install -Dm644 "tor-browser-user.js" "$ENV_DIR/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
+}
