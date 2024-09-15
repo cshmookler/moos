@@ -8,8 +8,8 @@
 # Modifications include:
 #       - Removal of Arch Linux logos and trademarks.
 
-pkgname=moos-filesystem
-pkgver=2024.09.14
+pkgname='moos-filesystem'
+pkgver='2024.09.14'
 pkgrel=1
 pkgdesc='Filesystem structure and base files for MOOS.'
 arch=('any')
@@ -17,7 +17,7 @@ license=('GPL-3.0-or-later')
 groups=('moos')
 options=('!debug')
 depends=('iana-etc')
-provides=('filesystem')
+provides=("filesystem=$pkgver-$pkgrel")
 conflicts=('filesystem')
 backup=(
     'etc/crypttab'
