@@ -1,5 +1,5 @@
 pkgname="moos-us-keys"
-pkgver=20240909
+pkgver=20240914
 pkgrel=1
 pkgdesc='A custom us-derived keyboard layout.'
 arch=('any')
@@ -13,45 +13,9 @@ sha256sums=(
     '5b89e572665ca54778ab1e17e8ccad7e1ff5a88c6d9a971975f6363ddb15d067'
     '825094aa9646bbd53b870cf3b053d2f4a322cb4c0c16b7187d04dd4048b9785e'
 )
-
-_install_hook() {
-    echo "[Trigger]"
-    echo "Operation = Install"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Enabling the custom keymap for $pkgname..."
-    echo "When = PostTransaction"
-    echo "Depends = bash"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/bash -ec 'localectl --no-convert set-keymap us_moos; localectl --no-convert set-x11-keymap us_moos'"
-}
-
-_removal_hook() {
-    echo "[Trigger]"
-    echo "Operation = Remove"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Disabling the custom keymap for $pkgname..."
-    echo "When = PreTransaction"
-    echo "Depends = bash"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/bash -ec 'localectl --no-convert set-keymap us; localectl --no-convert set-x11-keymap us'"
-}
+install="$pkgname.install"
 
 package() {
-    # Install the custom keyboard layouts.
     install -Dm644 "tty_us_moos.map.gz" "$pkgdir/usr/share/kbd/keymaps/moos/us_moos.map.gz"
     install -Dm644 "x_us_moos" "$pkgdir/usr/share/X11/xkb/symbols/us_moos"
-
-    # Install the post-installation and pre-removal pacman hooks.
-    INSTALL_HOOK="$pkgname-install.hook"
-    REMOVAL_HOOK="$pkgname-removal.hook"
-    _install_hook > "$INSTALL_HOOK"
-    _removal_hook > "$REMOVAL_HOOK"
-    install -Dm644 "$INSTALL_HOOK" "$pkgdir/etc/pacman.d/hooks/$INSTALL_HOOK"
-    install -Dm644 "$REMOVAL_HOOK" "$pkgdir/etc/pacman.d/hooks/$REMOVAL_HOOK"
 }

@@ -1,0 +1,34 @@
+_tty_keyboard_conf() {
+    echo '# Written by systemd-localed(8) or systemd-firstboot(1), read by systemd-localed'
+    echo '# and systemd-vconsole-setup(8). Use localectl(1) to update this file.'
+    echo 'KEYMAP='"$1"
+    echo 'XKBLAYOUT='"$1"
+}
+
+_x_keyboard_conf() {
+    echo '# Written by systemd-localed(8), read by systemd-localed and Xorg. It'"'"'s'
+    echo '# probably wise not to edit this file manually. Use localectl(1) to'
+    echo '# update this file.'
+    echo 'Section "InputClass"'
+    echo '        Identifier "system-keyboard"'
+    echo '        MatchIsKeyboard "on"'
+    echo '        Option "XkbLayout" "'"$1"'"'
+    echo 'EndSection'
+}
+
+_set_layout() {
+    _tty_keyboard_conf "$1" > '/etc/vconsole.conf'
+    _x_keyboard_conf "$1" > '/etc/X11/xorg.conf.d/00-keyboard.conf'
+    loadkeys "$1"
+    setxkbmap "$1"
+    localectl --no-convert set-keymap "$1"
+    localectl --no-convert set-x11-keymap "$1"
+}
+
+post_install() {
+    _set_layout 'us_moos'
+}
+
+pre_remove() {
+    _set_layout 'us'
+}
