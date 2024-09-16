@@ -52,4 +52,6 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 
 - [X] Automatically setup the user environment.
 - [ ] Setup firefox and install extensions.
+- [ ] Install virtual machine utilities.
+- [ ] Enable the firewall.
 - [ ] Improve documentation.
