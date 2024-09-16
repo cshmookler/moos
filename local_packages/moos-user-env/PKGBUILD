@@ -10,6 +10,9 @@ depends=(
     'xorg-xset'
     'physlock'
     'xss-lock'
+    'qt5-styleplugins'
+    'qt6gtk2'
+    'aritim-dark-gtk-git'
     'moos-dwm'
     'moos-fonts'
     'moos-slock'
@@ -19,13 +22,19 @@ source=(
     '.bash_profile'
     '.bashrc'
     '.xinitrc'
+    '.gtkrc-2.0'
+    'gtk3-settings.ini'
+    'gtk4-settings.ini'
     'firefox-user.js'
     'tor-browser-user.js'
 )
 sha256sums=(
     '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
-    '53b2025be4363786b0367323f6278a39d738ed7fcad9935248ae98fd6f0018ae'
+    'b2210635dbf22c11dc6e4b644130314b8619c3a895034baa9b4a92f12830881e'
     '1e87c4c5d74fe53108c628222a7a471829eebccbcfcdf74d91746bc815b40958'
+    '5536914c83bf695b9e86e53fb4d91a5c0ae40c3636dab1aa4111da0840a01241'
+    '40bb30eaad81ae5d1469e1b1b441336c5a76762e7499a4fc8f666b77e87540f6'
+    '40bb30eaad81ae5d1469e1b1b441336c5a76762e7499a4fc8f666b77e87540f6'
     'f61cf6ce1e4a232c285b32a0aaa6d22e6da4341aa2337c247da26fb971e7ad65'
     'ddbae0abc7116ec9028272b1dbf4b05893d2d80a1903560daf371a434c99c23a'
 )
@@ -35,6 +44,9 @@ package() {
     install -Dm644 ".bash_profile" "$ENV_DIR/.bash_profile"
     install -Dm644 ".bashrc" "$ENV_DIR/.bashrc"
     install -Dm644 ".xinitrc" "$ENV_DIR/.xinitrc"
+    install -Dm644 ".gtkrc-2.0" "$ENV_DIR/.gtkrc-2.0"
+    install -Dm644 "gtk3-settings.ini" "$ENV_DIR/.config/gtk-3.0/settings.ini"
+    install -Dm644 "gtk4-settings.ini" "$ENV_DIR/.config/gtk-4.0/settings.ini"
     install -Dm644 "firefox-user.js" "$ENV_DIR/.mozilla/firefox/user.js"
     install -Dm644 "tor-browser-user.js" "$ENV_DIR/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
 }

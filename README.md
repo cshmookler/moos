@@ -50,5 +50,6 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 
 ## **TODO**
 
-- [ ] Automatically setup the user environment.
+- [X] Automatically setup the user environment.
+- [ ] Setup firefox and install extensions.
 - [ ] Improve documentation.
