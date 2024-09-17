@@ -35,6 +35,7 @@ depends=(
     'pulseaudio-alsa'
     'pulseaudio-bluetooth'
     $(pacman -Sgq 'xorg')
+    'xdotool'
     'xorg-xinit'
     'ffmpeg'
     'firefox'

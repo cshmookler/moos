@@ -1,10 +1,15 @@
 pkgname='moos-user-env'
-pkgver=20240915
+pkgver=20240916
 pkgrel=1
 pkgdesc='Default user environment for MOOS.'
 arch=('any')
 groups=('moos')
 options=('!debug')
+makedepends=(
+    'python'
+    'curl'
+    'unzip'
+)
 depends=(
     'xorg-xinit'
     'xorg-xset'
@@ -13,6 +18,7 @@ depends=(
     'qt5-styleplugins'
     'qt6gtk2'
     'breeze-gtk'
+    'rsync'
     'moos-dwm'
     'moos-fonts'
     'moos-slock'
@@ -27,26 +33,36 @@ source=(
     'gtk4-settings.ini'
     'firefox-user.js'
     'tor-browser-user.js'
+    'update_user_env.sh'
+    'ff_addons.py'
 )
 sha256sums=(
     '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
-    'd5890e534868ce57a3e0379fb4347eaed370e9fa0991836119c9acf44b2bffc3'
+    '7db33240033cc744f3cafee68a04a5d166e9ee224440c84ef757ed0d81ce22b1'
     '1e87c4c5d74fe53108c628222a7a471829eebccbcfcdf74d91746bc815b40958'
     '18fc70fc443362ec32257804ceb561a3ae3eaff9a39e01ee79c9f115303c3001'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'f61cf6ce1e4a232c285b32a0aaa6d22e6da4341aa2337c247da26fb971e7ad65'
     'ddbae0abc7116ec9028272b1dbf4b05893d2d80a1903560daf371a434c99c23a'
+    '4af412248b07e9cfcc8577399ae7d07b5fb2c3e2d0ce054defeb24813c5a8e06'
+    '0450ba6dec985c16feaf0014a7733b95e45b5949856c3c2f47d29d168dbb08e4'
 )
 
+build() {
+    python ff_addons.py "$srcdir/.firefox/extensions"
+}
+
 package() {
-    ENV_DIR="$pkgdir/etc/user_env"
-    install -Dm644 ".bash_profile" "$ENV_DIR/.bash_profile"
-    install -Dm644 ".bashrc" "$ENV_DIR/.bashrc"
-    install -Dm644 ".xinitrc" "$ENV_DIR/.xinitrc"
-    install -Dm644 ".gtkrc-2.0" "$ENV_DIR/.gtkrc-2.0"
-    install -Dm644 "gtk3-settings.ini" "$ENV_DIR/.config/gtk-3.0/settings.ini"
-    install -Dm644 "gtk4-settings.ini" "$ENV_DIR/.config/gtk-4.0/settings.ini"
-    install -Dm644 "firefox-user.js" "$ENV_DIR/.mozilla/firefox/user.js"
-    install -Dm644 "tor-browser-user.js" "$ENV_DIR/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
+    _env_dir="$pkgdir/etc/user_env"
+    install -Dm644 ".bash_profile" "$_env_dir/.bash_profile"
+    install -Dm644 ".bashrc" "$_env_dir/.bashrc"
+    install -Dm644 ".xinitrc" "$_env_dir/.xinitrc"
+    install -Dm644 ".gtkrc-2.0" "$_env_dir/.gtkrc-2.0"
+    install -Dm644 "gtk3-settings.ini" "$_env_dir/.config/gtk-3.0/settings.ini"
+    install -Dm644 "gtk4-settings.ini" "$_env_dir/.config/gtk-4.0/settings.ini"
+    install -Dm644 "firefox-user.js" "$_env_dir/.firefox/user.js"
+    install -Dm644 "tor-browser-user.js" "$_env_dir/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
+    rsync --recursive --mkpath --ignore-existing "--chmod=D755,F644" ".firefox/" "$_env_dir/.firefox/"
+    install -Dm755 "update_user_env.sh" "$pkgdir/usr/bin/update_user_env"
 }
