@@ -8,9 +8,6 @@
 # Use the same theme for QT as with GTK
 export QT_QPA_PLATFORMTHEME="gtk2"
 
-# Always use the same profile for Firefox
-export XRE_PROFILE_PATH="$HOME/.firefox"
-
 # Prompts
 PS0=''
 PS1='\[\e[0m\]$(EXIT_CODE="$?"; [ "$EXIT_CODE" -eq "0" ] || echo "\[\e[31;1m\]$EXIT_CODE\[\e[0m\]:")\[\e[32;1m\]\u@\h\[\e[0m\]:\[\e[94;1m\]\w\[\e[0m\]$ '

@@ -32,11 +32,7 @@ if __name__ == "__main__":
     if not os.path.isabs(ff_addon_dir):
         error("The given path must be absolute")
         quit(1)
-    try:
-        os.makedirs(ff_addon_dir, exist_ok=True)
-    except OSError:
-        error("Failed to create " + ff_addon_dir)
-        quit(1)
+    os.makedirs(ff_addon_dir, exist_ok=True)
 
     url: str = "https://addons.mozilla.org/api/v5/addons/addon/"
 
@@ -111,9 +107,22 @@ if __name__ == "__main__":
             error("Failed to find the addon id")
             quit(1)
 
-        try:
-            os.rename(addon_file, ff_addon_dir + "/" + id + ".xpi")
-        except OSError:
-            error("Failed to remove " + addon_file)
-            quit(1)
+        os.rename(addon_file, ff_addon_dir + "/" + id + ".xpi")
         shutil.rmtree(addon_dir)
+
+    # ff_tmp_dir = ff_addon_dir + "/tmp"
+    # os.makedirs(ff_addon_dir + "/")
+
+    # if not run(
+    #     "rsync",
+    #     "--archive",
+    #     "--ignore-existing",
+    #     ff_factory + "/",
+    #     profile_dir + "/",
+    # ):
+    #     error("Failed to copy files from " + ff_factory + " to " + profile_dir)
+    #     quit(1)
+
+    # if not run("firefox", "--first-startup", "--new-instance", "--profile", ff_tmp_dir):
+    #     error("Failed to generate a temporary Firefox profile with the generated extensions")
+    #     quit(1)
