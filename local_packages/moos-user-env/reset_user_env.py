@@ -41,7 +41,6 @@ if __name__ == "__main__":
     if not run(
         "rsync",
         "--archive",
-        "--ignore-existing",
         "--chown=" + user + ":" + user,
         env_factory + "/",
         home + "/",
@@ -80,7 +79,6 @@ if __name__ == "__main__":
     if not run(
         "rsync",
         "--archive",
-        "--ignore-existing",
         ff_factory + "/",
         profile_dir + "/",
     ):

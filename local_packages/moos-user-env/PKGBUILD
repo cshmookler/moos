@@ -34,7 +34,7 @@ source=(
     'gtk4-settings.ini'
     'firefox-user.js'
     'tor-browser-user.js'
-    'update_user_env.py'
+    'reset_user_env.py'
     'ff_addons.py'
 )
 sha256sums=(
@@ -45,8 +45,8 @@ sha256sums=(
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'f61cf6ce1e4a232c285b32a0aaa6d22e6da4341aa2337c247da26fb971e7ad65'
-    'ddbae0abc7116ec9028272b1dbf4b05893d2d80a1903560daf371a434c99c23a'
-    'e028341da7a827b0db4d18a249a34475dfeeecd03f2adfede5b09f98e0996663'
+    '6dde9eece3fa18197ecdf08122527160f4e525d69b804c06aa150a642769fb1d'
+    '74265be3807b6f448d21212675a938df15131c69683c51d360d7228ac83419f5'
     '89f4f672eb799ae316720ca7737a50d51e7863ff9cd0a937f6e20c2f52270f2f'
 )
 _env_name="env"
@@ -72,5 +72,5 @@ package() {
     rsync --recursive --mkpath --ignore-existing "--chmod=D755,F644" "firefox/" "$_ff/"
     install -Dm644 "firefox-user.js" "$_ff/user.js"
 
-    install -Dm755 "update_user_env.py" "$pkgdir/usr/bin/update_user_env"
+    install -Dm755 "reset_user_env.py" "$pkgdir/usr/bin/reset_user_env"
 }
