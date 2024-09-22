@@ -14,22 +14,21 @@ def run(*args, cwd: str | None = None) -> bool:
 
 
 if __name__ == "__main__":
-    home = os.path.expanduser("~")
     user = getpass.getuser()
-    env_factory = "/etc/user_env/env"
+    ff_factory = "/etc/user_env/firefox"
+    ff_conf_dir = "/etc/firefox"
 
-    if user == "root":
-        error("Running this script as root is prohibited")
+    if user != "root":
+        error("This script must be run as root")
         quit(1)
 
     if not run(
         "rsync",
         "--archive",
-        "--chown=" + user + ":" + user,
-        env_factory + "/",
-        home + "/",
+        ff_factory + "/",
+        ff_conf_dir + "/"
     ):
-        error("Failed to copy files from " + env_factory + " to " + home)
+        error("Failed to copy files from " + ff_factory + " to " + ff_conf_dir)
         quit(1)
 
-    print("Successfully updated the environment for " + user)
+    print("Successfully updated the global firefox policies")

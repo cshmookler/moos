@@ -1,0 +1,59 @@
+{
+    "policies": {
+        "AutofillAddressEnabled": false,
+        "AutofillCreditCardEnabled": false,
+        "DownloadDirectory": "${home}/downloads",
+        "DisableAccounts": true,
+        "DisableFirefoxStudies": true,
+        "DisableFormHistory": true,
+        "DisablePasswordReveal": true,
+        "DisablePocket": true,
+        "DisableTelemetry": true,
+        "DisplayBookmarksToolbar": "never",
+        "DNSOverHTTPS": {
+            "Enabled": true,
+            "Fallback": false
+        },
+        "DontCheckDefaultBrowser": true,
+        "EnableTrackingProtection": {
+            "Value": true,
+            "Cryptomining": true,
+            "Fingerprinting": true,
+            "EmailTracking": true
+        },
+        "FirefoxSuggest": {
+            "WebSuggestions": false,
+            "SponsoredSuggestions": false,
+            "ImproveSuggest": false
+        },
+        "Homepage": {
+            "URL": "about:blank",
+            "StartPage": "none"
+        },
+        "HttpsOnlyMode": "enabled",
+        "NetworkPrediction": false,
+        "NewTabPage": false,
+        "NoDefaultBookmarks": true,
+        "OfferToSaveLoginsDefault": false,
+        "OverrideFirstRunPage": "about:blank",
+        "OverridePostUpdatePage": "about:blank",
+        "PasswordManagerEnabled": false,
+        "PopupBlocking": {
+            "Default": true
+        },
+        "PostQuantumKeyAgreementEnabled": true,
+        "PromptForDownloadLocation": true,
+        "SanitizeOnShutdown": true,
+        "SearchSuggestEnabled": false,
+        "ShowHomeButton": false,
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "FeatureRecommendations": false,
+            "UrlbarInterventions": false,
+            "SkipOnboarding": false,
+            "MoreFromMozilla": false,
+            "FirefoxLabs": false
+        },
+        "UseSystemPrintDialog": false
+    }
+}

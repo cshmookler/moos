@@ -1,15 +1,10 @@
 pkgname='moos-user-env'
-pkgver=20240916
+pkgver=20240922
 pkgrel=1
 pkgdesc='Default user environment for MOOS.'
 arch=('any')
 groups=('moos')
 options=('!debug')
-makedepends=(
-    'python'
-    'curl'
-    'unzip'
-)
 depends=(
     'xorg-xinit'
     'xorg-xset'
@@ -18,8 +13,9 @@ depends=(
     'qt5-styleplugins'
     'qt6gtk2'
     'breeze-gtk'
+    'python'
+    'curl'
     'rsync'
-    'firefox'
     'moos-dwm'
     'moos-fonts'
     'moos-slock'
@@ -32,45 +28,45 @@ source=(
     '.gtkrc-2.0'
     'gtk3-settings.ini'
     'gtk4-settings.ini'
-    'firefox-user.js'
-    'tor-browser-user.js'
+    'tb-user.js'
+    'ff-policies.json'
+    'ff_extensions.py'
     'reset_user_env.py'
-    'ff_addons.py'
+    'reset_firefox_policies.py'
 )
 sha256sums=(
     '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
     '47ec861cf7fbbeb9851607fc95e6a6288813dec65421c9e756c2fa85042ccc24'
-    '1e87c4c5d74fe53108c628222a7a471829eebccbcfcdf74d91746bc815b40958'
+    'a2b934394ce932b50bba5560295725b171cc781834b3a8617b8cade884b39e49'
     '18fc70fc443362ec32257804ceb561a3ae3eaff9a39e01ee79c9f115303c3001'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
-    'f61cf6ce1e4a232c285b32a0aaa6d22e6da4341aa2337c247da26fb971e7ad65'
     '6dde9eece3fa18197ecdf08122527160f4e525d69b804c06aa150a642769fb1d'
-    '74265be3807b6f448d21212675a938df15131c69683c51d360d7228ac83419f5'
-    '89f4f672eb799ae316720ca7737a50d51e7863ff9cd0a937f6e20c2f52270f2f'
+    'a38a89aceed7e8e328db1d41768bea2b40f6b0044fba5ef51131f49a340fe21e'
+    '630b43b8cfb026cc24810a06c4a28d8b07108f172dc69d95e4206fbad2233d4d'
+    '192f68e7f3b5773b8f2f3dfb4fedfd19b9d36e3f00acbd28d3506bf810ae241b'
+    'e93098bd1262ba8df74645b44942cf65ee92a2a26f1c4708f99b6a8c3cf6097f'
 )
-_env_name="env"
-_ff_name="firefox"
 
 build() {
-    python ff_addons.py "$srcdir/$_ff_name/extensions"
+    python ff_extensions.py "$srcdir/ff-policies.json" "$srcdir/firefox"
 }
 
 package() {
     _factory="$pkgdir/etc/user_env"
 
-    _env="$_factory/$_env_name"
+    _env="$_factory/env"
     install -Dm644 ".bash_profile" "$_env/.bash_profile"
     install -Dm644 ".bashrc" "$_env/.bashrc"
     install -Dm644 ".xinitrc" "$_env/.xinitrc"
     install -Dm644 ".gtkrc-2.0" "$_env/.gtkrc-2.0"
     install -Dm644 "gtk3-settings.ini" "$_env/.config/gtk-3.0/settings.ini"
     install -Dm644 "gtk4-settings.ini" "$_env/.config/gtk-4.0/settings.ini"
-    install -Dm644 "tor-browser-user.js" "$_env/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
+    install -Dm644 "tb-user.js" "$_env/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
 
-    _ff="$_factory/$_ff_name"
-    rsync --recursive --mkpath --ignore-existing "--chmod=D755,F644" "firefox/" "$_ff/"
-    install -Dm644 "firefox-user.js" "$_ff/user.js"
+    _ff="$_factory/firefox"
+    rsync --recursive --mkpath "--chmod=D755,F644" "firefox/" "$_ff/"
 
     install -Dm755 "reset_user_env.py" "$pkgdir/usr/bin/reset_user_env"
+    install -Dm755 "reset_firefox_policies.py" "$pkgdir/usr/bin/reset_firefox_policies"
 }
