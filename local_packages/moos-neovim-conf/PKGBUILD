@@ -17,11 +17,15 @@ depends=(
     'vscode-html-languageserver' # HTML LSP
     'vscode-json-languageserver' # JSON LSP
     'vscode-css-languageserver'  # CSS LSP
+    'yaml-language-server'       # YAML LSP
     'eslint-language-server'     # JavaScript and TypeScript LSP
     'clang'                      # C++ LSP
     'lua-language-server'        # Lua LSP
+    'vim-language-server'        # VimScript LSP
     'jedi-language-server'       # Python LSP
     'bash-language-server'       # Bash LSP
+    'rust-analyzer'              # Rust LSP
+    'texlab'                     # LaTeX LSP
 )
 source=(
     'git+https://github.com/cshmookler/neovim_conf.git'
