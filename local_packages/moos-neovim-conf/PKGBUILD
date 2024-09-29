@@ -12,8 +12,10 @@ makedepends=(
 )
 depends=(
     'neovim'
+    'tree-sitter-cli'
     'moos-user-env'
-    'vivify'                     # Markdown and document viewer
+
+    # Language Server Protocol
     'vscode-html-languageserver' # HTML LSP
     'vscode-json-languageserver' # JSON LSP
     'vscode-css-languageserver'  # CSS LSP
@@ -26,6 +28,13 @@ depends=(
     'bash-language-server'       # Bash LSP
     'rust-analyzer'              # Rust LSP
     'texlab'                     # LaTeX LSP
+
+    # LaTeX
+    'texlive-basic'
+    'texlive-latex'
+    'texlive-latexrecommended'
+    'texlive-fontsrecommended'
+    'texlive-mathscience'
 )
 source=(
     'git+https://github.com/cshmookler/neovim_conf.git'
