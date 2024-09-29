@@ -51,7 +51,14 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 ## **TODO**
 
 - [X] Automatically setup the user environment.
-- [ ] Setup firefox and install extensions.
+- [X] Setup firefox and install extensions.
+- [X] Add a default neovim configuration.
+- [ ] Remove screen flicker when the screen is locked.
 - [ ] Install virtual machine utilities.
 - [ ] Enable the firewall.
+- [ ] Enable speach synthesis in Firefox.
+- [ ] Resolve issues with Zoom (cannot annotate and screen randomly turns black)
 - [ ] Improve documentation.
+- [ ] Replace pulseaudio with pipewire.
+- [ ] Replace Xorg with Wayland.
+- [ ] Provide options for other languages (aside from English).

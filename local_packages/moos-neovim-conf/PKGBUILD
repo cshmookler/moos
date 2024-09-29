@@ -1,0 +1,51 @@
+pkgname='moos-neovim-conf'
+pkgver=20240928
+pkgrel=1
+pkgdesc='Default Neovim configuration for MOOS.'
+arch=('any')
+groups=('moos')
+options=('!debug')
+makedepends=(
+    'git'
+    'aspell'
+    'aspell-en' # English is the default language.
+)
+depends=(
+    'neovim'
+    'moos-user-env'
+    'vivify'                     # Markdown and document viewer
+    'vscode-html-languageserver' # HTML LSP
+    'vscode-json-languageserver' # JSON LSP
+    'vscode-css-languageserver'  # CSS LSP
+    'eslint-language-server'     # JavaScript and TypeScript LSP
+    'clang'                      # C++ LSP
+    'lua-language-server'        # Lua LSP
+    'jedi-language-server'       # Python LSP
+    'bash-language-server'       # Bash LSP
+)
+source=(
+    'git+https://github.com/cshmookler/neovim_conf.git'
+)
+sha256sums=(
+    'SKIP'
+)
+_repo='neovim_conf'
+
+pkgver() {
+    cd "$_repo"
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    aspell --lang=en dump master | aspell --lang=en expand > "$srcdir/dict"
+}
+
+package() {
+    _env="$pkgdir/etc/user_env/env"
+    _conf="$_env/.config/nvim"
+    install -Dm644 "dict" "$_env/.local/share/nvim/dict"
+    install -Dm644 "$_repo/init.lua" "$_conf/init.lua"
+    install -Dm644 "$_repo/lazy-lock.json" "$_conf/lazy-lock.json"
+    rsync --recursive --mkpath "--chmod=D755,F644" "$_repo/lua/" "$_conf/lua/"
+    install -Dm644 "$_repo/README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

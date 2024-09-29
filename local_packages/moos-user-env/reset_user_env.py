@@ -32,4 +32,4 @@ if __name__ == "__main__":
         error("Failed to copy files from " + env_factory + " to " + home)
         quit(1)
 
-    print("Successfully updated the environment for " + user)
+    print("Successfully reset the environment for " + user)
