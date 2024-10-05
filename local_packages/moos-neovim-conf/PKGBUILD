@@ -1,5 +1,5 @@
 pkgname='moos-neovim-conf'
-pkgver=20240928
+pkgver=20240929
 pkgrel=1
 pkgdesc='Default Neovim configuration for MOOS.'
 arch=('any')
@@ -19,8 +19,8 @@ depends=(
     'vscode-html-languageserver' # HTML LSP
     'vscode-json-languageserver' # JSON LSP
     'vscode-css-languageserver'  # CSS LSP
+    'typescript-language-server' # JS/TS LSP
     'yaml-language-server'       # YAML LSP
-    'eslint-language-server'     # JavaScript and TypeScript LSP
     'clang'                      # C++ LSP
     'lua-language-server'        # Lua LSP
     'vim-language-server'        # VimScript LSP
@@ -28,6 +28,9 @@ depends=(
     'bash-language-server'       # Bash LSP
     'rust-analyzer'              # Rust LSP
     'texlab'                     # LaTeX LSP
+
+    # Formatters
+    'python-black'               # Python Formatter
 
     # LaTeX
     'texlive-basic'
