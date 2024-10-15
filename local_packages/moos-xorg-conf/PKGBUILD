@@ -1,20 +1,35 @@
 pkgname='moos-xorg-conf'
-pkgver=20240908
+pkgver=20241015
 pkgrel=1
 pkgdesc='Configuration for securing Xorg.'
 arch=('any')
 groups=('moos')
 options=('!debug')
 
-_xorg_config() {
+_xorg_secure_config() {
     echo 'Section "ServerFlags"'
-    echo '        Option "DontVTSwitch" "True"'
-    echo '        Option "DontZap" "True"'
+    echo '    Option "DontVTSwitch" "true"'
+    echo '    Option "DontZap" "true"'
+    echo 'EndSection'
+}
+
+_xorg_qol_config() {
+    echo '# Quality Of Life (QOL) settings'
+    echo ''
+    echo 'Section "InputClass"'
+    echo '    Identifier "libinput touchpad natural_scrolling"'
+    echo '    Driver "libinput"'
+    echo '    MatchIsTouchpad "on"'
+    echo '    Option "NaturalScrolling" "true"'
     echo 'EndSection'
 }
 
 package() {
-    CONF_NAME="10-secure.conf"
-    _xorg_config > "$CONF_NAME"
-    install -Dm644 "$CONF_NAME" "$pkgdir/etc/X11/xorg.conf.d/$CONF_NAME"
+    SECURE_CONF_NAME="10-secure.conf"
+    _xorg_secure_config > "$SECURE_CONF_NAME"
+    install -Dm644 "$SECURE_CONF_NAME" "$pkgdir/etc/X11/xorg.conf.d/$SECURE_CONF_NAME"
+
+    QOL_CONF_NAME="20-qol.conf"
+    _xorg_qol_config > "$QOL_CONF_NAME"
+    install -Dm644 "$QOL_CONF_NAME" "$pkgdir/etc/X11/xorg.conf.d/$QOL_CONF_NAME"
 }
