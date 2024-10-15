@@ -1,7 +1,7 @@
 pkgname='moos-fonts'
 pkgver=20240908
 pkgrel=1
-pkgdesc='Fonts expected to be install on MOOS'
+pkgdesc='Fonts expected to be install on MOOS.'
 arch=('any')
 groups=('moos')
 options=('!debug')

@@ -1,7 +1,7 @@
 pkgname='moos-xorg-conf'
 pkgver=20241015
 pkgrel=1
-pkgdesc='Configuration for securing Xorg.'
+pkgdesc='The default configuration for Xorg on MOOS.'
 arch=('any')
 groups=('moos')
 options=('!debug')
