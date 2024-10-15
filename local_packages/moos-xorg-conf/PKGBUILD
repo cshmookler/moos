@@ -17,10 +17,11 @@ _xorg_qol_config() {
     echo '# Quality Of Life (QOL) settings'
     echo ''
     echo 'Section "InputClass"'
-    echo '    Identifier "libinput touchpad natural_scrolling"'
+    echo '    Identifier "libinput touchpad qol"'
     echo '    Driver "libinput"'
     echo '    MatchIsTouchpad "on"'
     echo '    Option "NaturalScrolling" "true"'
+    echo '    Option "DisableWhileTyping" "false"'
     echo 'EndSection'
 }
 
