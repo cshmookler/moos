@@ -13,6 +13,8 @@ makedepends=(
 depends=(
     'neovim'
     'tree-sitter-cli'
+    'xsel'
+    'tinyxxd'
     'moos-user-env'
 
     # Language Server Protocol
@@ -28,9 +30,18 @@ depends=(
     'bash-language-server'       # Bash LSP
     'rust-analyzer'              # Rust LSP
     'texlab'                     # LaTeX LSP
+    'csharp-ls'                  # C# LSP
 
     # Formatters
     'python-black'               # Python Formatter
+
+    # Linters
+    'mypy'                       # Python Linter
+    'flake8'                     # Python Linter
+    'usort'                      # Python Linter
+
+    # Software Development Kits
+    'dotnet-sdk'                 # C# .NET SDK
 
     # LaTeX
     'texlive-basic'
