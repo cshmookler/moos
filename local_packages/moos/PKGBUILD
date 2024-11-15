@@ -53,6 +53,7 @@ depends=(
     'moos-xorg-conf'
     'moos-fonts'
     'moos-us-keys'
+    'moos-ansies'
     'moos-dwm'
     'moos-st'
     'moos-slock'
