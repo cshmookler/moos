@@ -1,5 +1,5 @@
 pkgname='moos'
-pkgver=20240914
+pkgver=20241124
 pkgrel=1
 pkgdesc='All required packages for a base MOOS installation.'
 arch=('any')
@@ -9,7 +9,7 @@ depends=(
     # Packages from the official repositories.
     'base'
     'base-devel'
-    'linux'
+    'linux-lts'
     'linux-firmware'
     'bash'
     'bash-completion'
