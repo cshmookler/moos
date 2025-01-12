@@ -1,5 +1,5 @@
 pkgname='moos'
-pkgver=20241124
+pkgver=20250112
 pkgrel=1
 pkgdesc='All required packages for a base MOOS installation.'
 arch=('any')
@@ -57,6 +57,7 @@ depends=(
     'moos-dwm'
     'moos-st'
     'moos-slock'
+    'moos-system-state'
     'moos-status-bar'
     'moos-special-keys'
     'moos-snap'

@@ -1,0 +1,43 @@
+pkgname='moos-system-state'
+pkgver=20250112
+pkgrel=1
+pkgdesc='C++ library for fetching and modifying the system state on MOOS (https://github.com/cshmookler/moos).'
+arch=('any')
+license=('Zlib')
+groups=('moos')
+options=('!debug')
+makedepends=(
+    'git'
+    'meson'
+    'gtest'
+)
+depends=(
+    'alsa-lib'
+)
+source=('git+https://github.com/cshmookler/system_state.git')
+sha256sums=('SKIP')
+_repo='system_state'
+
+pkgver() {
+    cd "$_repo"
+    cat "VERSION"
+}
+
+build() {
+    cd "$_repo"
+    arch-meson . build 
+    meson compile -C build 
+}
+
+# check() {
+#     # Testing fails if any features are invalid.
+#     cd "$_repo"
+#     meson test -C build 
+# }
+
+package() {
+    cd "$_repo"
+    meson install -C build --destdir "$pkgdir"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}
