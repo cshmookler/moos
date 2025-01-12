@@ -1,5 +1,5 @@
 pkgname='moos-special-keys'
-pkgver=20240817
+pkgver=0.3.0
 pkgrel=1
 pkgdesc='Provides functions for common special (multimedia) keys. Communicates with status_bar (https://github.com/cshmookler/status_bar) for instant visual feedback.'
 arch=('any')
@@ -13,8 +13,7 @@ makedepends=(
     'argparse'
 )
 depends=(
-    'alsa-lib'
-    'moos-status-bar'
+    'moos-system-state'
 )
 _service_name='special-keys-backlight'
 source=(
@@ -55,7 +54,7 @@ _removal_hook() {
 
 pkgver() {
     cd "$_repo"
-    git log -1 --date=format:"%Y%m%d" --format="%ad"
+    cat "VERSION"
 }
 
 build() {
