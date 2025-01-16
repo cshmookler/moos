@@ -1,3 +1,7 @@
 if test "$XDG_VTNR" -eq 1; then
+    echo 'Welcome to the MOOS live ISO!'
+    echo ''
+    echo 'The installer (auto_moos) is launched automatically.'
+    echo ''
     auto_moos
 fi
