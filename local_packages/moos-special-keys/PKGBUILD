@@ -1,5 +1,5 @@
 pkgname='moos-special-keys'
-pkgver=0.3.0
+pkgver=0.4.0
 pkgrel=1
 pkgdesc='Provides functions for common special (multimedia) keys. Communicates with status_bar (https://github.com/cshmookler/status_bar) for instant visual feedback.'
 arch=('any')
@@ -11,9 +11,11 @@ makedepends=(
     'meson'
     'gtest'
     'argparse'
+    'moos-cpp-result'
 )
 depends=(
     'moos-system-state'
+    'moos-status-bar'
 )
 _service_name='special-keys-backlight'
 source=(
