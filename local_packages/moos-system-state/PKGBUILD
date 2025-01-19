@@ -1,5 +1,5 @@
 pkgname='moos-system-state'
-pkgver=0.19.1
+pkgver=0.22.0
 pkgrel=1
 pkgdesc='C++ library for fetching and modifying the system state on MOOS (https://github.com/cshmookler/moos).'
 arch=('any')
@@ -10,6 +10,7 @@ makedepends=(
     'git'
     'meson'
     'gtest'
+    'moos-cpp-result'
 )
 depends=(
     'alsa-lib'
