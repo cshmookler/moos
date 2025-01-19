@@ -57,6 +57,7 @@ depends=(
     'moos-dwm'
     'moos-st'
     'moos-slock'
+    'moos-cpp-result'
     'moos-system-state'
     'moos-status-bar'
     'moos-special-keys'

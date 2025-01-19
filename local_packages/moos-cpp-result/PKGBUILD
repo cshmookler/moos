@@ -1,0 +1,39 @@
+pkgname='moos-cpp-result'
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='A compromise between error codes and exceptions. Contains result types with detailed error messages and stack traces.'
+arch=('any')
+license=('Zlib')
+groups=('moos')
+options=('!debug')
+makedepends=(
+    'git'
+    'meson'
+    'gtest'
+)
+source=('git+https://github.com/cshmookler/cpp_result.git')
+sha256sums=('SKIP')
+_repo='cpp_result'
+
+pkgver() {
+    cd "$_repo"
+    cat "VERSION"
+}
+
+build() {
+    cd "$_repo"
+    arch-meson . build 
+    meson compile -C build 
+}
+
+check() {
+    cd "$_repo"
+    meson test -C build 
+}
+
+package() {
+    cd "$_repo"
+    meson install -C build --destdir "$pkgdir"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+}
