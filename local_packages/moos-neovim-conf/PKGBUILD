@@ -1,5 +1,5 @@
 pkgname='moos-neovim-conf'
-pkgver=20250123
+pkgver=20250129
 pkgrel=1
 pkgdesc='Default Neovim configuration for MOOS.'
 arch=('any')
@@ -32,6 +32,7 @@ depends=(
     'texlab'                     # LaTeX LSP
     'csharp-ls'                  # C# LSP
     'openscad-lsp'               # OpenSCAD LSP
+    'verible-bin'                # SystemVerilog LSP
 
     # Formatters
     'python-black'               # Python Formatter
