@@ -1,7 +1,7 @@
-pkgname='moos-cpp-result'
-pkgver=1.1.0
+pkgname='moos-inotify-ipc'
+pkgver=0.2.0
 pkgrel=1
-pkgdesc='A compromise between error codes and exceptions. Contains result types with detailed error messages and stack traces.'
+pkgdesc='A socketless inter-process communication library for Linux.  Uses inotify (https://en.wikipedia.org/wiki/Inotify) to exchange messages between programs.'
 arch=('any')
 license=('Zlib')
 groups=('moos')
@@ -10,10 +10,11 @@ makedepends=(
     'git'
     'meson'
     'gtest'
+    'moos-cpp-result'
 )
-source=('git+https://github.com/cshmookler/cpp_result.git')
+source=('git+https://github.com/cshmookler/inotify_ipc.git')
 sha256sums=('SKIP')
-_repo='cpp_result'
+_repo='inotify_ipc'
 
 pkgver() {
     cd "$_repo"
