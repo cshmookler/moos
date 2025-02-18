@@ -43,9 +43,6 @@ depends=(
     'libvirt'              # Wrapper for QEMU
     'virt-manager'         # GUI for QEMU
     'virt-viewer'          # Advanced VM viewer for QEMU
-    'kicad'                # PCB design software
-    'kicad-library'        # Symbols and footprints for KiCAD
-    'kicad-library-3d'     # 3D component models for KiCAD
 
     # Packages from the AUR.
     'yay'                  # AUR helper
