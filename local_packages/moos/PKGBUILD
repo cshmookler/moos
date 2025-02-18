@@ -57,7 +57,6 @@ depends=(
     'moos-xorg-conf'       # Global configuration for the X server.
     'moos-fonts'           # Required fonts.
     'moos-us-keys'         # Custom US-style keyboard layout.
-    'moos-ansies'          # ANSI escape codes for C++.
     'moos-dwm'             # Window manager (runs under the X server).
     'moos-st'              # Terminal emulator.
     'moos-slock'           # Screen locker.
