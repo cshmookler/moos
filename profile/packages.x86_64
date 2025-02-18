@@ -4,7 +4,7 @@ bash-completion
 cloud-init
 hyperv
 less
-linux
+linux-lts
 linux-firmware
 man-db
 man-pages
