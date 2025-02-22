@@ -1,5 +1,5 @@
 pkgname='moos-neovim-conf'
-pkgver=20250129
+pkgver=20250222
 pkgrel=1
 pkgdesc='Default Neovim configuration for MOOS.'
 arch=('any')
@@ -14,9 +14,9 @@ depends=(
     'neovim'
     'tree-sitter-cli'
     'xsel'
-    'tinyxxd'
     'moos-user-env'
-
+)
+optdepends=(
     # Language Server Protocol
     'vscode-html-languageserver' # HTML LSP
     'vscode-json-languageserver' # JSON LSP
@@ -33,7 +33,7 @@ depends=(
     'csharp-ls'                  # C# LSP
     'openscad-lsp'               # OpenSCAD LSP
     'verible-bin'                # SystemVerilog LSP
-
+    
     # Formatters
     'python-black'               # Python Formatter
 
@@ -51,6 +51,9 @@ depends=(
     'texlive-latexrecommended'
     'texlive-fontsrecommended'
     'texlive-mathscience'
+
+    # Other
+    'tinyxxd'                    # Binary file viewer
 )
 source=(
     'git+https://github.com/cshmookler/neovim_conf.git'
