@@ -1,0 +1,33 @@
+_random() {
+    value=''
+    for i in {1..9}; do
+        value="$((RANDOM % 10))$value"
+    done
+    echo $value
+}
+
+_ssh_config() {
+    echo "Port $(((10#$(_random) % 50000) + 10000))                # Non-standard port"
+    echo "PermitRootLogin no        # Never allow remote root login"
+    echo "MaxAuthTries 3            # Prevent more than three consecutive login attempts"
+    echo "MaxSessions 3             # Disallow more than three concurrent sessions"
+    echo "PubkeyAuthentication yes  # Allow login via public key authentication"
+    echo "PasswordAuthentication no # Never login with clear text passwords"
+    echo "PermitEmptyPasswords no   # empty password == no password (extremely insecure)"
+    echo "Banner none               # OS-specific banners are too easily identifiable"
+}
+
+_conf_name="10-secure.conf"
+_conf_path="/etc/ssh/sshd_config.d/$_conf_name"
+
+post_install() {
+    _ssh_config > "$_conf_path"
+}
+
+post_upgrade() {
+    _ssh_config > "$_conf_path"
+}
+
+pre_remove() {
+    rm "$_conf_path"
+}
