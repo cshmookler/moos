@@ -51,4 +51,5 @@ depends=(
     'moos-cpp-result'        # Rust-like result types for C++.
     # 'moos-inotify-ipc'       # Socketless inter-process communication.
     'moos-system-state'      # System state fetcher and modifier.
+    'moos-run'               # Scripts for quickly executing code.
 )
