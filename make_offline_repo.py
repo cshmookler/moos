@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
-from argparse import ArgumentParser, Namespace
 import atexit
-from colorama import Fore, Style
-import time
-from typing import Any, Callable, Dict, List, Optional
+import os
 import shutil
 import subprocess
-import os
+import time
+from argparse import ArgumentParser, Namespace
+from typing import Any, Callable, Dict, List, Optional
+
+from colorama import Fore, Style
 
 
 # General utilities
@@ -135,26 +136,41 @@ class PackageBuilder:
             return False
         name = str(name)
 
-        # Get package dependencies
-        dependencies = get(
+        # Get required package dependencies
+        dependencies_str = get(
             "bash",
             "-ec",
             "source " + self.build_dir.path + "/PKGBUILD;"
             "echo ${makedepends[@]%:*};"
             "echo ${checkdepends[@]%:*};"
-            "echo ${depends[@]%:*};"
-            "echo ${optdepends[@]%:*};",
+            "echo ${depends[@]%:*};",
         )
-        if dependencies == None:
-            error("Error: Failed to read package dependencies")
+        if dependencies_str == None:
+            error("Error: Failed to read the required package dependencies")
             return False
-        dependencies = str(dependencies).split()
+        dependencies = str(dependencies_str).split()
 
-        # Handle package dependencies
+        # Get optional package dependencies
+        optional_dependencies_str = get(
+            "bash",
+            "-ec",
+            "source " + self.build_dir.path + "/PKGBUILD; echo ${optdepends[@]%:*};",
+        )
+        if optional_dependencies_str == None:
+            error("Error: Failed to read the optional package dependencies")
+            return False
+        optional_dependencies = str(optional_dependencies_str).split()
+
+        # Handle required package dependencies
         for dep in dependencies:
             if not dep_handler(dep):
                 error("Error: Failed to handle dependency for: " + name)
                 return False
+
+        # Handle required package dependencies
+        for dep in optional_dependencies:
+            if not dep_handler(dep):
+                error("Error: Failed to handle optional dependency for: " + name)
 
         # makepkg requires that the PKGBUILD be in the working directory.
         if not cd(self.build_dir.path):
@@ -252,9 +268,7 @@ class PackageRepoMaker:
             "https://aur.archlinux.org/" + package + ".git",
         )
 
-    def _get_makepkg_env(
-        self, build_dir: str, cache_dir: str
-    ) -> Dict[str, str]:
+    def _get_makepkg_env(self, build_dir: str, cache_dir: str) -> Dict[str, str]:
         makepkg_env = os.environ.copy()
         makepkg_env["SRCDEST"] = build_dir
         makepkg_env["SRCPKGDEST"] = build_dir
@@ -276,9 +290,7 @@ class PackageRepoMaker:
             return False
 
         cache_dir: str = package_builder.build_dir.path if install else self.dst
-        makepkg_env = self._get_makepkg_env(
-            package_builder.build_dir.path, cache_dir
-        )
+        makepkg_env = self._get_makepkg_env(package_builder.build_dir.path, cache_dir)
 
         result: bool = package_builder.build(
             self.add_package_dependency, makepkg_env, install=install
@@ -299,9 +311,7 @@ class PackageRepoMaker:
             return False
 
         cache_dir: str = package_builder.build_dir.path if install else self.dst
-        makepkg_env = self._get_makepkg_env(
-            package_builder.build_dir.path, cache_dir
-        )
+        makepkg_env = self._get_makepkg_env(package_builder.build_dir.path, cache_dir)
 
         result: bool = package_builder.build(
             self.add_package_dependency,
@@ -413,7 +423,7 @@ if __name__ == "__main__":
     package_repo_name: str = "offline"
 
     # Which packages are being added to the repository?
-    packages = ["moos"]
+    packages = ["moos", "moos-xorg", "moos-auto-moos", "syslinux"]
 
     # Who is building the packages in this package database?
     packager_name: Optional[str] = get("git", "config", "get", "user.name")
