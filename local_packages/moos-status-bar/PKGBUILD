@@ -9,11 +9,11 @@ makedepends=(
     'git'
     'meson'
     'gtest'
-    'fmt'
     'argparse'
 )
 depends=(
     'libx11'
+    'fmt'
     'alsa-lib'
 )
 provides=('slstatus')
