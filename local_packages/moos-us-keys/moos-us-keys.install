@@ -29,6 +29,10 @@ post_install() {
     _set_layout 'us_moos'
 }
 
+post_upgrade() {
+    _set_layout 'us_moos'
+}
+
 pre_remove() {
     _set_layout 'us'
 }
