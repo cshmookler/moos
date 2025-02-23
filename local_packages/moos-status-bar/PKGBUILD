@@ -9,6 +9,7 @@ makedepends=(
     'git'
     'meson'
     'gtest'
+    'fmt'
     'argparse'
 )
 depends=(
