@@ -422,9 +422,6 @@ if __name__ == "__main__":
     # The package repository name.
     package_repo_name: str = "offline"
 
-    # Which packages are being added to the repository?
-    packages = ["moos", "moos-xorg", "moos-auto-moos", "syslinux"]
-
     # Who is building the packages in this package database?
     packager_name: Optional[str] = get("git", "config", "get", "user.name")
     if not packager_name:
@@ -435,7 +432,7 @@ if __name__ == "__main__":
     packager_email: Optional[str] = get("git", "config", "get", "user.email")
     if not packager_email:
         error(
-            "Error: Packager email not found. Set the 'user.email' field in your Git configuration"
+            "Error: Packager email not found. Set the 'user.email' field in your Git configuration."
         )
         quit(1)
     packager: str = packager_name + " <" + packager_email + ">"
@@ -446,6 +443,20 @@ if __name__ == "__main__":
     profile_dir: str = work_dir + "/profile"
     db_dir: str = work_dir + "/offline_db"
     offline_repo_dir: str = profile_dir + "/airootfs/offline"
+
+    live_iso_packages: Optional[str] = get("cat", profile_dir + "/packages.x86_64")
+    if not live_iso_packages:
+        error("Error: Failed to get the list of packages installed on the live ISO.")
+        quit(1)
+
+    # Which additional packages are being added to the repository?
+    extra_packages: list[str] = ["moos", "moos-xorg", "moos-sshd-conf"]
+
+    # Construct a list of all packages to add to the repository.
+    packages: list[str] = extra_packages
+    for pkg in live_iso_packages.split():
+        if pkg not in packages:
+            packages.append(pkg)
 
     # Make a package repository containing the specified packages and place it in the profile directory.
     if not make_repo(

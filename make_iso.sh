@@ -10,24 +10,17 @@ error() {
 
 THIS_DIR=$(pwd)
 PROFILE_DIR="$THIS_DIR/profile"
-WORK_DIR="$THIS_DIR/build/work"
-OUT_DIR="$THIS_DIR/build"
+WORK_DIR="$THIS_DIR/work"
+OUT_DIR="$THIS_DIR/out"
 
 _pacman_conf() {
     echo "[options]"
     echo "HoldPkg = pacman glibc"
     echo "Architecture = auto"
     echo "SigLevel = Never"
-    echo "ParallelDownloads = 5"
     echo ""
     echo "[offline]"
     echo "Server = file://$PROFILE_DIR/airootfs/offline/"
-    echo ""
-    echo "[core]"
-    echo "Include = /etc/pacman.d/mirrorlist"
-    echo ""
-    echo "[extra]"
-    echo "Include = /etc/pacman.d/mirrorlist"
 }
 
 if ! _pacman_conf > "$PROFILE_DIR/pacman.conf"; then
@@ -52,7 +45,7 @@ _sshd_config() {
     echo "PermitEmptyPasswords yes"
 }
 
-if ! _sshd_config > "$PROFILE_DIR/airootfs/etc/ssh/sshd_config.d/10-archiso.conf"; then
+if ! _sshd_config > "$PROFILE_DIR/airootfs/etc/ssh/sshd_config.d/10-moosiso.conf"; then
     error "Failed to generate custom pacman.conf"
     exit 1
 fi

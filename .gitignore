@@ -1,5 +1,6 @@
 profile/pacman.conf
-profile/airootfs/etc/ssh/sshd_config.d/10-archiso.conf
+profile/airootfs/etc/ssh/sshd_config.d/10-moosiso.conf
 profile/airootfs/offline/*
 offline_db/
-build/
+work/
+out/

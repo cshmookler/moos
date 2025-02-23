@@ -1,6 +1,6 @@
 PRESETS=('archiso')
 
 ALL_kver='/boot/vmlinuz-linux-lts'
-archiso_config='/etc/mkinitcpio.conf.d/archiso.conf'
+archiso_config='/etc/mkinitcpio.conf.d/moosiso.conf'
 
 archiso_image="/boot/initramfs-linux-lts.img"
