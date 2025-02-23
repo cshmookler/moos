@@ -1,4 +1,5 @@
 {
+    "headless": false,
     "network_install": false,
     "min_device_bytes": 10000000000,
     "device": null,
