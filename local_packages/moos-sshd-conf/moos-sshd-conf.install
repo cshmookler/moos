@@ -6,7 +6,7 @@ _random() {
     echo $value
 }
 
-_ssh_config() {
+_sshd_config() {
     echo "Port $(((10#$(_random) % 50000) + 10000))                # Non-standard port"
     echo "PermitRootLogin no        # Never allow remote root login"
     echo "MaxAuthTries 3            # Prevent more than three consecutive login attempts"
@@ -21,11 +21,11 @@ _conf_name="10-secure.conf"
 _conf_path="/etc/ssh/sshd_config.d/$_conf_name"
 
 post_install() {
-    _ssh_config > "$_conf_path"
+    _sshd_config > "$_conf_path"
 }
 
 post_upgrade() {
-    _ssh_config > "$_conf_path"
+    _sshd_config > "$_conf_path"
 }
 
 pre_remove() {
