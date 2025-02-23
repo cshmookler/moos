@@ -1,0 +1,34 @@
+pkgname='moos-xorg'
+pkgver=20250222
+pkgrel=1
+pkgdesc='All required packages for a graphical MOOS installation with Xorg.'
+arch=('any')
+options=('!debug')
+depends=(
+    # Base packages.
+    'moos'
+
+    # Packages from the official repositories.
+    $(pacman -Sgq 'xorg')    # X server and related utilities
+    'xorg-xinit'             # Allow users to manually start the X server
+    'ffmpeg'                 # AV manipulation + player (ffplay)
+    'vlc'                    # AV dedicated player
+    'firefox'                # Normal browser
+    'torbrowser-launcher'    # TOR browser
+    'qemu-full'              # Virtual machines
+    'libvirt'                # Wrapper for QEMU
+    'virt-manager'           # GUI for QEMU
+    'virt-viewer'            # Advanced VM viewer for QEMU
+
+    # Packages made specifically for MOOS.
+    'moos-xorg-conf'         # Global configuration for the X server.
+    'moos-fonts'             # Required fonts.
+    'moos-dwm'               # Window manager (runs under the X server).
+    'moos-st'                # Terminal emulator.
+    'moos-slock'             # Screen locker.
+    'moos-status-bar'        # Status bar for DWM.
+    'moos-special-keys'      # Functions for common multimedia keys.  # TODO: Replace with system_state and DWM.
+    'moos-snap'              # Simple screenshot utility.
+    'moos-user-env'          # Default user environment.
+    'moos-neovim-conf'       # Custom Neovim configuration.
+)

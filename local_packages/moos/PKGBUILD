@@ -1,71 +1,54 @@
 pkgname='moos'
-pkgver=20250112
+pkgver=20250222
 pkgrel=1
 pkgdesc='All required packages for a base MOOS installation.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 depends=(
     # Packages from the official repositories.
-    'base'                 # All necessary packages for a base Arch Linux installation
-    'base-devel'           # Basic development tools (gcc, fakeroot, make, makepkg)
-    'linux-lts'            # The latest stable version of the Linux kernel
-    'linux-firmware'       # Additional firmware for the Linux kernel
-    'bash'                 # A basic shell                #TODO: Replace with ZSH
-    'bash-completion'      # Auto-completion for bash
-    'man-db'               # Documentation for programs and functions
-    'man-pages'            # POSIX documentation
-    'curl'                 # Send network requests from the command line.
-    'git'                  # Version control
-    'zip'                  # ZIP archive maker
-    'unzip'                # ZIP archive extractor
-    'python'               # Python 3.x interpreter
-    'python-virtualenv'    # Python environment generator/duplicator
-    'htop'                 # Alternative to 'top'
-    'ufw'                  # Firewall management
-    'borg'                 # Data archival utility
-    'openssh'              # SSH client and server
-    'neovim'               # Text editor and IDE
-    'networkmanager'       # Network management (wired and wireless)
-    'alsa-utils'           # ALSA (Linux sound) utilities
-    'bluez'                # Bluetooth support
-    'bluez-utils'          # Bluetooth cmdline utilities
-    'pulseaudio'           # Audio multiplexing
-    'pulseaudio-alsa'      # ALSA support for PulseAudio
-    'pulseaudio-bluetooth' # Bluetooth support for PulseAudio
-    $(pacman -Sgq 'xorg')  # X server and related utilities
-    'xorg-xinit'           # Allow users to manually start the X server
-    'ffmpeg'               # AV manipulation + player (ffplay)
-    'vlc'                  # AV dedicated player
-    'firefox'              # Normal browser
-    'torbrowser-launcher'  # TOR browser
-    'qemu-full'            # Virtual machines
-    'libvirt'              # Wrapper for QEMU
-    'virt-manager'         # GUI for QEMU
-    'virt-viewer'          # Advanced VM viewer for QEMU
+    'base'                   # All necessary packages for a base Arch Linux installation
+    'base-devel'             # Basic development tools (gcc, fakeroot, make, makepkg)
+    'linux-lts'              # The latest stable version of the Linux kernel
+    'linux-firmware'         # Additional firmware for the Linux kernel
+    'hyperv'                 # Hyper-V tools
+    'open-vm-tools'          # VMware tools
+    'qemu-guest-agent'       # QEMU Guest Agent tools
+    'virtualbox-guest-utils' # Virtualbox Guest userspace utilities
+    'mkinitcpio'             # Initramfs creation utility
+    'mkinitcpio-archiso'     # Initcpio scripts used by archiso
+    'bash'                   # A basic shell                #TODO: Replace with ZSH
+    'bash-completion'        # Auto-completion for bash
+    'man-db'                 # Documentation for programs and functions
+    'man-pages'              # POSIX documentation
+    'curl'                   # Send network requests from the command line.
+    'git'                    # Version control
+    'zip'                    # ZIP archive maker
+    'unzip'                  # ZIP archive extractor
+    'python'                 # Python 3.x interpreter
+    'python-virtualenv'      # Python environment generator/duplicator
+    'htop'                   # Alternative to 'top'
+    'ufw'                    # Firewall management
+    'borg'                   # Data archival utility
+    'openssh'                # SSH client and server
+    'neovim'                 # Text editor and IDE
+    'networkmanager'         # Network management (wired and wireless)
+    'alsa-utils'             # ALSA (Linux sound) utilities
+    'bluez'                  # Bluetooth support
+    'bluez-utils'            # Bluetooth cmdline utilities
+    'pulseaudio'             # Audio multiplexing
+    'pulseaudio-alsa'        # ALSA support for PulseAudio
+    'pulseaudio-bluetooth'   # Bluetooth support for PulseAudio
 
     # Packages from the AUR.
-    'yay'                  # AUR helper
-    'neovim-symlinks'      # System-wide aliases for nvim (Neovim)
-    'python-result'        # Dep of auto_moos.py
+    'yay'                    # AUR helper
+    'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
 
     # Packages made specifically for MOOS.
-    'moos-filesystem'      # Replacement for 'filesystem' in 'base'
-    'moos-auto-moos'       # Automatic installer for MOOS.
-    'moos-auto-limine'     # Automatic boot loader installer for Arch Linux.
-    'moos-sshd-conf'       # Security enhancement for SSH server.
-    'moos-xorg-conf'       # Global configuration for the X server.
-    'moos-fonts'           # Required fonts.
-    'moos-us-keys'         # Custom US-style keyboard layout.
-    'moos-dwm'             # Window manager (runs under the X server).
-    'moos-st'              # Terminal emulator.
-    'moos-slock'           # Screen locker.
-    'moos-cpp-result'      # Rust-like result types for C++.
-    'moos-inotify-ipc'     # Socketless inter-process communication.
-    'moos-system-state'    # System state fetcher and modifier.
-    'moos-status-bar'      # Status bar for DWM.
-    'moos-special-keys'    # Functions for common multimedia keys.  # TODO: Replace with system_state and DWM.
-    'moos-snap'            # Simple screenshot utility.
-    'moos-user-env'        # Default user environment.
-    'moos-neovim-conf'     # Custom Neovim configuration.
+    'moos-filesystem'        # Replacement for 'filesystem' in 'base'
+    'moos-auto-limine'       # Automatic boot loader installer for Arch Linux.
+    'moos-sshd-conf'         # Security enhancement for SSH server.
+    'moos-us-keys'           # Custom US-style keyboard layout.
+    'moos-cpp-result'        # Rust-like result types for C++.
+    # 'moos-inotify-ipc'       # Socketless inter-process communication.
+    'moos-system-state'      # System state fetcher and modifier.
 )
