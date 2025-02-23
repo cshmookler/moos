@@ -1,4 +1,5 @@
 profile/airootfs/offline/*
+profile/pacman.conf
 offline_db/
 work/
 iso/
