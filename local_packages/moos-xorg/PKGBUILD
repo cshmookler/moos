@@ -21,7 +21,6 @@ depends=(
     'virt-viewer'            # Advanced VM viewer for QEMU
 
     # Packages made specifically for MOOS.
-    'moos-xorg-conf'         # Global configuration for the X server.
     'moos-fonts'             # Required fonts.
     'moos-dwm'               # Window manager (runs under the X server).
     'moos-st'                # Terminal emulator.
@@ -32,3 +31,16 @@ depends=(
     'moos-user-env'          # Default user environment.
     'moos-neovim-conf'       # Custom Neovim configuration.
 )
+source=(
+    '10-secure.conf'
+    '20-qol.conf'
+)
+sha256sums=(
+    'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
+    '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
+)
+
+package() {
+    install -Dm644 "10-secure.conf" "$pkgdir/etc/X11/xorg.conf.d/10-secure.conf"
+    install -Dm644 "20-qol.conf" "$pkgdir/etc/X11/xorg.conf.d/20-qol.conf"
+}
