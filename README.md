@@ -53,6 +53,7 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 - [X] Automatically setup the user environment.
 - [X] Setup firefox and install extensions.
 - [X] Add a default neovim configuration.
+- [X] Allow remote login through SSH in the live ISO.
 - [ ] Remove screen flicker when the screen is locked.
 - [ ] Install virtual machine utilities.
 - [ ] Enable the firewall.

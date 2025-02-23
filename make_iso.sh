@@ -10,10 +10,10 @@ error() {
 
 THIS_DIR=$(pwd)
 PROFILE_DIR="$THIS_DIR/profile"
-WORK_DIR="$THIS_DIR/work"
-OUT_DIR="$THIS_DIR/iso"
+WORK_DIR="$THIS_DIR/build/work"
+OUT_DIR="$THIS_DIR/build"
 
-pacman_conf() {
+_pacman_conf() {
     echo "[options]"
     echo "HoldPkg = pacman glibc"
     echo "Architecture = auto"
@@ -30,7 +30,29 @@ pacman_conf() {
     echo "Include = /etc/pacman.d/mirrorlist"
 }
 
-if ! pacman_conf > "$PROFILE_DIR/pacman.conf"; then
+if ! _pacman_conf > "$PROFILE_DIR/pacman.conf"; then
+    error "Failed to generate custom pacman.conf"
+    exit 1
+fi
+
+_random() {
+    value=''
+    for i in {1..9}; do
+        value="$((RANDOM % 10))$value"
+    done
+    echo $value
+}
+
+_sshd_port=$(((10#$(_random) % 50000) + 10000))
+
+_sshd_config() {
+    echo "Port $_sshd_port"
+    echo "PermitRootLogin yes"
+    echo "PasswordAuthentication yes"
+    echo "PermitEmptyPasswords yes"
+}
+
+if ! _sshd_config > "$PROFILE_DIR/airootfs/etc/ssh/sshd_config.d/10-archiso.conf"; then
     error "Failed to generate custom pacman.conf"
     exit 1
 fi
@@ -41,4 +63,5 @@ if ! sudo mkarchiso -v -r -w "$WORK_DIR" -o "$OUT_DIR" "$PROFILE_DIR"; then
 fi
 
 success "ISO construction succeeded"
+success "SSH Port: $_sshd_port"
 exit 0
