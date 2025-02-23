@@ -3,7 +3,6 @@ pkgver=20250222
 pkgrel=1
 pkgdesc='Default Neovim configuration for MOOS.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

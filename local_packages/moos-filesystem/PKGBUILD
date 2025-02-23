@@ -14,7 +14,6 @@ pkgrel=1
 pkgdesc='Filesystem structure and base files for MOOS.'
 arch=('any')
 license=('GPL-3.0-or-later')
-groups=('moos')
 options=('!debug')
 depends=('iana-etc')
 provides=("filesystem=$pkgver-$pkgrel")

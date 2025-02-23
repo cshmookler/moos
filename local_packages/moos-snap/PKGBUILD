@@ -3,7 +3,6 @@ pkgver=20240908
 pkgrel=1
 pkgdesc='A simple wrapper for maim.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 depends=('maim')
 source=('snap')

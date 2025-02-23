@@ -1,10 +1,9 @@
 pkgname='moos-system-state'
-pkgver=0.22.0
+pkgver=0.23.0
 pkgrel=1
 pkgdesc='C++ library for fetching and modifying the system state on MOOS (https://github.com/cshmookler/moos).'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

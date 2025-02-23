@@ -3,7 +3,6 @@ pkgver=20240914
 pkgrel=1
 pkgdesc='A custom us-derived keyboard layout.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 source=(
     'tty_us_moos.map.gz'

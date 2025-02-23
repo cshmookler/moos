@@ -17,7 +17,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -60,12 +60,12 @@ static const char *termcmd[]           = { "st", NULL };
 static const char *torbrowsercmd[]     = { "torbrowser-launcher", NULL };
 static const char *firefoxbrowsercmd[] = { "firefox", NULL };
 static const char *officecmd[]         = { "libreoffice", NULL };
+static const char *lockcmd[]           = { "slock", NULL };
 static const char *volumetogglecmd[]   = { "special_keys", "playback", "toggle", NULL };
 static const char *volumedowncmd[]     = { "special_keys", "playback", "-5", NULL };
 static const char *volumeupcmd[]       = { "special_keys", "playback", "+5", NULL };
 static const char *backlightdowncmd[]  = { "special_keys", "backlight", "-5", NULL };
 static const char *backlightupcmd[]    = { "special_keys", "backlight", "+5", NULL };
-static const char *lockcmd[]           = { "slock", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key                       function        argument */
@@ -74,6 +74,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_o,                     spawn,          {.v = torbrowsercmd } },
 	{ MODKEY|ShiftMask,             XK_f,                     spawn,          {.v = firefoxbrowsercmd } },
 	{ MODKEY|ShiftMask,             XK_l,                     spawn,          {.v = officecmd } },
+	{ MODKEY|ShiftMask,             XK_x,                     spawn,          {.v = lockcmd } },
 	{ NoEventMask,                  XF86XK_AudioMute,         spawn,          {.v = volumetogglecmd } },
 	{ NoEventMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volumedowncmd } },
 	{ NoEventMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volumeupcmd } },
@@ -103,6 +104,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_1,                                     0)
 	TAGKEYS(                        XK_2,                                     1)
 	TAGKEYS(                        XK_3,                                     2)
+	TAGKEYS(                        XK_4,                                     3)
+	TAGKEYS(                        XK_5,                                     4)
 	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} },
 };
 

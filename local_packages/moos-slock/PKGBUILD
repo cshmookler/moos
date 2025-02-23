@@ -5,7 +5,6 @@ pkgdesc='Patched simple display locker for X.'
 arch=('any')
 url='https://tools.suckless.org/slock'
 license=('MIT')
-groups=('moos')
 options=(
     'zipman'
     '!debug'

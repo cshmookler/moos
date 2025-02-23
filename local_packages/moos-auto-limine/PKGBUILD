@@ -3,7 +3,6 @@ pkgver=20240907
 pkgrel=1
 pkgdesc='Automatically installs Limine (https://limine-bootloader.org/) on BIOS and UEFI systems.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 makedepends=('git')
 depends=(

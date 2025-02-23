@@ -1,11 +1,10 @@
 pkgname='moos-dwm'
-pkgver=20240914
+pkgver=20241028
 pkgrel=1
 pkgdesc='Patched dynamic window manager for X.'
 arch=('any')
 url='https://tools.suckless.org/dwm/'
 license=('MIT')
-groups=('moos')
 options=(
     'zipman'
     '!debug'
@@ -29,7 +28,7 @@ source=(
 sha256sums=(
     'SKIP'
     '2e773dd4f276e2485dd40dd13180322519503c5bea66c639115e39bc72033010'
-    '367067190c53d198f52f86bea6e7792cec161a05c805ac96227d4a322dfe4e5e'
+    '4ccb814d2634c648b806a18df85dade1bb13ec1677d6bc0fbdf99a20a455aaa5'
 )
 _repo='dwm'
 

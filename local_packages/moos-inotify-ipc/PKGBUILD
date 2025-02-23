@@ -4,7 +4,6 @@ pkgrel=1
 pkgdesc='A socketless inter-process communication library for Linux.  Uses inotify (https://en.wikipedia.org/wiki/Inotify) to exchange messages between programs.'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

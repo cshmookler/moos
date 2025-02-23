@@ -4,7 +4,6 @@ pkgrel=1
 pkgdesc='A header-only C++ library for using ANSI escape sequences. Supported on Windows and Unix-like operating systems.'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

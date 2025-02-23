@@ -1,10 +1,9 @@
 pkgname='moos-auto-moos'
-pkgver=20240908
+pkgver=20250116
 pkgrel=1
 pkgdesc='Automatically installs MOOS (https://github.com/cshmookler/moos) on a device.'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 depends=(
     'git'

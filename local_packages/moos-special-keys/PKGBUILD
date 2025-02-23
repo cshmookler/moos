@@ -4,7 +4,6 @@ pkgrel=1
 pkgdesc='Provides functions for common special (multimedia) keys. Communicates with status_bar (https://github.com/cshmookler/status_bar) for instant visual feedback.'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

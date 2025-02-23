@@ -4,7 +4,6 @@ pkgrel=1
 pkgdesc='Status bar for dwm (https://dwm.suckless.org). Customizable at runtime and updates instantly.'
 arch=('any')
 license=('Zlib')
-groups=('moos')
 options=('!debug')
 makedepends=(
     'git'

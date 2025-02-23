@@ -5,7 +5,6 @@ pkgdesc='Patched simple terminal for X'
 arch=('any')
 url='https://st.suckless.org'
 license=('MIT')
-groups=('moos')
 options=(
     'zipman'
     '!debug'
