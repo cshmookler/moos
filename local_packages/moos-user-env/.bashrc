@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Use the same theme for QT as with GTK
-export QT_QPA_PLATFORMTHEME="gtk2"
+export QT_QPA_PLATFORMTHEME='gtk2'
 
 # Prompts
 PS0=''

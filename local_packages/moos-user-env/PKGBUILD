@@ -1,9 +1,8 @@
 pkgname='moos-user-env'
-pkgver=20240928
+pkgver=20250113
 pkgrel=1
 pkgdesc='Default user environment for MOOS.'
 arch=('any')
-groups=('moos')
 options=('!debug')
 depends=(
     'xorg-xinit'
@@ -36,7 +35,7 @@ source=(
 )
 sha256sums=(
     '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
-    '47ec861cf7fbbeb9851607fc95e6a6288813dec65421c9e756c2fa85042ccc24'
+    '61934632ed4a70fc85dbc4bf22aad3bf3344fa4d23e4ef58c51ec504f288e4c0'
     'a2b934394ce932b50bba5560295725b171cc781834b3a8617b8cade884b39e49'
     '18fc70fc443362ec32257804ceb561a3ae3eaff9a39e01ee79c9f115303c3001'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
