@@ -18,6 +18,7 @@ pacman_conf() {
     echo "HoldPkg = pacman glibc"
     echo "Architecture = auto"
     echo "SigLevel = Never"
+    echo "ParallelDownloads = 5"
     echo ""
     echo "[offline]"
     echo "Server = file://$PROFILE_DIR/airootfs/offline/"
