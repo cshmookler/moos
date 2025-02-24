@@ -31,6 +31,7 @@ depends=(
     'ufw'                    # Firewall management
     'borg'                   # Data archival utility
     'openssh'                # SSH client and server
+    'hostapd'                # Daemon for using a WiFi interface as an access point.
     'neovim'                 # Text editor and IDE
     'networkmanager'         # Network management (wired and wireless)
     'alsa-utils'             # ALSA (Linux sound) utilities
