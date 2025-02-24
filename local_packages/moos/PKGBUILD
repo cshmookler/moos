@@ -31,7 +31,6 @@ depends=(
     'ufw'                    # Firewall management
     'borg'                   # Data archival utility
     'openssh'                # SSH client and server
-    'hostapd'                # Daemon for using a WiFi interface as an access point.
     'neovim'                 # Text editor and IDE
     'networkmanager'         # Network management (wired and wireless)
     'alsa-utils'             # ALSA (Linux sound) utilities
@@ -44,6 +43,7 @@ depends=(
     # Packages from the AUR.
     'yay'                    # AUR helper
     'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
+    'linux-wifi-hotspot'     # Program for creating a WiFi hotspot
 
     # Packages made specifically for MOOS.
     'moos-filesystem'        # Replacement for 'filesystem' in 'base'
