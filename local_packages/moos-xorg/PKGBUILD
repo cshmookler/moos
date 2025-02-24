@@ -27,9 +27,10 @@ depends=(
     'moos-slock'             # Screen locker.
     'moos-status-bar'        # Status bar for DWM.
     'moos-special-keys'      # Functions for common multimedia keys.  # TODO: Replace with system_state and DWM.
-    'moos-snap'              # Simple screenshot utility.
+    'moos-us-keys-xorg'      # Custom US-style keyboard layout for Xorg.
     'moos-user-env'          # Default user environment.
     'moos-neovim-conf'       # Custom Neovim configuration.
+    'moos-snap'              # Simple screenshot utility.
 )
 source=(
     '10-secure.conf'

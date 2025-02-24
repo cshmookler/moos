@@ -1,0 +1,23 @@
+_tty_keyboard_conf() {
+    echo '# Written by systemd-localed(8) or systemd-firstboot(1), read by systemd-localed'
+    echo '# and systemd-vconsole-setup(8). Use localectl(1) to update this file.'
+    echo 'KEYMAP='"$1"
+    echo 'XKBLAYOUT='"$1"
+}
+
+_set_layout() {
+    _tty_keyboard_conf "$1" > '/etc/vconsole.conf'
+    loadkeys "$1"
+}
+
+post_install() {
+    _set_layout 'us_moos'
+}
+
+post_upgrade() {
+    _set_layout 'us_moos'
+}
+
+pre_remove() {
+    _set_layout 'us'
+}
