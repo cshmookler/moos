@@ -54,6 +54,7 @@ depends=(
 
     # Other
     'tinyxxd'                    # Binary file viewer
+    'npm'                        # Package manager for JacaScript
 )
 source=(
     'git+https://github.com/cshmookler/neovim_conf.git'
