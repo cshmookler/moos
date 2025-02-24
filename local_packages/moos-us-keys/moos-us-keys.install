@@ -21,8 +21,6 @@ _set_layout() {
     _x_keyboard_conf "$1" > '/etc/X11/xorg.conf.d/00-keyboard.conf'
     loadkeys "$1"
     setxkbmap "$1"
-    localectl --no-convert set-keymap "$1"
-    localectl --no-convert set-x11-keymap "$1"
 }
 
 post_install() {
