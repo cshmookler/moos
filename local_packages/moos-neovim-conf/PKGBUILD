@@ -10,12 +10,13 @@ makedepends=(
     'aspell-en' # English is the default language.
 )
 depends=(
+    # Required packages
     'neovim'
+    'neovim-symlinks'
     'tree-sitter-cli'
     'xsel'
     'moos-user-env'
-)
-optdepends=(
+
     # Language Server Protocol
     'vscode-html-languageserver' # HTML LSP
     'vscode-json-languageserver' # JSON LSP
