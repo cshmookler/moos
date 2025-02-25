@@ -43,7 +43,6 @@ depends=(
     # Packages from the AUR.
     'yay'                    # AUR helper
     'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
-    'linux-wifi-hotspot'     # Program for creating a WiFi hotspot
 
     # Packages made specifically for MOOS.
     'moos-filesystem'        # Replacement for 'filesystem' in 'base'
