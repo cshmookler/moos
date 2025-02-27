@@ -33,6 +33,7 @@ depends=(
     'openssh'                # SSH client and server
     'neovim'                 # Text editor and IDE
     'networkmanager'         # Network management (wired and wireless)
+    'dnsmasq'                # Required by network manager to create hotspots
     'alsa-utils'             # ALSA (Linux sound) utilities
     'bluez'                  # Bluetooth support
     'bluez-utils'            # Bluetooth cmdline utilities
