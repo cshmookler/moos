@@ -55,7 +55,8 @@ _hotspot_password=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10)
 _hotspot_conf() {
     echo "[Unit]"
     echo "Description=Create a WiFi hotspot (Access Point) with NetworkManager"
-    echo "Wants=NetworkManager.service"
+    echo "Requires=NetworkManager.service"
+    echo "After=NetworkManager.service"
     echo ""
     echo "[Service]"
     echo "Type=oneshot"
