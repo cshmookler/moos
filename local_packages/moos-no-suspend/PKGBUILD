@@ -1,0 +1,16 @@
+pkgname='moos-no-suspend'
+pkgver=20250227
+pkgrel=1
+pkgdesc='Prevents the system from suspending.'
+arch=('any')
+options=('!debug')
+source=(
+    'no-suspend.conf'
+)
+sha256sums=(
+    '17ea3cafdfa2575a94d36e7328148bc5da28bb4833e16bc4a474f8dcdc2b73df'
+)
+
+package() {
+    install -Dm644 "no-suspend.conf" "$pkgdir/etc/systemd/logind.conf.d/no-suspend.conf"
+}
