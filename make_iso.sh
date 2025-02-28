@@ -79,8 +79,8 @@ if ! sudo mkarchiso -v -r -w "$WORK_DIR" -o "$OUT_DIR" "$PROFILE_DIR"; then
     exit 1
 fi
 
-echo "$_hotspot_password" > "$OUT_DIR/hotspot_password"
-echo "$_sshd_port" > "$OUT_DIR/ssh_port"
+echo "$_hotspot_password" | sudo tee "$OUT_DIR/hotspot_password"
+echo "$_sshd_port" | sudo tee "$OUT_DIR/ssh_port"
 
 success "ISO construction succeeded"
 success "WiFi Hotspot Password: $_hotspot_password"

@@ -1,11 +1,12 @@
 [Unit]
 Description=Create a WiFi hotspot (Access Point) with NetworkManager
-Wants=NetworkManager.service
+Requires=NetworkManager.service
+After=NetworkManager.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/env bash -c '(nmcli connection show moos-hotspot && nmcli connection delete moos-hotspot) || true'
-ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name moos-hotspot ssid moos-live password "yUU6lzpJF6"'
+ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name moos-hotspot ssid moos-live password "4wJNcJiIyZ"'
 ExecStart=/usr/bin/env bash -c 'nmcli connection modify moos-hotspot connection.autoconnect yes'
 ExecStart=/usr/bin/env bash -c 'nmcli connection up moos-hotspot'
 
