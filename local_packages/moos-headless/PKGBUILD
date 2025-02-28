@@ -1,0 +1,17 @@
+pkgname='moos-headless'
+pkgver=20250227
+pkgrel=1
+pkgdesc='All required packages for a headless MOOS installation.'
+arch=('any')
+options=('!debug')
+depends=(
+    # Base packages.
+    'moos'
+
+    # Packages from the official repositories.
+    # TODO: Add official headless-specific packages
+
+    # Packages made specifically for MOOS.
+    'moos-no-suspend'
+    'moos-hotspot'
+)

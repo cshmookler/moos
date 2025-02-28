@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import atexit
 import os
@@ -450,7 +450,7 @@ if __name__ == "__main__":
         quit(1)
 
     # Which additional packages are being added to the repository?
-    extra_packages: list[str] = ["moos", "moos-xorg", "moos-sshd-conf"]
+    extra_packages: list[str] = ["moos", "moos-xorg", "moos-headless", "moos-sshd-conf"]
 
     # Construct a list of all packages to add to the repository.
     packages: list[str] = extra_packages

@@ -9,6 +9,5 @@
     "root_password": "root",
     "username": "main",
     "user_password": "main",
-    "sudo_group": "wheel",
-    "restart": false
+    "sudo_group": "wheel"
 }
