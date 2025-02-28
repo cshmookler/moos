@@ -48,12 +48,56 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 ./make_iso.sh
 ```
 
+### 6.&nbsp; Troubleshooting
+
+A discrepancy between packages installed globally on your system and the version placed into the offline repository may cause the 'make_iso.sh' script to fail.
+
+#### Example:
+
+```
+:: File /var/cache/pacman/pkg/moos-filesystem-2024.09.14-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/yay-12.4.2-1-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/neovim-symlinks-5-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/moos-cpp-result-1.1.2-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/moos-system-state-0.23.0-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/moos-us-keys-tty-20250222-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/moos-run-20241106-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+:: File /var/cache/pacman/pkg/moos-20250222-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
+Do you want to delete it? [Y/n] 
+error: failed to commit transaction (invalid or corrupted package)
+Errors occurred, no packages were upgraded.
+==> ERROR: Failed to install packages to new root
+Error: ISO construction failed.
+```
+
+#### Fix:
+
+Delete the 'work' directory.
+
+```bash
+sudo rm -rf work
+```
+
+Re-run the 'make_iso.sh' script.  The issue should resolve itself.
+
+```bash
+./make_iso.sh
+```
+
 ## **TODO**
 
 - [X] Automatically setup the user environment.
 - [X] Setup firefox and install extensions.
 - [X] Add a default neovim configuration.
 - [X] Allow remote login through SSH in the live ISO.
+- [X] Automatically create a hotspot when running in headless mode.
 - [ ] Remove screen flicker when the screen is locked.
 - [X] Install virtual machine utilities.
 - [ ] Enable the firewall.

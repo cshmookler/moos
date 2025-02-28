@@ -1,5 +1,5 @@
 profile/pacman.conf
-profile/airootfs/etc/systemd/system/moos_hotspot.service
+profile/airootfs/etc/systemd/system/moos-hotspot.service
 profile/airootfs/etc/ssh/sshd_config.d/10-moosiso.conf
 profile/airootfs/offline/*
 offline_db/
