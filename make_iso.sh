@@ -63,6 +63,7 @@ _hotspot_conf() {
     echo "ExecStart=/usr/bin/env bash -c '(nmcli connection show moos-hotspot && nmcli connection delete moos-hotspot) || true'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name moos-hotspot ssid moos-live password \"$_hotspot_password\"'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify moos-hotspot connection.autoconnect yes'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify moos-hotspot ipv4.addresses 10.0.0.1/24'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli connection up moos-hotspot'"
     echo ""
     echo "[Install]"

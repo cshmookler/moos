@@ -21,6 +21,7 @@ _hotspot_conf() {
     echo "ExecStart=/usr/bin/env bash -c '(nmcli connection show \"$_con_name\" && nmcli connection delete \"$_con_name\") || true'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name \"$_con_name\" ssid \$(cat /etc/$pkgname/ssid) password \$(cat /etc/$pkgname/password)'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"$_con_name\" connection.autoconnect yes'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"$_con_name\" ipv4.addresses 10.0.0.1/24'"
     echo "ExecStart=/usr/bin/env bash -c 'nmcli connection up \"$_con_name\"'"
     echo ""
     echo "[Install]"
