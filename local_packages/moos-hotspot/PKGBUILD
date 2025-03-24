@@ -61,11 +61,11 @@ package() {
 
     # Create the file that contains the hotspot SSID.
     # If this file is empty or missing, the hostname is the hotspot SSID.
-    echo "$_ssid" > "ssid"
+    printf "$_ssid" > "ssid"
     install -Dm644 "ssid" "$pkgdir/etc/$pkgname/ssid"
 
     # Create the file that contains the hotspot password.
-    echo "$_password" > "password"
+    printf "$_password" > "password"
     install -Dm644 "password" "$pkgdir/etc/$pkgname/password"
 
     # Install the post-installation and pre-removal pacman hooks.
