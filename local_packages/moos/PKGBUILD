@@ -34,6 +34,8 @@ depends=(
     'neovim'                 # Text editor and IDE
     'networkmanager'         # Network management (wired and wireless)
     'dnsmasq'                # Required by network manager to create hotspots
+    'macchanger'             # MAC address spoofer
+    'nmap'                   # Network discovery
     'alsa-utils'             # ALSA (Linux sound) utilities
     'bluez'                  # Bluetooth support
     'bluez-utils'            # Bluetooth cmdline utilities
