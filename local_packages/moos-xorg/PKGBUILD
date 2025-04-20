@@ -40,7 +40,7 @@ source=(
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
     '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
-    '1a542811cac8cba1edf1c36eb013a6b8699269984e5d5a4177fcb5377cf04109'
+    '2da034ab896dbfa256c2e72b5c684809dba7cfb4202ef0f5c7dfc9718d4c2b9b'
 )
 
 package() {
