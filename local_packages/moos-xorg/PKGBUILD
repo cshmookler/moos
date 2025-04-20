@@ -35,16 +35,13 @@ depends=(
 source=(
     '10-secure.conf'
     '20-qol.conf'
-    '30-tear-free.conf'
 )
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
     '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
-    '2da034ab896dbfa256c2e72b5c684809dba7cfb4202ef0f5c7dfc9718d4c2b9b'
 )
 
 package() {
     install -Dm644 "10-secure.conf" "$pkgdir/etc/X11/xorg.conf.d/10-secure.conf"
     install -Dm644 "20-qol.conf" "$pkgdir/etc/X11/xorg.conf.d/20-qol.conf"
-    install -Dm644 "30-tear-free.conf" "$pkgdir/etc/X11/xorg.conf.d/30-tear-free.conf"
 }
