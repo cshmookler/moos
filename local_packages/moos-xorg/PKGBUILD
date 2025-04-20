@@ -1,5 +1,5 @@
 pkgname='moos-xorg'
-pkgver=20250222
+pkgver=20250419
 pkgrel=1
 pkgdesc='All required packages for a graphical MOOS installation with Xorg.'
 arch=('any')
@@ -35,13 +35,16 @@ depends=(
 source=(
     '10-secure.conf'
     '20-qol.conf'
+    '30-tear-free.conf'
 )
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
-    '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
+    '8b7584d13a41ffac3502d1d6e5cb117c7bb394e38b3f37438c4680c2dec463d7'
+    '1b000dbf99090b26475a326a3a8d3ceafe4b539c31f1b5053ba09afc8849a64c'
 )
 
 package() {
     install -Dm644 "10-secure.conf" "$pkgdir/etc/X11/xorg.conf.d/10-secure.conf"
     install -Dm644 "20-qol.conf" "$pkgdir/etc/X11/xorg.conf.d/20-qol.conf"
+    install -Dm644 "30-tear-free.conf" "$pkgdir/etc/X11/xorg.conf.d/30-tear-free.conf"
 }
