@@ -1,5 +1,5 @@
 pkgname='moos-hotspot'
-pkgver=20250502
+pkgver=20250503
 pkgrel=1
 pkgdesc='Creates a WiFi hotspot (Access Point) that connects automatically.'
 arch=('any')
@@ -18,12 +18,12 @@ _hotspot_conf() {
     echo ""
     echo "[Service]"
     echo "Type=oneshot"
-    echo "ExecStart=/usr/bin/env bash -c '(nmcli connection show \"$_con_name\" && nmcli connection delete \"$_con_name\") || true'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name \"$_con_name\" ssid \$((test -s /etc/$pkgname/ssid && cat /etc/$pkgname/ssid) || cat /etc/hostname) password \$(cat /etc/$pkgname/password)'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"$_con_name\" connection.autoconnect yes'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"$_con_name\" connection.autoconnect-priority 999'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"$_con_name\" ipv4.addresses 10.0.0.1/24'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection up \"$_con_name\"'"
+    echo "ExecStart=/usr/bin/env bash -c '(nmcli connection show \\\"$_con_name\\\" && nmcli connection delete \\\"$_con_name\\\") || true'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name \\\"$_con_name\\\" ssid \\\"\$((test -s /etc/$pkgname/ssid && cat /etc/$pkgname/ssid) || cat /etc/hostname)\\\" password \\\"\$(cat /etc/$pkgname/password)\\\"'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" connection.autoconnect yes'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" connection.autoconnect-priority 999'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" ipv4.addresses 10.0.0.1/24'"
+    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection up \\\"$_con_name\\\"'"
     echo ""
     echo "[Install]"
     echo "WantedBy=multi-user.target"
