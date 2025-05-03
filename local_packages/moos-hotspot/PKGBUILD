@@ -1,5 +1,5 @@
 pkgname='moos-hotspot'
-pkgver=20250323
+pkgver=20250502
 pkgrel=1
 pkgdesc='Creates a WiFi hotspot (Access Point) that connects automatically.'
 arch=('any')
@@ -29,32 +29,6 @@ _hotspot_conf() {
     echo "WantedBy=multi-user.target"
 }
 
-_install_hook() {
-    echo "[Trigger]"
-    echo "Operation = Install"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Enabling $_service_name service..."
-    echo "When = PostTransaction"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/systemctl enable $_service_name.service"
-}
-
-_removal_hook() {
-    echo "[Trigger]"
-    echo "Operation = Remove"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Disabling the $_service_name service..."
-    echo "When = PreTransaction"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/systemctl disable $_service_name.service"
-}
-
 package() {
     # Install the systemd service that creates and updates the hotspot.
     _hotspot_conf > "$_service_name.service"
@@ -69,12 +43,4 @@ package() {
     printf "$_password" > "password"
     # Only root can read this file.
     install -Dm600 "password" "$pkgdir/etc/$pkgname/password"
-
-    # Install the post-installation and pre-removal pacman hooks.
-    INSTALL_HOOK="$pkgname-install.hook"
-    REMOVAL_HOOK="$pkgname-removal.hook"
-    _install_hook > "$INSTALL_HOOK"
-    _removal_hook > "$REMOVAL_HOOK"
-    install -Dm644 "$INSTALL_HOOK" "$pkgdir/etc/pacman.d/hooks/$INSTALL_HOOK"
-    install -Dm644 "$REMOVAL_HOOK" "$pkgdir/etc/pacman.d/hooks/$REMOVAL_HOOK"
 }
