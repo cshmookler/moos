@@ -8,7 +8,7 @@ options=('!debug')
 _service_name="moos-hotspot"
 _con_name="moos-hotspot"
 _ssid="" # By default, use the hostname instead of a custom SSID.
-_password=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10)
+_password=$(tr -dc '[:graph:]' </dev/urandom | head -c 10)
 
 _hotspot_conf() {
     echo "[Unit]"
