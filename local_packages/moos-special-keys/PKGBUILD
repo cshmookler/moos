@@ -27,32 +27,6 @@ sha256sums=(
 )
 _repo='special_keys'
 
-_install_hook() {
-    echo "[Trigger]"
-    echo "Operation = Install"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Enabling $_service_name service..."
-    echo "When = PostTransaction"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/systemctl enable $_service_name.service"
-}
-
-_removal_hook() {
-    echo "[Trigger]"
-    echo "Operation = Remove"
-    echo "Type = Package"
-    echo "Target = $pkgname"
-    echo ""
-    echo "[Action]"
-    echo "Description = Disabling the $_service_name service..."
-    echo "When = PreTransaction"
-    echo "Depends = systemd"
-    echo "Exec = /usr/bin/systemctl disable $_service_name.service"
-}
-
 pkgver() {
     cd "$_repo"
     cat "VERSION"
@@ -79,12 +53,4 @@ package() {
 
     # Install the systemd service.
     install -Dm644 "$srcdir/$_service_name.service" "$pkgdir/etc/systemd/system/$_service_name.service"
-
-    # Install the post-installation and pre-removal pacman hooks.
-    INSTALL_HOOK="$pkgname-install.hook"
-    REMOVAL_HOOK="$pkgname-removal.hook"
-    _install_hook > "$INSTALL_HOOK"
-    _removal_hook > "$REMOVAL_HOOK"
-    install -Dm644 "$INSTALL_HOOK" "$pkgdir/etc/pacman.d/hooks/$INSTALL_HOOK"
-    install -Dm644 "$REMOVAL_HOOK" "$pkgdir/etc/pacman.d/hooks/$REMOVAL_HOOK"
 }
