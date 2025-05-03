@@ -50,7 +50,7 @@ if ! _sshd_conf > "$PROFILE_DIR/airootfs/etc/ssh/sshd_config.d/10-moosiso.conf";
     exit 1
 fi
 
-_hotspot_password=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10)
+_hotspot_password=$(tr -dc '[:graph:]' </dev/urandom | head -c 10)
 
 _hotspot_conf() {
     echo "[Unit]"
