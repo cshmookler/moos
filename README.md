@@ -10,13 +10,19 @@ Releases will be available after version 1.0.0. For now, follow the instructions
 
 An existing MOOS or Arch Linux installation is required to build a MOOS live ISO from source.
 
-### 1.&nbsp; Install the following required packages on your existing installation
+### 1.&nbsp; Update your system
+
+```bash
+sudo pacman -Syyu
+```
+
+### 2.&nbsp; Install the following required packages on your existing installation
 
 ```bash
 sudo pacman -S base-devel archiso git python
 ```
 
-### 2.&nbsp; Register your name and email with Git
+### 3.&nbsp; Register your name and email with Git
 
 Some packages may need to be built from scratch using makepkg. Your name and email are used to identify you as the packager.
 
@@ -27,14 +33,14 @@ git config set user.name "FirstName LastName"
 git config set user.email "email@example.com"
 ```
 
-### 3.&nbsp; Clone this repository with Git
+### 4.&nbsp; Clone this repository with Git
 
 ```bash
 git clone https://github.com/cshmookler/moos.git
 cd moos
 ```
 
-### 4.&nbsp; Make the offline package repository
+### 5.&nbsp; Make the offline package repository
 
 The installer built into the MOOS live ISO is capable of working entirely offline. All necessary packages must be downloaded in advance and placed within the filesystem of the live ISO.
 
@@ -42,13 +48,13 @@ The installer built into the MOOS live ISO is capable of working entirely offlin
 ./make_offline_repo.py
 ```
 
-### 5.&nbsp; Make the live ISO
+### 6.&nbsp; Make the live ISO
 
 ```bash
 ./make_iso.sh
 ```
 
-### 6.&nbsp; Troubleshooting
+### 7.&nbsp; Troubleshooting
 
 A discrepancy between packages installed globally on your system and the version placed into the offline repository may cause the 'make_iso.sh' script to fail.
 
