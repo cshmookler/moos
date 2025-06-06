@@ -16,6 +16,7 @@ depends=(
     'tree-sitter-cli'
     'xsel'
     'moos-user-env'
+    'rsync'
 
     # Language Server Protocol
     'vscode-html-languageserver' # HTML LSP
