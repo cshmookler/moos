@@ -1,5 +1,5 @@
 pkgname="moos-us-keys-xorg"
-pkgver=20250222
+pkgver=20250618
 pkgrel=1
 pkgdesc='A custom US-style keyboard layout for Xorg.'
 arch=('any')
@@ -17,5 +17,5 @@ sha256sums=(
 install="$pkgname.install"
 
 package() {
-    install -Dm644 "x_us_moos" "$pkgdir/usr/share/X11/xkb/symbols/us_moos"
+    install -Dm644 "x_us_moos" "$pkgdir/usr/share/xkeyboard-config-2/symbols/us_moos"
 }
