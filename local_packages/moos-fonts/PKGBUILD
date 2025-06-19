@@ -1,11 +1,12 @@
 pkgname='moos-fonts'
-pkgver=20240908
+pkgver=20250618
 pkgrel=1
 pkgdesc='Fonts expected to be install on MOOS.'
 arch=('any')
 options=('!debug')
 depends=(
     'ttf-hack-nerd'
+    'ttf-liberation'
     'noto-fonts'
     'noto-fonts-emoji'
     'noto-fonts-cjk'
