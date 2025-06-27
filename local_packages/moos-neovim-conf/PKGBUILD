@@ -44,7 +44,7 @@ depends=(
     'usort'                      # Python Linter
 
     # Software Development Kits
-    'dotnet-sdk'                 # C# .NET SDK
+    'dotnet-sdk-bin'                 # C# .NET SDK
 
     # LaTeX
     'texlive-basic'
