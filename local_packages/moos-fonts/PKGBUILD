@@ -1,5 +1,5 @@
 pkgname='moos-fonts'
-pkgver=20250618
+pkgver=20250713
 pkgrel=1
 pkgdesc='Fonts expected to be install on MOOS.'
 arch=('any')
@@ -9,6 +9,7 @@ depends=(
     'ttf-liberation'
     'noto-fonts'
     'noto-fonts-emoji'
+    'noto-color-emoji-fontconfig'
     'noto-fonts-cjk'
     'noto-fonts-extra'
 )
