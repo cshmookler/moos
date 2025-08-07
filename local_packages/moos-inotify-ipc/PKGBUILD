@@ -1,5 +1,5 @@
 pkgname='moos-inotify-ipc'
-pkgver=0.2.0
+pkgver=1.2.0
 pkgrel=1
 pkgdesc='A socketless inter-process communication library for Linux.  Uses inotify (https://en.wikipedia.org/wiki/Inotify) to exchange messages between programs.'
 arch=('any')
