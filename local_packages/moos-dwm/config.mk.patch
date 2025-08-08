@@ -1,0 +1,11 @@
+--- config.mk	2025-08-07 04:30:13.727124219 -0600
++++ config.patch.mk	2025-08-07 04:31:16.404658130 -0600
+@@ -23,7 +23,7 @@
+ 
+ # includes and libs
+ INCS = -I${X11INC} -I${FREETYPEINC}
+-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
++LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lsystem_state -lstatus_bar_notify
+ 
+ # flags
+ CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}

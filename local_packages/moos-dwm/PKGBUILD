@@ -1,5 +1,5 @@
 pkgname='moos-dwm'
-pkgver=20241028
+pkgver=20250807
 pkgrel=1
 pkgdesc='Patched dynamic window manager for X.'
 arch=('any')
@@ -16,31 +16,30 @@ depends=(
     'libxft'
     'dmenu'
     'moos-fonts'
-    'moos-special-keys'
+    'moos-system-state'
+    'moos-status-bar'
 )
 provides=('dwm')
 conflicts=('dwm')
 source=(
     'git+https://git.suckless.org/dwm'
     'dwm.c.patch'
+    'config.mk.patch'
     'config.h'
 )
 sha256sums=(
     'SKIP'
     '2e773dd4f276e2485dd40dd13180322519503c5bea66c639115e39bc72033010'
-    '4ccb814d2634c648b806a18df85dade1bb13ec1677d6bc0fbdf99a20a455aaa5'
+    '8749849723cb05bcc0c3c34b189220767387c65039504432851ac33558a98bf6'
+    '34f7d7d96582259139d6324b5bcfd3f3e4bfedac159ce75c23edaa3e3bc81b71'
 )
 _repo='dwm'
 
 prepare() {
     cd "$_repo"
     patch < "$srcdir/dwm.c.patch"
+    patch < "$srcdir/config.mk.patch"
     cp "$srcdir/config.h" .
-}
-
-pkgver() {
-    cd "$_repo"
-    git log -1 --date=format:"%Y%m%d" --format="%ad"
 }
 
 build() {

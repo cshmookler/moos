@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <system_state/system_state.h>
+#include <status_bar/notify.h>
+
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -61,11 +64,67 @@ static const char *torbrowsercmd[]     = { "torbrowser-launcher", NULL };
 static const char *firefoxbrowsercmd[] = { "firefox", NULL };
 static const char *officecmd[]         = { "libreoffice", NULL };
 static const char *lockcmd[]           = { "slock", NULL };
-static const char *volumetogglecmd[]   = { "special_keys", "playback", "toggle", NULL };
-static const char *volumedowncmd[]     = { "special_keys", "playback", "-5", NULL };
-static const char *volumeupcmd[]       = { "special_keys", "playback", "+5", NULL };
-static const char *backlightdowncmd[]  = { "special_keys", "backlight", "-5", NULL };
-static const char *backlightupcmd[]    = { "special_keys", "backlight", "+5", NULL };
+
+void soundaction(const Arg *arg) {
+    syst_sound_mixer_t* sound_mixer = syst_get_sound_mixer(NULL);
+
+    syst_sound_control_list_t* sound_control_list = syst_sound_mixer_get_controls(sound_mixer, NULL);
+    unsigned long sound_control_count = syst_sound_control_list_get_size(sound_control_list, NULL);
+    for (unsigned long idx = 0; idx < sound_control_count; ++idx) {
+        syst_sound_control_t* sound_control = syst_sound_control_list_get(sound_control_list, idx, NULL);
+        ((void (*)(syst_sound_control_t*))(arg->v))(sound_control);
+    }
+
+    syst_sound_control_list_free(sound_control_list);
+    syst_sound_mixer_free(sound_mixer);
+
+    sbar_notify((sbar_top_field_t)(sbar_top_field_audio_playback | sbar_top_field_audio_capture), NULL);
+}
+
+void soundplaybackstatustoggle(syst_sound_control_t* sound_control) {
+    if (syst_sound_control_has_playback_status(sound_control, NULL)) {
+        syst_sound_control_toggle_playback_status(sound_control, NULL);
+    }
+}
+
+void soundplaybackvolumedown(syst_sound_control_t* sound_control) {
+    if (syst_sound_control_has_playback_status(sound_control, NULL)) {
+        syst_sound_control_set_playback_volume_all_relative(sound_control, -5, NULL);
+    }
+}
+
+void soundplaybackvolumeup(syst_sound_control_t* sound_control) {
+    if (syst_sound_control_has_playback_status(sound_control, NULL)) {
+        syst_sound_control_set_playback_volume_all_relative(sound_control, 5, NULL);
+    }
+}
+
+void soundcapturestatustoggle(syst_sound_control_t* sound_control) {
+    if (syst_sound_control_has_capture_status(sound_control, NULL)) {
+        syst_sound_control_toggle_capture_status(sound_control, NULL);
+    }
+}
+
+void backlightaction(const Arg *arg) {
+    syst_backlight_list_t* backlight_list = syst_get_backlights(NULL);
+    unsigned long backlight_count = syst_backlight_list_get_size(backlight_list, NULL);
+    for (unsigned long idx = 0; idx < backlight_count; ++idx) {
+        syst_backlight_t* backlight = syst_backlight_list_get(backlight_list, idx, NULL);
+        ((void (*)(syst_backlight_t*))(arg->v))(backlight);
+    }
+
+    syst_backlight_list_free(backlight_list);
+
+    sbar_notify(sbar_top_field_backlight, NULL);
+}
+
+void backlightdown(syst_backlight_t* backlight) {
+    syst_backlight_set_brightness_relative(backlight, -5, NULL);
+}
+
+void backlightup(syst_backlight_t* backlight) {
+    syst_backlight_set_brightness_relative(backlight, 5, NULL);
+}
 
 static const Key keys[] = {
 	/* modifier                     key                       function        argument */
@@ -75,11 +134,12 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,                     spawn,          {.v = firefoxbrowsercmd } },
 	{ MODKEY|ShiftMask,             XK_l,                     spawn,          {.v = officecmd } },
 	{ MODKEY|ShiftMask,             XK_x,                     spawn,          {.v = lockcmd } },
-	{ NoEventMask,                  XF86XK_AudioMute,         spawn,          {.v = volumetogglecmd } },
-	{ NoEventMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volumedowncmd } },
-	{ NoEventMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volumeupcmd } },
-	{ NoEventMask,                  XF86XK_MonBrightnessDown, spawn,          {.v = backlightdowncmd } },
-	{ NoEventMask,                  XF86XK_MonBrightnessUp,   spawn,          {.v = backlightupcmd } },
+	{ NoEventMask,                  XF86XK_AudioMute,         soundaction,          {.v = soundplaybackstatustoggle } },
+	{ NoEventMask,                  XF86XK_AudioLowerVolume,  soundaction,          {.v = soundplaybackvolumedown } },
+	{ NoEventMask,                  XF86XK_AudioRaiseVolume,  soundaction,          {.v = soundplaybackvolumeup } },
+	{ NoEventMask,                  XF86XK_AudioMicMute,      soundaction,          {.v = soundcapturestatustoggle } },
+	{ NoEventMask,                  XF86XK_MonBrightnessDown, backlightaction,      {.v = backlightdown } },
+	{ NoEventMask,                  XF86XK_MonBrightnessUp,   backlightaction,      {.v = backlightup } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                     focusstack,     {.i = -1 } },
