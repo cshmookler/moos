@@ -8,29 +8,38 @@ depends=(
     # Base packages.
     'moos'
 
-    # Packages from the official repositories.
-    $(pacman -Sgq 'xorg')    # X server and related utilities
-    'xorg-xinit'             # Allow users to manually start the X server
-    'ffmpeg'                 # AV manipulation + player (ffplay)
-    'vlc'                    # AV dedicated player
-    'firefox'                # Normal browser
-    'torbrowser-launcher'    # TOR browser
-    'qemu-full'              # Virtual machines
-    'libvirt'                # Wrapper for QEMU
-    'virt-manager'           # GUI for QEMU
-    'virt-viewer'            # Advanced VM viewer for QEMU
+    # X11
+    $(pacman -Sgq 'xorg')         # X server and related utilities
+    'xorg-xinit'                  # Allow users to manually start the X server
 
-    # Packages made specifically for MOOS.
-    'moos-fonts'             # Required fonts.
-    'moos-dwm'               # Window manager (runs under the X server).
-    'moos-st'                # Terminal emulator.
-    'moos-slock'             # Screen locker.
-    'moos-status-bar'        # Status bar for DWM.
-    'moos-special-keys'      # Functions for common multimedia keys.  # TODO: Replace with system_state and DWM.
-    'moos-us-keys-xorg'      # Custom US-style keyboard layout for Xorg.
-    'moos-user-env'          # Default user environment.
-    'moos-neovim-conf'       # Custom Neovim configuration.
-    'moos-snap'              # Simple screenshot utility.
+    # Applications and Utilities
+    'ffmpeg'                      # AV manipulation + player (ffplay)
+    'mpv'                         # AV dedicated player
+    'firefox'                     # Normal browser
+    'torbrowser-launcher'         # TOR browser
+    'qemu-full'                   # Virtual machine (QEMU)
+    'libvirt'                     # Wrapper for QEMU
+    'virt-manager'                # GUI launcher for QEMU
+    'virt-viewer'                 # Advanced VM viewer for QEMU
+    'libreoffice-still'           # Office Suite
+    'moos-dwm'                    # Window manager (runs under the X server).
+    'moos-st'                     # Terminal emulator
+    'moos-slock'                  # Screen locker
+    'moos-status-bar'             # Status bar for DWM
+    'moos-us-keys-xorg'           # Custom US-style keyboard layout for Xorg
+    'moos-user-env'               # Default user environment
+    'moos-neovim-conf'            # Custom Neovim configuration
+    'moos-snap'                   # Simple screenshot utility
+
+    # Fonts
+    'noto-fonts'                  # Google fonts
+    'noto-fonts-emoji'            # Google color emojis
+    'noto-color-emoji-fontconfig' # Always default to Google's color emojis
+    'noto-fonts-cjk'              # Google chinese, japanese, and korean fonts
+    'noto-fonts-extra'            # Google extra fonts
+    'ttf-hack-nerd'               # Monospace font for coding
+    'ttf-liberation'              # Free alternatives to certain MS fonts
+    'ttf-ms-win11-auto'           # MS fonts from Win11
 )
 source=(
     '10-secure.conf'
