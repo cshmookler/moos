@@ -1,25 +1,21 @@
 pkgname='moos-run'
-pkgver=20241106
+pkgver=20250808
 pkgrel=1
 pkgdesc='Scripts for executing single-file programs.'
 arch=('any')
 options=('!debug')
 depends=(
-    'python'
 )
 source=(
+    'run_c'
     'run_cpp'
-    'run_hr_cpp'
-    'run_hr_python'
 )
 sha256sums=(
-    'bec965415b02a42f68c8c235e253b6f977ea65d7719bbd9fc009a638c94fd2e2'
-    '414fc5e373e37c9fd447cddd43a5fa61c385d9d834ba962566db2ed8142ff402'
-    'f5cffd8e118526bd45b1731854b9a4b7b06ab2e7c3531e1c85541f5a22f08826'
+    '19924decdb0e1af6f8f74b350d7b08dede6717b80e6e2a572a458ebde8b3decc'
+    'e15f238fc7530f9799eadacd943315fb7e54402c4ca5b044faa2c54fe5ae7db3'
 )
 
 package() {
+    install -Dm755 "run_c" "$pkgdir/usr/bin/run_c"
     install -Dm755 "run_cpp" "$pkgdir/usr/bin/run_cpp"
-    install -Dm755 "run_hr_cpp" "$pkgdir/usr/bin/run_hr_cpp"
-    install -Dm755 "run_hr_python" "$pkgdir/usr/bin/run_hr_python"
 }
