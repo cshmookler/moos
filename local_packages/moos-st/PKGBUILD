@@ -1,5 +1,5 @@
 pkgname='moos-st'
-pkgver=20240914
+pkgver=20250809
 pkgrel=1
 pkgdesc='Patched simple terminal for X'
 arch=('any')
@@ -12,18 +12,19 @@ options=(
 makedepends=('git')
 depends=(
     'libxft'
-    'moos-fonts'
 )
 provides=('st')
 conflicts=('st')
 source=(
     'git+https://git.suckless.org/st'
+    'https://st.suckless.org/patches/anysize/st-expected-anysize-0.9.diff'
     'Makefile.patch'
     'st.info.patch'
     'config.h'
 )
 sha256sums=(
     'SKIP'
+    '628b12527f5e00b742b7f12c370355c8e91a909bcd9d3ab6e751410a909bfb11'
     '1262e4c57896a678dd7d2d31a4a776bcab29c0a9183fedb54cbe1a6f9fab3259'
     '0a3394180059ee2e02cccc31e2138b4a1649f1203fc29411a6d171e8eb6da987'
     '4b9c2fb4837cbc60d2e73491cfa2825d23925c7ce9a6f743f404a5ed1e4adaf7'
@@ -32,6 +33,7 @@ _repo='st'
 
 prepare() {
     cd "$_repo"
+    patch -p1 < "$srcdir/st-expected-anysize-0.9.diff"
     patch < "$srcdir/Makefile.patch"
     patch < "$srcdir/st.info.patch"
     cp "$srcdir/config.h" .
