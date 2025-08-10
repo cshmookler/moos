@@ -1,32 +1,31 @@
 pkgname='moos-hotspot'
-pkgver=20250503
+pkgver=20250808
 pkgrel=1
-pkgdesc='Creates a WiFi hotspot (Access Point) that connects automatically.'
+pkgdesc='Creates a WiFi hotspot (Access Point) that starts automatically.'
 arch=('any')
 options=('!debug')
+install="$pkgname.install"
 
 _service_name="moos-hotspot"
 _con_name="moos-hotspot"
-_ssid="" # By default, use the hostname instead of a custom SSID.
-_password=$(tr -dc '[:graph:]' </dev/urandom | head -c 10)
 
 _hotspot_conf() {
-    echo "[Unit]"
-    echo "Description=Create a WiFi hotspot (Access Point) with NetworkManager"
-    echo "Requires=NetworkManager.service"
-    echo "After=NetworkManager.service"
-    echo ""
-    echo "[Service]"
-    echo "Type=oneshot"
-    echo "ExecStart=/usr/bin/env bash -c '(nmcli connection show \\\"$_con_name\\\" && nmcli connection delete \\\"$_con_name\\\") || true'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli device wifi hotspot con-name \\\"$_con_name\\\" ssid \\\"\$((test -s /etc/$pkgname/ssid && cat /etc/$pkgname/ssid) || cat /etc/hostname)\\\" password \\\"\$(cat /etc/$pkgname/password)\\\"'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" connection.autoconnect yes'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" connection.autoconnect-priority 999'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection modify \\\"$_con_name\\\" ipv4.addresses 10.0.0.1/24'"
-    echo "ExecStart=/usr/bin/env bash -c 'nmcli connection up \\\"$_con_name\\\"'"
-    echo ""
-    echo "[Install]"
-    echo "WantedBy=multi-user.target"
+    echo '[Unit]'
+    echo 'Description=Create a WiFi hotspot (Access Point) with NetworkManager'
+    echo 'Requires=NetworkManager.service'
+    echo 'After=NetworkManager.service'
+    echo ''
+    echo '[Service]'
+    echo 'Type=oneshot'
+    echo $'ExecStart=/usr/bin/env bash -c \'(nmcli connection show "'"$_con_name"$'" && nmcli connection delete "'"$_con_name"$'") || true\''
+    echo $'ExecStart=/usr/bin/env bash -c \'nmcli device wifi hotspot con-name "'"$_con_name"$'" ssid "$((test -s /etc/'"$pkgname"$'/ssid && cat /etc/'"$pkgname"$'/ssid) || cat /etc/hostname)" password "$(cat /etc/'"$pkgname"$'/password)"\''
+    echo $'ExecStart=/usr/bin/env bash -c \'nmcli connection modify "'"$_con_name"$'" connection.autoconnect yes\''
+    echo $'ExecStart=/usr/bin/env bash -c \'nmcli connection modify "'"$_con_name"$'" connection.autoconnect-priority 999\''
+    echo $'ExecStart=/usr/bin/env bash -c \'nmcli connection modify "'"$_con_name"$'" ipv4.addresses 10.0.0.1/24\''
+    echo $'ExecStart=/usr/bin/env bash -c \'nmcli connection up "'"$_con_name"$'"\''
+    echo ''
+    echo '[Install]'
+    echo 'WantedBy=multi-user.target'
 }
 
 package() {
@@ -36,11 +35,11 @@ package() {
 
     # Create the file that contains the hotspot SSID.
     # If this file is empty or missing, the hostname is the hotspot SSID.
-    printf "$_ssid" > "ssid"
-    install -Dm644 "ssid" "$pkgdir/etc/$pkgname/ssid"
+    touch "$srcdir/ssid"
+    install -Dm644 "$srcdir/ssid" "$pkgdir/etc/$pkgname/ssid"
 
     # Create the file that contains the hotspot password.
-    printf "$_password" > "password"
+    touch "$srcdir/password"
     # Only root can read this file.
-    install -Dm600 "password" "$pkgdir/etc/$pkgname/password"
+    install -Dm600 "$srcdir/password" "$pkgdir/etc/$pkgname/password"
 }
