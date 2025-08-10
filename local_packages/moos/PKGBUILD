@@ -1,25 +1,38 @@
 pkgname='moos'
-pkgver=20250222
+pkgver=20250808
 pkgrel=1
 pkgdesc='All required packages for a base MOOS installation.'
 arch=('any')
 options=('!debug')
 depends=(
-    # Packages from the official repositories.
+    # Base packages
+    'moos-filesystem'        # Replacement for 'filesystem' in 'base'
     'base'                   # All necessary packages for a base Arch Linux installation
     'base-devel'             # Basic development tools (gcc, fakeroot, make, makepkg)
+    'moos-auto-limine'       # Automatic boot loader installer for Arch Linux.
+
+    # Kernel
     'linux-lts'              # The latest stable version of the Linux kernel
     'linux-firmware'         # Additional firmware for the Linux kernel
-    'hyperv'                 # Hyper-V tools
-    'open-vm-tools'          # VMware tools
-    'qemu-guest-agent'       # QEMU Guest Agent tools
-    'virtualbox-guest-utils' # Virtualbox Guest userspace utilities
     'mkinitcpio'             # Initramfs creation utility
     'mkinitcpio-archiso'     # Initcpio scripts used by archiso
-    'bash'                   # A basic shell                #TODO: Replace with ZSH
+
+    # Custom Libraries
+    'moos-cpp-result'        # Rust-like result types for C++.
+    'moos-inotify-ipc'       # Socketless inter-process communication.
+    'moos-system-state'      # System state fetcher and modifier.
+
+    # Shell
+    'moos-us-keys-tty'       # Custom US-style keyboard layout for the TTY.
+    'bash'                   # A basic shell
     'bash-completion'        # Auto-completion for bash
+    'zsh'                    # An improved alternative to the default shell (bash)
+    'zsh-completions'        # Auto-completion for zsh
+
+    # Command line utilities
     'man-db'                 # Documentation for programs and functions
     'man-pages'              # POSIX documentation
+    'rsync'                  # File copying
     'curl'                   # Send network requests from the command line.
     'git'                    # Version control
     'zip'                    # ZIP archive maker
@@ -28,31 +41,33 @@ depends=(
     'python'                 # Python 3.x interpreter
     'python-virtualenv'      # Python environment generator/duplicator
     'htop'                   # Alternative to 'top'
-    'ufw'                    # Firewall management
+    'moos-run'               # Scripts for quickly executing code.
+    'yay'                    # AUR helper
     'borg'                   # Data archival utility
-    'openssh'                # SSH client and server
     'neovim'                 # Text editor and IDE
+    'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
+
+    # Network
     'networkmanager'         # Network management (wired and wireless)
     'dnsmasq'                # Required by network manager to create hotspots
     'macchanger'             # MAC address spoofer
+    'ufw'                    # Firewall management
     'nmap'                   # Network discovery
+    'openssh'                # SSH client and server
+
+    # Audio
     'alsa-utils'             # ALSA (Linux sound) utilities
-    'bluez'                  # Bluetooth support
-    'bluez-utils'            # Bluetooth cmdline utilities
     'pulseaudio'             # Audio multiplexing
     'pulseaudio-alsa'        # ALSA support for PulseAudio
     'pulseaudio-bluetooth'   # Bluetooth support for PulseAudio
 
-    # Packages from the AUR.
-    'yay'                    # AUR helper
-    'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
+    # Bluetooth
+    'bluez'                  # Bluetooth support
+    'bluez-utils'            # Bluetooth cmdline utilities
 
-    # Packages made specifically for MOOS.
-    'moos-filesystem'        # Replacement for 'filesystem' in 'base'
-    'moos-auto-limine'       # Automatic boot loader installer for Arch Linux.
-    'moos-cpp-result'        # Rust-like result types for C++.
-    # 'moos-inotify-ipc'       # Socketless inter-process communication.
-    'moos-system-state'      # System state fetcher and modifier.
-    'moos-us-keys-tty'       # Custom US-style keyboard layout for the TTY.
-    'moos-run'               # Scripts for quickly executing code.
+    # Virtualization tools (for running within a VM)
+    'hyperv'                 # Hyper-V tools
+    'open-vm-tools'          # VMware tools
+    'qemu-guest-agent'       # QEMU Guest Agent tools
+    'virtualbox-guest-utils' # Virtualbox Guest userspace utilities
 )

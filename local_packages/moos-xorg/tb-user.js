@@ -4,3 +4,4 @@ user_pref("network.proxy.socks", " ");
 user_pref("browser.startup.homepage", "about:blank");
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 user_pref("browser.urlbar.suggest.bookmark", false);
+user_pref("widget.gtk.middle-click-enabled", false);

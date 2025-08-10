@@ -72,7 +72,7 @@ if __name__ == "__main__":
             guid = response["guid"]
             download_url = response["current_version"]["file"]["url"]
         except KeyError:
-            error("Invalid json data for " + remote_id + " from " + url)
+            error("Invalid json data for " + remote_id + " from " + download_url)
             quit(1)
 
         extension_file = ff_extensions_dir + "/" + guid + ".xpi"
@@ -95,4 +95,3 @@ if __name__ == "__main__":
 
     with open(ff_policies_file, "w") as file:
         json.dump(ff_policies, file, indent=4)
-
