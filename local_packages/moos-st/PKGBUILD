@@ -18,6 +18,7 @@ conflicts=('st')
 source=(
     'git+https://git.suckless.org/st'
     'https://st.suckless.org/patches/anysize/st-expected-anysize-0.9.diff'
+    'https://st.suckless.org/patches/scrollback/st-scrollback-ringbuffer-0.9.2.diff'
     'Makefile.patch'
     'st.info.patch'
     'config.h'
@@ -25,15 +26,17 @@ source=(
 sha256sums=(
     'SKIP'
     '628b12527f5e00b742b7f12c370355c8e91a909bcd9d3ab6e751410a909bfb11'
+    '961198be12e01e20ea93cd822ed73a9106a5386383954613a96aae122bc143e4'
     '1262e4c57896a678dd7d2d31a4a776bcab29c0a9183fedb54cbe1a6f9fab3259'
     '0a3394180059ee2e02cccc31e2138b4a1649f1203fc29411a6d171e8eb6da987'
-    '4b9c2fb4837cbc60d2e73491cfa2825d23925c7ce9a6f743f404a5ed1e4adaf7'
+    '386afe3a916194c8abe3c96e2bce597bc8922065b052755f04acbb26d9b0a98e'
 )
 _repo='st'
 
 prepare() {
     cd "$_repo"
     patch -p1 < "$srcdir/st-expected-anysize-0.9.diff"
+    patch -p1 < "$srcdir/st-scrollback-ringbuffer-0.9.2.diff"
     patch < "$srcdir/Makefile.patch"
     patch < "$srcdir/st.info.patch"
     cp "$srcdir/config.h" .
