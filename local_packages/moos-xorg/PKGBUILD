@@ -4,6 +4,12 @@ pkgrel=1
 pkgdesc='All required packages for a graphical MOOS installation with Xorg.'
 arch=('any')
 options=('!debug')
+makedepends=(
+    'git'
+    'rsync'
+    'aspell'
+    'aspell-en' # English is the default language.
+)
 depends=(
     # Base packages
     'moos'
@@ -12,6 +18,7 @@ depends=(
     $(pacman -Sgq 'xorg')         # X server and related utilities
     'xorg-xinit'                  # Allow users to manually start the X server
     'xss-lock'                    # Set the active screen locker
+    'xsel'                        # Manipulate the X selection
     'moos-slock'                  # Screen locker
     'moos-us-keys-xorg'           # Custom US-style keyboard layout for Xorg
 
@@ -36,19 +43,57 @@ depends=(
 
     # Applications and Utilities
     'moos-st'                     # Terminal emulator
-    'moos-neovim-conf'            # Custom Neovim configuration
+    'neovim'                      # Text editor and IDE
+    'neovim-symlinks'             # System-wide aliases for Neovim
+    'tree-sitter-cli'             # Advanced syntax highlighting for Neovim
     'ffmpeg'                      # AV manipulation + player (ffplay)
     'mpv'                         # AV dedicated player
     'firefox'                     # Normal browser
     'torbrowser-launcher'         # TOR browser
     'libreoffice-still'           # Office Suite
     'moos-snap'                   # Simple screenshot utility
+    'tinyxxd'                    # Binary file viewer
 
     # Virtual machine
     'qemu-full'                   # Virtual machine (QEMU)
     'libvirt'                     # Wrapper for QEMU
     'virt-manager'                # GUI launcher for QEMU
     'virt-viewer'                 # Advanced VM viewer for QEMU
+
+    # Language Server Protocol
+    'vscode-html-languageserver' # HTML LSP
+    'vscode-json-languageserver' # JSON LSP
+    'vscode-css-languageserver'  # CSS LSP
+    'typescript-language-server' # JS/TS LSP
+    'yaml-language-server'       # YAML LSP
+    'clang'                      # C++ LSP
+    'lua-language-server'        # Lua LSP
+    'vim-language-server'        # VimScript LSP
+    'jedi-language-server'       # Python LSP
+    'bash-language-server'       # Bash LSP
+    'rust-analyzer'              # Rust LSP
+    'texlab'                     # LaTeX LSP
+    'csharp-ls'                  # C# LSP
+    'openscad-lsp'               # OpenSCAD LSP
+    'verible-bin'                # SystemVerilog LSP
+    
+    # Formatters
+    'python-black'               # Python Formatter
+
+    # Linters
+    'mypy'                       # Python static typing linter
+    'flake8'                     # Python style linter
+    'usort'                      # Python import sorter
+
+    # Software Development Kits
+    'dotnet-sdk-bin'             # C# .NET SDK
+
+    # LaTeX
+    'texlive-basic'
+    'texlive-latex'
+    'texlive-latexrecommended'
+    'texlive-fontsrecommended'
+    'texlive-mathscience'
 )
 source=(
     '10-secure.conf'
@@ -64,6 +109,7 @@ source=(
     'tb-user.js'
     'ff-policies.json'
     'ff_extensions.py'
+    'git+https://github.com/cshmookler/neovim_conf.git'
 )
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
@@ -79,15 +125,23 @@ sha256sums=(
     '2dde5b36a023113cb10bbbd11256dbab36968c459438bcb9ddde5f1d1ac8f8ed'
     'a38a89aceed7e8e328db1d41768bea2b40f6b0044fba5ef51131f49a340fe21e'
     'f3ad9a3a105b8fac962983e590f7632613ea6871f4bcb6c50dafa53df5deea7d'
+    'SKIP'
 )
+
+pkgver() {
+    date +%Y%m%d
+}
 
 build() {
     python ff_extensions.py "$srcdir/ff-policies.json" "$srcdir/firefox"
+    aspell --lang=en dump master | aspell --lang=en expand > "$srcdir/dict"
 }
 
 package() {
     install -Dm644 "10-secure.conf" "$pkgdir/etc/X11/xorg.conf.d/10-secure.conf"
     install -Dm644 "20-qol.conf" "$pkgdir/etc/X11/xorg.conf.d/20-qol.conf"
+
+    rsync --recursive --mkpath "--chmod=D755,F644" "firefox/" "$pkgdir/etc/firefox/"
 
     _skel="$pkgdir/etc/moos-skel"
     install -Dm644 ".zprofile" "$_skel/.zprofile"
@@ -96,9 +150,7 @@ package() {
     install -Dm644 ".gtkrc-2.0" "$_skel/.gtkrc-2.0"
     install -Dm644 "gtk3-settings.ini" "$_skel/.config/gtk-3.0/settings.ini"
     install -Dm644 "gtk4-settings.ini" "$_skel/.config/gtk-4.0/settings.ini"
-
-    _tb="$_skel/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default"
-    install -Dm644 "tb-user.js" "$_tb/user.js"
-
-    rsync --recursive --mkpath "--chmod=D755,F644" "$srcdir/firefox/" "/etc/firefox/"
+    install -Dm644 "dict" "$_skel/.local/share/nvim/dict"
+    install -Dm644 "tb-user.js" "$_skel/.local/share/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/profile.default/user.js"
+    rsync --recursive --mkpath "--chmod=D755,F644" "neovim_conf/" "$_skel/.config/nvim/"
 }
