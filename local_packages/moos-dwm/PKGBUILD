@@ -62,18 +62,17 @@ _backlight_service() {
 package() {
     cd "$_repo"
 
-    # Install this program
     make PREFIX="/usr" DESTDIR="$pkgdir/" install
     install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 "README" "$pkgdir/usr/share/doc/$pkgname/README"
 
-    # Install and enable the systemd service
+    cd "$srcdir"
+
     _service_name="dwm-backlight.service"
-    _service_src="$srcdir/$_service_name"
     _service_dest="$pkgdir/usr/lib/systemd/system/$_service_name"
     _service_symlink_dir="$pkgdir/etc/systemd/system/$_backlight_service_wantedby.wants/"
-    _backlight_service > "$_service_src"
-    install -Dm644 "$_service_src" "$_service_dest"
+    _backlight_service > "$_service_name"
+    install -Dm644 "$_service_name" "$_service_dest"
     install -dm755 "$_service_symlink_dir"
     ln -s "$_service_dest" "$_service_symlink_dir/$_service_name"
 }
