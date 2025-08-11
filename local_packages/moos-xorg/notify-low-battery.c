@@ -21,22 +21,24 @@ int main() {
       double charge = syst_battery_get_charge(battery, NULL);
       syst_battery_status_t status = syst_battery_get_status(battery, NULL);
 
-      if (charge <= low_battery_threshold &&
-          (status & syst_battery_status_charging) == 0) {
-        if (!notified) {
-          char *name = syst_battery_get_name(battery, NULL);
-          char *message;
-          asprintf(&message,
-                   "notify-send -u critical 'Low Battery (%s %.0f%%)'", name,
-                   charge);
-          system(message);
-          free(message);
-          free(name);
-          notified = 1;
-        }
-      } else {
+      if (charge > low_battery_threshold ||
+          (status & syst_battery_status_charging) != 0) {
         notified = 0;
+        continue;
       }
+
+      if (notified) {
+        continue;
+      }
+
+      char *name = syst_battery_get_name(battery, NULL);
+      char *cmd;
+      asprintf(&cmd, "notify-send -u critical 'Low Battery (%s %.0f%%)'", name,
+               charge);
+      system(cmd);
+      free(cmd);
+      free(name);
+      notified = 1;
     }
 
     syst_battery_list_free(battery_list);
