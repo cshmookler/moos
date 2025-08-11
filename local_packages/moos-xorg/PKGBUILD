@@ -1,5 +1,5 @@
 pkgname='moos-xorg'
-pkgver=20250810
+pkgver=20250811
 pkgrel=1
 pkgdesc='All required packages for a graphical MOOS installation with Xorg.'
 arch=('any')
@@ -104,6 +104,8 @@ depends=(
 source=(
     '10-secure.conf'
     '20-qol.conf'
+    '.shprofile'
+    '.shrc'
     '.bash_profile'
     '.bashrc'
     '.zprofile'
@@ -122,10 +124,12 @@ source=(
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
     '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
-    '1469da7b27766ad4d07eb202de0142609a72763f5e3088d67893334d68725984'
-    '61934632ed4a70fc85dbc4bf22aad3bf3344fa4d23e4ef58c51ec504f288e4c0'
-    '1eaf39ce674d65f3d6985ae8d2573f9d87ffc0125676d8a06986c72a7ec25324'
-    'ae5968817b518ba0e15dff271195086edc58c0c835d2d3d9a0834fbcc5105adb'
+    'afc0818d08c5d0a2d9dcf6f36c9a60e5f936460f7f27491abe9d87d72de610dd'
+    '960c3b6c7a2e47fe7a8fb3a65b23ee7d57e8f1c8289ee4efb94f749c8178de29'
+    'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
+    'a7f973bf90df9f9a89d40dc0bb19f36dad94e3ee8ebfa6c4afa6cccf09081446'
+    'd9a356718338071158ea6b6bf6fd37f42cc3ee663df03370d4c7e48e293ef9a2'
+    '9b7d925f390c690c560bb9f2f7e204204ad0be79d9c29b8ef786ed67a5e468c9'
     '6dc9f5cf4acbbe822a2321de025114d33b9dee293751d1c78fbddb1983e7abd6'
     '18fc70fc443362ec32257804ceb561a3ae3eaff9a39e01ee79c9f115303c3001'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
