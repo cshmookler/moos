@@ -31,7 +31,7 @@ _hotspot_conf() {
 package() {
     # Install the systemd service that creates and updates the hotspot.
     _hotspot_conf > "$_service_name.service"
-    install -Dm644 "$_service_name.service" "$pkgdir/etc/systemd/system/$_service_name.service"
+    install -Dm644 "$_service_name.service" "$pkgdir/usr/lib/systemd/system/$_service_name.service"
 
     # Create the file that contains the hotspot SSID.
     # If this file is empty or missing, the hostname is the hotspot SSID.
