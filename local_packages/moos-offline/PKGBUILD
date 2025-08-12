@@ -21,13 +21,27 @@ _kiwix_books=(
     'zimit/anonymousplanet.org_en_all'
     # 'gutenberg/gutenberg_en_all'
 )
+_service_name='serve-kiwix'
+
+_kiwix_serve_service() {
+    echo '[Unit]'
+    echo 'Description=Serve books with Kiwix'
+    echo 'After=network-online.target'
+    echo ''
+    echo '[Service]'
+    echo 'Type=exec'
+    echo 'ExecStart=/usr/bin/kiwix-serve --library /usr/share/kiwix/library.xml'
+    echo ''
+    echo '[Install]'
+    echo 'WantedBy=multi-user.target'
+}
 
 package() {
     _kiwix_dir="$pkgdir/usr/share/kiwix/"
     _kiwix_zim_dir="${_kiwix_dir}zim/"
     install -dm755 "$_kiwix_zim_dir"
 
-    for _book in "${_kiwix_books}"
+    for _book in "${_kiwix_books[@]}"
     do
         _book_section="${_book%%/*}"
         _book_name="${_book#*/}"
@@ -38,5 +52,8 @@ package() {
         curl "$_kiwix_book_url" -o "$_kiwix_zim_dir$_book_name_full"
     done
 
-    kiwix-manage "${_kiwix_dir}library.xml" add "${_kiwix_zim_dir}*.zim"
+    kiwix-manage "${_kiwix_dir}library.xml" add ${_kiwix_zim_dir}*.zim
+
+    _kiwix_serve_service > "$_service_name.service"
+    install -Dm644 "$_service_name.service" "$pkgdir/usr/lib/systemd/system/$_service_name.service"
 }
