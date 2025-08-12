@@ -159,6 +159,10 @@ package() {
     rsync --recursive --mkpath "--chmod=D755,F644" "firefox/" "$pkgdir/etc/firefox/"
 
     _skel="$pkgdir/etc/moos-skel"
+    install -Dm644 ".shprofile" "$_skel/.shprofile"
+    install -Dm644 ".shrc" "$_skel/.shrc"
+    install -Dm644 ".bash_profile" "$_skel/.bash_profile"
+    install -Dm644 ".bashrc" "$_skel/.bashrc"
     install -Dm644 ".zprofile" "$_skel/.zprofile"
     install -Dm644 ".zshrc" "$_skel/.zshrc"
     install -Dm644 ".xinitrc" "$_skel/.xinitrc"
