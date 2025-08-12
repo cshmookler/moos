@@ -46,33 +46,9 @@ build() {
     make
 }
 
-_backlight_service_wantedby='graphical.target'
-_backlight_service() {
-    echo '[Unit]'
-    echo 'Description=Enable reading and writing to backlight brightness files on startup.'
-    echo 'After=multi-user.target'
-    echo ''
-    echo '[Service]'
-    echo $'ExecStart=/usr/bin/bash -c \'if test -n "$(ls -A \'/sys/class/backlight/\')"; then chmod 666 /sys/class/backlight/*/brightness; fi\''
-    echo ''
-    echo '[Install]'
-    echo "WantedBy=$_backlight_service_wantedby"
-}
-
 package() {
     cd "$_repo"
-
     make PREFIX="/usr" DESTDIR="$pkgdir/" install
     install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 "README" "$pkgdir/usr/share/doc/$pkgname/README"
-
-    cd "$srcdir"
-
-    _service_name="dwm-backlight.service"
-    _service_dest="$pkgdir/usr/lib/systemd/system/$_service_name"
-    _service_symlink_dir="$pkgdir/etc/systemd/system/$_backlight_service_wantedby.wants/"
-    _backlight_service > "$_service_name"
-    install -Dm644 "$_service_name" "$_service_dest"
-    install -dm755 "$_service_symlink_dir"
-    ln -s "$_service_dest" "$_service_symlink_dir/$_service_name"
 }
