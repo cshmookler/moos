@@ -1,5 +1,5 @@
 pkgname='moos-system-state'
-pkgver=0.25.1
+pkgver=0.25.2
 pkgrel=1
 pkgdesc='C++ library for fetching and modifying the system state on MOOS (https://github.com/cshmookler/moos).'
 arch=('any')
@@ -35,9 +35,18 @@ build() {
 #     meson test -C build 
 # }
 
+_udev_rules() {
+    echo 'SUBSYSTEM=="backlight", KERNEL=="*" RUN+="/usr/bin/chmod 666 /sys/class/backlight/%k/brightness"'
+}
+
 package() {
     cd "$_repo"
     meson install -C build --destdir "$pkgdir"
     install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 "README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+
+    cd "$srcdir"
+    _udev_rules_name='30-system-state.rules'
+    _udev_rules > "$_udev_rules_name"
+    install -Dm644 "$_udev_rules_name" "$pkgdir/usr/lib/udev/rules.d/$_udev_rules_name"
 }
