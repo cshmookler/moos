@@ -40,61 +40,10 @@ git clone https://github.com/cshmookler/moos.git
 cd moos
 ```
 
-### 5.&nbsp; Make the offline package repository
-
-The installer built into the MOOS live ISO is capable of working entirely offline. All necessary packages must be downloaded in advance and placed within the filesystem of the live ISO.
+### 5.&nbsp; Make the live ISO
 
 ```bash
-./make_offline_repo.py
-```
-
-### 6.&nbsp; Make the live ISO
-
-```bash
-./make_iso.sh
-```
-
-### 7.&nbsp; Troubleshooting
-
-A discrepancy between packages installed globally on your system and the version placed into the offline repository may cause the 'make_iso.sh' script to fail.
-
-#### Example:
-
-```
-:: File /var/cache/pacman/pkg/moos-filesystem-2024.09.14-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/yay-12.4.2-1-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/neovim-symlinks-5-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/moos-cpp-result-1.1.2-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/moos-system-state-0.23.0-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/moos-us-keys-tty-20250222-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/moos-run-20241106-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-:: File /var/cache/pacman/pkg/moos-20250222-1-any.pkg.tar.zst is corrupted (invalid or corrupted package (checksum)).
-Do you want to delete it? [Y/n] 
-error: failed to commit transaction (invalid or corrupted package)
-Errors occurred, no packages were upgraded.
-==> ERROR: Failed to install packages to new root
-Error: ISO construction failed.
-```
-
-#### Fix:
-
-Delete the 'work' directory.
-
-```bash
-sudo rm -rf work
-```
-
-Re-run the 'make_iso.sh' script.  The issue should resolve itself.
-
-```bash
-./make_iso.sh
+./make_iso.py
 ```
 
 ## **TODO**

@@ -12,8 +12,8 @@ _con_name="moos-hotspot"
 _hotspot_conf() {
     echo '[Unit]'
     echo 'Description=Create a WiFi hotspot (Access Point) with NetworkManager'
-    echo 'Requires=NetworkManager.service'
-    echo 'After=NetworkManager.service'
+    echo 'Wants=network-online.target'
+    echo 'After=network-online.target'
     echo ''
     echo '[Service]'
     echo 'Type=oneshot'

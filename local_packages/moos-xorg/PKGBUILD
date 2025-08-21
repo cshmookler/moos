@@ -91,9 +91,6 @@ depends=(
     'flake8'                     # Python style linter
     'usort'                      # Python import sorter
 
-    # Software Development Kits
-    'dotnet-sdk-bin'             # C# .NET SDK
-
     # LaTeX
     'texlive-basic'
     'texlive-latex'
