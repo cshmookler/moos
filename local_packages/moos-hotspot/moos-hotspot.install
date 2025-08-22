@@ -2,7 +2,7 @@ _assert_has_password() {
     _password_file="/etc/moos-hotspot/password"
     if [ ! -e "$_password_file" ] || [ ! -s "$_password_file" ]; then
         # Generate a new password if the password file is empty.
-        _password=$(tr -dc '[:graph:]' </dev/urandom | head -c 10)
+        _password=$(tr -dc '[:lower:]' </dev/urandom | head -c 10)
         printf "$_password" > "$_password_file"
     fi
 }
