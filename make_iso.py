@@ -630,8 +630,9 @@ if __name__ == "__main__":
         hotspot_service_path,
         "[Unit]\n"
         "Description=Create a WiFi hotspot (Access Point) with NetworkManager\n"
-        "Wants=network-online.target\n"
-        "After=network-online.target\n"
+        "Requires=NetworkManager.service\n"
+        "After=NetworkManager.service\n"
+        "\n"
         "[Service]\n"
         "Type=oneshot\n"
         f'ExecStart=/usr/bin/env bash -c \'(nmcli connection show "{hotspot_con_name}" && nmcli connection delete "{hotspot_con_name}") || true\'\n'
