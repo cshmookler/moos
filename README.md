@@ -46,6 +46,12 @@ cd moos
 ./make_iso.py
 ```
 
+### 6.&nbsp; (Optional) Write the ISO to an external device
+
+```bash
+sudo dd status=progress oflag=direct bs=4M if=out/moos-XXXX-XX-XX-x86_64.iso of=/dev/XXX
+```
+
 ## **TODO**
 
 - [X] Automatically setup the user environment.
