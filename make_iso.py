@@ -636,11 +636,11 @@ if __name__ == "__main__":
         "[Service]\n"
         "Type=oneshot\n"
         f'ExecStart=/usr/bin/env bash -c \'(nmcli connection show "{hotspot_con_name}" && nmcli connection delete "{hotspot_con_name}") || true\'\n'
-        f'ExecStart=/usr/bin/env bash -c \'nmcli device wifi hotspot con-name "{hotspot_con_name}" ssid "{hotspot_ssid}" password "{hotspot_password}"\''
-        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect yes'"
-        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect-priority 999'"
-        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" ipv4.addresses 10.0.0.1/24'"
-        f"ExecStart=/usr/bin/env bash -c 'nmcli connection up {hotspot_con_name}'"
+        f'ExecStart=/usr/bin/env bash -c \'nmcli device wifi hotspot con-name "{hotspot_con_name}" ssid "{hotspot_ssid}" password "{hotspot_password}"\'\n'
+        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect yes'\n"
+        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect-priority 999'\n"
+        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" ipv4.addresses 10.0.0.1/24'\n"
+        f"ExecStart=/usr/bin/env bash -c 'nmcli connection up {hotspot_con_name}'\n"
         "\n"
         "[Install]\n"
         "WantedBy=multi-user.target\n",
