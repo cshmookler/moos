@@ -82,6 +82,10 @@ depends=(
     'csharp-ls'                  # C# LSP
     'openscad-lsp'               # OpenSCAD LSP
     'verible-bin'                # SystemVerilog LSP
+    'gopls'                      # Go LSP
+
+    # Compilers
+    'go'                         # Go
     
     # Formatters
     'python-black'               # Python Formatter
