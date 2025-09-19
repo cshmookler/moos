@@ -92,11 +92,7 @@ depends=(
     'usort'                      # Python import sorter
 
     # LaTeX
-    'texlive-basic'
-    'texlive-latex'
-    'texlive-latexrecommended'
-    'texlive-fontsrecommended'
-    'texlive-mathscience'
+    $(pacman -Sgq 'texlive')     # LaTeX
 )
 source=(
     '10-secure.conf'
