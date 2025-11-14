@@ -1,0 +1,27 @@
+pkgname='moos-backpack'
+pkgver=20251114
+pkgrel=1
+pkgdesc='Manage encrypted backups.'
+arch=('any')
+options=('!debug')
+makedepends=(
+    'git'
+)
+depends=(
+    'python'
+    'python-cryptography'
+)
+source=(
+    'git+https://immer.duckdns.org/git/cshmookler/backpack.git'
+)
+sha256sums=(
+    'SKIP'
+)
+
+pkgver() {
+    date +%Y%m%d
+}
+
+package() {
+    install -Dm755 "backpack/backpack.py" "$pkgdir/usr/bin/backpack"
+}
