@@ -57,9 +57,10 @@ depends=(
 
     # Audio
     'alsa-utils'             # ALSA (Linux sound) utilities
-    'pulseaudio'             # Audio multiplexing
-    'pulseaudio-alsa'        # ALSA support for PulseAudio
-    'pulseaudio-bluetooth'   # Bluetooth support for PulseAudio
+    'pipewire'               # Audio multiplexing
+    'pipewire-alsa'          # ALSA support for PipeWire
+    'pipewire-docs'          # Documentation for PipeWire
+    'pipemixer'              # TUI volume control for PipeWire
 
     # Bluetooth
     'bluez'                  # Bluetooth support
