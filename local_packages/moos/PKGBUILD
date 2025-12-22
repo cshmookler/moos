@@ -58,6 +58,7 @@ depends=(
     # Audio
     'alsa-utils'             # ALSA (Linux sound) utilities
     'pipewire'               # Audio multiplexing
+    'pipewire-audio'         # Bluetooth support for PipeWire
     'pipewire-alsa'          # ALSA support for PipeWire
     'pipewire-docs'          # Documentation for PipeWire
     'pipemixer'              # TUI volume control for PipeWire
