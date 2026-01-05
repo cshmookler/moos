@@ -9,7 +9,7 @@
 #       - Removal of Arch Linux logos and trademarks.
 
 pkgname='moos-filesystem'
-pkgver='2025.08.08'
+pkgver='20251127'
 pkgrel=1
 pkgdesc='Filesystem structure and base files for MOOS.'
 arch=('any')

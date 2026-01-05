@@ -1,0 +1,72 @@
+pkgname='moos-neovim-conf'
+pkgver=20250811
+pkgrel=1
+pkgdesc='My preferred Neovim configuration.'
+arch=('any')
+options=('!debug')
+makedepends=(
+    'git'
+    'aspell'
+    'aspell-en' # English is the default language.
+)
+depends=(
+    'neovim'                      # Text editor and IDE
+    'neovim-symlinks'             # System-wide aliases for Neovim
+
+    # External Programs
+    'tree-sitter-cli'             # Advanced syntax highlighting for Neovim
+    'tinyxxd'                     # Binary file viewer
+    'xsel'                        # Manipulate the X selection
+
+    # Language Server Protocol
+    'vscode-html-languageserver'  # HTML LSP
+    'vscode-json-languageserver'  # JSON LSP
+    'vscode-css-languageserver'   # CSS LSP
+    'typescript-language-server'  # JS/TS LSP
+    'yaml-language-server'        # YAML LSP
+    'clang'                       # C++ LSP
+    'lua-language-server'         # Lua LSP
+    'vim-language-server'         # VimScript LSP
+    'jedi-language-server'        # Python LSP
+    'bash-language-server'        # Bash LSP
+    'rust-analyzer'               # Rust LSP
+    'texlab'                      # LaTeX LSP
+    'csharp-ls'                   # C# LSP
+    'openscad-lsp'                # OpenSCAD LSP
+    'verible-bin'                 # SystemVerilog LSP
+    'gopls'                       # Go LSP
+
+    # Compilers
+    'go'                          # Go
+    
+    # Formatters
+    'python-black'                # Python Formatter
+
+    # Linters
+    'mypy'                        # Python static typing linter
+    'flake8'                      # Python style linter
+    'usort'                       # Python import sorter
+
+    # LaTeX
+    $(pacman -Sgq 'texlive')      # LaTeX
+)
+source=(
+    'git+https://github.com/cshmookler/neovim_conf.git'
+)
+sha256sums=(
+    'SKIP'
+)
+
+pkgver() {
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
+build() {
+    aspell --lang=en dump master | aspell --lang=en expand > "$srcdir/dict"
+}
+
+package() {
+    _skel="$pkgdir/etc/moos-skel"
+    install -Dm644 "dict" "$_skel/.local/share/nvim/dict"
+    rsync --recursive --mkpath "--chmod=D755,F644" "neovim_conf/" "$_skel/.config/nvim/"
+}

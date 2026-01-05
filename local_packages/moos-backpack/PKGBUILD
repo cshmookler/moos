@@ -1,5 +1,5 @@
 pkgname='moos-backpack'
-pkgver=20251114
+pkgver=20251216
 pkgrel=1
 pkgdesc='Manage encrypted backups.'
 arch=('any')
@@ -19,7 +19,7 @@ sha256sums=(
 )
 
 pkgver() {
-    date +%Y%m%d
+    git log -1 --date=format:"%Y%m%d" --format="%ad"
 }
 
 package() {
