@@ -1,0 +1,33 @@
+pkgname='moos-env'
+pkgver=20260105
+pkgrel=1
+pkgdesc='Dot files that configure the shell.'
+arch=('any')
+options=('!debug')
+source=(
+    'rc_moos'
+    '.bashrc'
+    '.bash_profile'
+    '.zshrc'
+    '.zprofile'
+)
+sha256sums=(
+    '97359b569a29c3f6aab278087f058fc6950d4f0e336c81e54f41eecf7a6304e6'
+    'a34fbc10e210b82b81b74039a89e6d8f203ff1938b28de5efab2ccf247d2069e'
+    'f3ebf59170f3fe2b988180dd6737e6030eb4eb3ce93a7a39074100e5a6a0ebdd'
+    '7539498897d64b029fe59ba1694b8406d95d94a49ff705b434347f86e9125fe6'
+    '05d576fcc16587e630a6858489fd0f17ca2b40b9554f9081c8e5711362f06408'
+)
+
+pkgver() {
+    date +%Y%m%d
+}
+
+package() {
+    _skel="$pkgdir/etc/moos-skel"
+    install -Dm644 "rc_moos" "$_skel/.rc/moos"
+    install -Dm644 ".bashrc" "$_skel/.bashrc"
+    install -Dm644 ".bash_profile" "$_skel/.bash_profile"
+    install -Dm644 ".zshrc" "$_skel/.zshrc"
+    install -Dm644 ".zprofile" "$_skel/.zprofile"
+}

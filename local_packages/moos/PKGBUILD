@@ -28,6 +28,7 @@ depends=(
     'bash-completion'        # Auto-completion for bash
     'zsh'                    # An improved alternative to the default shell (bash)
     'zsh-completions'        # Auto-completion for zsh
+    'moos-env'               # Dot files that configure the shell
 
     # Command line utilities
     'man-db'                 # Documentation for programs and functions
@@ -44,8 +45,8 @@ depends=(
     'moos-run'               # Scripts for quickly executing code.
     'yay'                    # AUR helper
     'borg'                   # Data archival utility
-    'neovim'                 # Text editor and IDE
-    'neovim-symlinks'        # System-wide aliases for nvim (Neovim)
+    'moos-neovim-conf'       # Neovim + my preferred configuration
+    'moos-backpack'          # Directory encryption and obfuscation utility
 
     # Network
     'networkmanager'         # Network management (wired and wireless)

@@ -1,5 +1,5 @@
 pkgname='moos-xorg'
-pkgver=20250811
+pkgver=20260105
 pkgrel=1
 pkgdesc='All required packages for a graphical MOOS installation with Xorg.'
 arch=('any')
@@ -46,7 +46,6 @@ depends=(
 
     # Applications and Utilities
     'moos-st'                     # Terminal emulator
-    'moos-neovim-conf'            # Neovim + my preferred configuration
     'tree-sitter-cli'             # Advanced syntax highlighting for Neovim
     'ffmpeg'                      # AV manipulation + player (ffplay)
     'mpv'                         # AV dedicated player
@@ -64,12 +63,8 @@ depends=(
 source=(
     '10-secure.conf'
     '20-qol.conf'
-    '.shprofile'
-    '.shrc'
-    '.bash_profile'
-    '.bashrc'
-    '.zprofile'
-    '.zshrc'
+    'rc_xorg'
+    'profile_xorg'
     '.xinitrc'
     '.gtkrc-2.0'
     'gtk3-settings.ini'
@@ -83,13 +78,9 @@ source=(
 sha256sums=(
     'e5d244ba8652ceda9db4aff11c63b74478367fe681daee53fdf5435c3e5be1bc'
     '106a3154f1942daa9fd9f451baab3fef71ac245b525d8d5d681296ff15ef1e5b'
-    'afc0818d08c5d0a2d9dcf6f36c9a60e5f936460f7f27491abe9d87d72de610dd'
-    '960c3b6c7a2e47fe7a8fb3a65b23ee7d57e8f1c8289ee4efb94f749c8178de29'
-    'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
-    'a7f973bf90df9f9a89d40dc0bb19f36dad94e3ee8ebfa6c4afa6cccf09081446'
-    'd9a356718338071158ea6b6bf6fd37f42cc3ee663df03370d4c7e48e293ef9a2'
-    '9b7d925f390c690c560bb9f2f7e204204ad0be79d9c29b8ef786ed67a5e468c9'
-    '6dc9f5cf4acbbe822a2321de025114d33b9dee293751d1c78fbddb1983e7abd6'
+    '56dbff9298b788ddc303cb72c905009c77769628d9a48162f0407c675aa974b7'
+    '39fa171a0de2a4a38bab6fdd3589a636d9a8613e1423b94d2bffda692f43f43a'
+    '28a18fce961f873d62d2d48d9be4e86e8408bc3c9415a2e9012c7fc26190f263'
     '18fc70fc443362ec32257804ceb561a3ae3eaff9a39e01ee79c9f115303c3001'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
     'b845d6d8a1b817f323a7e884e9973c4a50fd1aeffd2e88d5b014b599920be956'
@@ -116,12 +107,8 @@ package() {
     rsync --recursive --mkpath "--chmod=D755,F644" "firefox/" "$pkgdir/etc/firefox/"
 
     _skel="$pkgdir/etc/moos-skel"
-    install -Dm644 ".shprofile" "$_skel/.shprofile"
-    install -Dm644 ".shrc" "$_skel/.shrc"
-    install -Dm644 ".bash_profile" "$_skel/.bash_profile"
-    install -Dm644 ".bashrc" "$_skel/.bashrc"
-    install -Dm644 ".zprofile" "$_skel/.zprofile"
-    install -Dm644 ".zshrc" "$_skel/.zshrc"
+    install -Dm644 "rc_xorg" "$_skel/.rc/xorg"
+    install -Dm644 "profile_xorg" "$_skel/.profile/xorg"
     install -Dm644 ".xinitrc" "$_skel/.xinitrc"
     install -Dm644 ".gtkrc-2.0" "$_skel/.gtkrc-2.0"
     install -Dm644 "gtk3-settings.ini" "$_skel/.config/gtk-3.0/settings.ini"
