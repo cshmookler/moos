@@ -17,8 +17,10 @@ source=(
 sha256sums=(
     'SKIP'
 )
+_repo='backpack'
 
 pkgver() {
+    cd "$_repo"
     git log -1 --date=format:"%Y%m%d" --format="%ad"
 }
 

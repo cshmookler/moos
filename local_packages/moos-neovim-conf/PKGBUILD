@@ -1,5 +1,5 @@
 pkgname='moos-neovim-conf'
-pkgver=20250811
+pkgver=20260105
 pkgrel=1
 pkgdesc='My preferred Neovim configuration.'
 arch=('any')
@@ -56,8 +56,10 @@ source=(
 sha256sums=(
     'SKIP'
 )
+_repo='neovim_conf'
 
 pkgver() {
+    cd "$_repo"
     git log -1 --date=format:"%Y%m%d" --format="%ad"
 }
 
