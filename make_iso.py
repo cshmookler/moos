@@ -639,7 +639,6 @@ if __name__ == "__main__":
         f'ExecStart=/usr/bin/env bash -c \'nmcli device wifi hotspot con-name "{hotspot_con_name}" ssid "{hotspot_ssid}" password "{hotspot_password}"\'\n'
         f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect yes'\n"
         f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" connection.autoconnect-priority 999'\n"
-        f"ExecStart=/usr/bin/env bash -c 'nmcli connection modify \"{hotspot_con_name}\" ipv4.addresses 10.0.0.1/24'\n"
         f"ExecStart=/usr/bin/env bash -c 'nmcli connection up {hotspot_con_name}'\n"
         "\n"
         "[Install]\n"
