@@ -5,18 +5,14 @@ pkgdesc='Dot files that configure the shell.'
 arch=('any')
 options=('!debug')
 source=(
-    'rc_moos'
+    'rc_moos.sh'
     '.bashrc'
     '.bash_profile'
-    '.zshrc'
-    '.zprofile'
 )
 sha256sums=(
     '97359b569a29c3f6aab278087f058fc6950d4f0e336c81e54f41eecf7a6304e6'
-    'a0af47a6285102e2f6140120cb258f73bbb1d1e81d90d9e09bfba7d364108ea7'
-    'd4602f486883effedc9df563eb3b187141cbd4138533f7cfb64cabd82730c026'
-    '9679b06a041e4940d88c175156c4761d2ed2560e4e9e6f2d2d2f387b83489937'
-    '891bf22bf98e1b172bde10c872c12455ee8ad6e7b3f4dfd97fbd2835571440e0'
+    '942f6075cffa731f0a9017892a5795c16e539a12c8844f03d6b14f6286d0e9d3'
+    '2e0ddc76f74a56fafdeba6bdb65589a5735586b9b25cbbe194e559352aecfe91'
 )
 
 pkgver() {
@@ -25,9 +21,7 @@ pkgver() {
 
 package() {
     _skel="$pkgdir/etc/moos-skel"
-    install -Dm644 "rc_moos" "$_skel/.rc/moos"
+    install -Dm644 "rc_moos.sh" "$_skel/.bashrc.d/moos.sh"
     install -Dm644 ".bashrc" "$_skel/.bashrc"
     install -Dm644 ".bash_profile" "$_skel/.bash_profile"
-    install -Dm644 ".zshrc" "$_skel/.zshrc"
-    install -Dm644 ".zprofile" "$_skel/.zprofile"
 }
