@@ -120,6 +120,9 @@ class Dir:
     def __init__(self, path: str) -> None:
         self.path = path
 
+    def __str__(self) -> str:
+        return self.path
+
 
 class TempDir(Dir):
     def __init__(self) -> None:
@@ -569,8 +572,12 @@ if __name__ == "__main__":
     # Make the ISO
 
     pacman_tmp_dir = TempDir()
+
     pacman_tmp_db_dir = os.path.join(pacman_tmp_dir.path, "db")
+    run("mkdir", pacman_tmp_db_dir, quiet=False)
+
     pacman_tmp_cache_dir = os.path.join(pacman_tmp_dir.path, "cache")
+    run("mkdir", pacman_tmp_cache_dir, quiet=False)
 
     if not write(
         os.path.join(profile_dir, "pacman.conf"),
