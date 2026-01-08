@@ -2,12 +2,12 @@
 # ~/.zprofile
 #
 
-if test -f "~/.zshrc"; then
-    source "~/.zshrc"
+if test -f "$HOME/.zshrc"; then
+    source "$HOME/.zshrc"
 fi
 
-if test -d "~/.profile"; then
-    for f in "~/.profile/*"; do
+if test -d "$HOME/.profile"; then
+    for f in "$(ls $HOME/.profile/*)"; do
         source "$f";
     done
 fi

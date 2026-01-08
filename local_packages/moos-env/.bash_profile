@@ -2,12 +2,12 @@
 # ~/.bash_profile
 #
 
-if test -f "~/.bashrc"; then
-    source "~/.bashrc"
+if test -f "$HOME/.bashrc"; then
+    source "$HOME/.bashrc"
 fi
 
-if test -d "~/.profile"; then
-    for f in "~/.profile/*"; do
+if test -d "$HOME/.profile"; then
+    for f in "$(ls $HOME/.profile/*)"; do
         source "$f";
     done
 fi
