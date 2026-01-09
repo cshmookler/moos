@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 if test -d "$HOME/.bashrc.d"; then
-    for f in "$(ls $HOME/.bashrc.d/*)"; do
+    for f in $(ls $HOME/.bashrc.d/*); do
         source "$f";
     done
 fi

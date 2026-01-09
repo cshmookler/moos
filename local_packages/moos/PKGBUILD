@@ -26,8 +26,6 @@ depends=(
     'moos-us-keys-tty'       # Custom US-style keyboard layout for the TTY.
     'bash'                   # A basic shell
     'bash-completion'        # Auto-completion for bash
-    'zsh'                    # An improved alternative to the default shell (bash)
-    'zsh-completions'        # Auto-completion for zsh
     'moos-env'               # Dot files that configure the shell
 
     # Command line utilities
@@ -45,8 +43,11 @@ depends=(
     'moos-run'               # Scripts for quickly executing code.
     'yay'                    # AUR helper
     'borg'                   # Data archival utility
-    'moos-neovim-conf'       # Neovim + my preferred configuration
     'moos-backpack'          # Directory encryption and obfuscation utility
+    'neovim'                 # Text editor and IDE
+    'neovim-symlinks'        # System-wide aliases for Neovim
+    'mdadm'                  # Manages and monitors device arrays (for Software RAID)
+    'cryptsetup'             # Manages encrypted LUKS volumes
 
     # Network
     'networkmanager'         # Network management (wired and wireless)

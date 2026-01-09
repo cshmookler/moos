@@ -1,5 +1,5 @@
 pkgname='moos-auto-limine'
-pkgver=20250224
+pkgver=20260109
 pkgrel=1
 pkgdesc='Automatically installs Limine (https://limine-bootloader.org/) on BIOS and UEFI systems.'
 arch=('any')

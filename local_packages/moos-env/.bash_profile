@@ -7,7 +7,7 @@ if test -f "$HOME/.bashrc"; then
 fi
 
 if test -d "$HOME/.bash_profile.d"; then
-    for f in "$(ls $HOME/.bash_profile.d/*)"; do
+    for f in $(ls $HOME/.bash_profile.d/*); do
         source "$f";
     done
 fi

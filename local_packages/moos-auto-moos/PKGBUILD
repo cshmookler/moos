@@ -1,5 +1,5 @@
 pkgname='moos-auto-moos'
-pkgver=20250116
+pkgver=20260109
 pkgrel=1
 pkgdesc='Automatically installs MOOS (https://github.com/cshmookler/moos) on a device.'
 arch=('any')

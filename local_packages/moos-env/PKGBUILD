@@ -1,9 +1,13 @@
 pkgname='moos-env'
-pkgver=20260108
+pkgver=20260109
 pkgrel=1
 pkgdesc='Dot files that configure the shell.'
 arch=('any')
 options=('!debug')
+depends=(
+    'bash'                   # A basic shell
+    'bash-completion'        # Auto-completion for bash
+)
 source=(
     'rc_moos.sh'
     '.bashrc'
@@ -11,8 +15,8 @@ source=(
 )
 sha256sums=(
     '97359b569a29c3f6aab278087f058fc6950d4f0e336c81e54f41eecf7a6304e6'
-    '942f6075cffa731f0a9017892a5795c16e539a12c8844f03d6b14f6286d0e9d3'
-    '2e0ddc76f74a56fafdeba6bdb65589a5735586b9b25cbbe194e559352aecfe91'
+    '77f22cc704998f9d51ded670037c0f16611addf321025a4c5749d69771506f03'
+    '59eefe5f9ec86a3b6dabc0aa7f0d789ff78f382fcbb9b87a9f15a133c9ddff5c'
 )
 
 pkgver() {
